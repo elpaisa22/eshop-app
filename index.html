@@ -71,5 +71,11 @@
     <script type="text/javascript" src="js/front.js"></script>
 
     <main-app>Cargando...</main-app>
+
+    <script type="text/javascript">
+        $(window).on('beforeunload', function(){
+          return 'Are you sure you want to leave?';
+        });
+    </script>
   </body>
 </html>
