@@ -167,7 +167,7 @@ h1 {
 }
 #hot .product-slider .item {
   margin: 0 25px;
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 #hot .product-slider .owl-controls {
   position: relative;

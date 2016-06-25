@@ -10,6 +10,9 @@ import {HomeComponent} from '../home/home.component';
 import {RegisterComponent} from '../register/register.component';
 import {ContactComponent} from '../contact/contact.component';
 import {BasketComponent} from '../basket/basket.component';
+import {ProductComponent} from '../product/product.component';
+import {DetailComponent} from '../detail/detail.component';
+import {ErrorComponent} from '../error/error.component';
 
 @Component({
 	selector: 'main-app',
@@ -18,9 +21,12 @@ import {BasketComponent} from '../basket/basket.component';
 })
 @RouteConfig([
 	new Route({path: '/', name: 'Home', component: HomeComponent}),
-	new Route({path: '/registro', name: 'Register', component: RegisterComponent}),
-	new Route({path: '/contacto', name: 'Contact', component: ContactComponent}),
-	new Route({path: '/carrito', name: 'Basket', component: BasketComponent})
+	new Route({path: '/register', name: 'Register', component: RegisterComponent}),
+	new Route({path: '/contact', name: 'Contact', component: ContactComponent}),
+	new Route({path: '/basket', name: 'Basket', component: BasketComponent}),
+	new Route({path: '/product', name: 'Product', component: ProductComponent}),
+	new Route({path: '/detail', name: 'Detail', component: DetailComponent}),
+	new Route({path: '/**', name: 'Error', component: ErrorComponent})
 ])
 export class MainComponent {
     text: string;
