@@ -1,22 +1,22 @@
-export interface Producto {
+export interface Product {
     id : string;
     descripcion : string;
-    categoria : Categoria;
+    categoria : Category;
     precio : number;
     nombre : string;
     fabricante : string;
     image_src? : string;
     califacionPromedio? : number;
-    comentarios : Comentario[];
+    comentarios : Comment[];
 }
 
-export interface Comentario {
+export interface Comment {
     nombre : string;
     comentario : string;
     calificacion? : number;
 }
 
-export interface Categoria {
+export interface Category {
     id : string;
     descripcion : string;
 }

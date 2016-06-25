@@ -1,16 +1,16 @@
 import {Injectable} from 'angular2/core';
-import {Producto} from '../models/producto.model';
+import {Product} from '../../models/product/product.model';
 
 @Injectable()
 export class CartService {
 
-    private cart : Producto[] = [];
+    private cart : Product[] = [];
 
-    agregarProducto(prod : Producto){
+    agregarItem(prod : Product){
         this.cart.push(prod);
     }
 
-    eliminarProducto(prod : Producto){
+    eliminarItem(prod : Product){
         this.cart = this.cart.filter(cartProd=>cartProd.id!==prod.id);
     }
 
@@ -18,7 +18,7 @@ export class CartService {
         this.cart = [];
     }
 
-    getCarrito():Producto[]{
+    getItems():Product[]{
         return this.cart;
     }
 

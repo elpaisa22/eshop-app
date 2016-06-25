@@ -1,3 +1,11 @@
+<p *ngIf="products != null"> {{products.length}} Productos! </p>
+
+<li *ngFor="#prod of products">
+  Producto:
+  {{ prod.id }} - {{ prod.descripcion }}
+</li>
+
+
 <div id="content">
     <div class="container">
 
@@ -21,41 +29,41 @@ _________________________________________________________ -->
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked category-menu">
                         <li>
-                            <a [routerLink]="['Product']">Men <span class="badge pull-right">42</span></a>
+                            <a [routerLink]="['Catalog']">Men <span class="badge pull-right">42</span></a>
                             <ul>
-                                <li><a [routerLink]="['Product']">T-shirts</a>
+                                <li><a [routerLink]="['Catalog']">T-shirts</a>
                                 </li>
-                                <li><a [routerLink]="['Product']">Shirts</a>
+                                <li><a [routerLink]="['Catalog']">Shirts</a>
                                 </li>
-                                <li><a [routerLink]="['Product']">Pants</a>
+                                <li><a [routerLink]="['Catalog']">Pants</a>
                                 </li>
-                                <li><a [routerLink]="['Product']">Accessories</a>
+                                <li><a [routerLink]="['Catalog']">Accessories</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="active">
-                            <a [routerLink]="['Product']">Ladies  <span class="badge pull-right">123</span></a>
+                            <a [routerLink]="['Catalog']">Ladies  <span class="badge pull-right">123</span></a>
                             <ul>
-                                <li><a [routerLink]="['Product']">T-shirts</a>
+                                <li><a [routerLink]="['Catalog']">T-shirts</a>
                                 </li>
-                                <li><a [routerLink]="['Product']">Skirts</a>
+                                <li><a [routerLink]="['Catalog']">Skirts</a>
                                 </li>
-                                <li><a [routerLink]="['Product']">Pants</a>
+                                <li><a [routerLink]="['Catalog']">Pants</a>
                                 </li>
-                                <li><a [routerLink]="['Product']">Accessories</a>
+                                <li><a [routerLink]="['Catalog']">Accessories</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a [routerLink]="['Product']">Kids  <span class="badge pull-right">11</span></a>
+                            <a [routerLink]="['Catalog']">Kids  <span class="badge pull-right">11</span></a>
                             <ul>
-                                <li><a [routerLink]="['Product']">T-shirts</a>
+                                <li><a [routerLink]="['Catalog']">T-shirts</a>
                                 </li>
-                                <li><a [routerLink]="['Product']">Skirts</a>
+                                <li><a [routerLink]="['Catalog']">Skirts</a>
                                 </li>
-                                <li><a [routerLink]="['Product']">Pants</a>
+                                <li><a [routerLink]="['Catalog']">Pants</a>
                                 </li>
-                                <li><a [routerLink]="['Product']">Accessories</a>
+                                <li><a [routerLink]="['Catalog']">Accessories</a>
                                 </li>
                             </ul>
                         </li>

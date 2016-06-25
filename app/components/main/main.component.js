@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../_shared/topbar/topbar.component', '../_shared/navbar/navbar.component', '../_shared/footer/footer.component', '../home/home.component', '../register/register.component', '../contact/contact.component', '../basket/basket.component', '../product/product.component', '../detail/detail.component', '../error/error.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../_shared/topbar/topbar.component', '../_shared/navbar/navbar.component', '../_shared/footer/footer.component', '../home/home.component', '../register/register.component', '../contact/contact.component', '../basket/basket.component', '../catalog/catalog.component', '../detail/detail.component', '../error/error.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../_shared/topbar/topbar.c
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, topbar_component_1, navbar_component_1, footer_component_1, home_component_1, register_component_1, contact_component_1, basket_component_1, product_component_1, detail_component_1, error_component_1;
+    var core_1, router_1, topbar_component_1, navbar_component_1, footer_component_1, home_component_1, register_component_1, contact_component_1, basket_component_1, catalog_component_1, detail_component_1, error_component_1;
     var MainComponent;
     return {
         setters:[
@@ -41,8 +41,8 @@ System.register(['angular2/core', 'angular2/router', '../_shared/topbar/topbar.c
             function (basket_component_1_1) {
                 basket_component_1 = basket_component_1_1;
             },
-            function (product_component_1_1) {
-                product_component_1 = product_component_1_1;
+            function (catalog_component_1_1) {
+                catalog_component_1 = catalog_component_1_1;
             },
             function (detail_component_1_1) {
                 detail_component_1 = detail_component_1_1;
@@ -66,7 +66,7 @@ System.register(['angular2/core', 'angular2/router', '../_shared/topbar/topbar.c
                         new router_1.Route({ path: '/register', name: 'Register', component: register_component_1.RegisterComponent }),
                         new router_1.Route({ path: '/contact', name: 'Contact', component: contact_component_1.ContactComponent }),
                         new router_1.Route({ path: '/basket', name: 'Basket', component: basket_component_1.BasketComponent }),
-                        new router_1.Route({ path: '/product', name: 'Product', component: product_component_1.ProductComponent }),
+                        new router_1.Route({ path: '/catalog', name: 'Catalog', component: catalog_component_1.CatalogComponent }),
                         new router_1.Route({ path: '/detail', name: 'Detail', component: detail_component_1.DetailComponent }),
                         new router_1.Route({ path: '/**', name: 'Error', component: error_component_1.ErrorComponent })
                     ]), 

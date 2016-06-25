@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,31 +10,34 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1;
-    var ProductComponent;
+    var core_1, http_1;
+    var ProductRepository;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (router_1_1) {
-                router_1 = router_1_1;
-            }],
+            function (http_1_1) {
+                http_1 = http_1_1;
+            },
+            function (_1) {}],
         execute: function() {
-            ProductComponent = (function () {
-                function ProductComponent() {
+            ProductRepository = (function () {
+                function ProductRepository(_http) {
+                    this._http = _http;
+                    this.endpoint_url = "http://localhost:8080/data/productos";
                 }
-                ProductComponent = __decorate([
-                    core_1.Component({
-                        templateUrl: 'app/components/product/product.html',
-                        directives: [router_1.ROUTER_DIRECTIVES]
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], ProductComponent);
-                return ProductComponent;
+                ProductRepository.prototype.getAllProducts = function () {
+                    return this._http.request(this.endpoint_url).map(function (res) { return (res.json()); });
+                };
+                ProductRepository = __decorate([
+                    core_1.Injectable(), 
+                    __metadata('design:paramtypes', [http_1.Http])
+                ], ProductRepository);
+                return ProductRepository;
             }());
-            exports_1("ProductComponent", ProductComponent);
+            exports_1("ProductRepository", ProductRepository);
         }
     }
 });
-//# sourceMappingURL=product.component.js.map
+//# sourceMappingURL=product.repository.js.map

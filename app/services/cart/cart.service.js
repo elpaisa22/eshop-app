@@ -22,16 +22,16 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 function CartService() {
                     this.cart = [];
                 }
-                CartService.prototype.agregarProducto = function (prod) {
+                CartService.prototype.agregarItem = function (prod) {
                     this.cart.push(prod);
                 };
-                CartService.prototype.eliminarProducto = function (prod) {
+                CartService.prototype.eliminarItem = function (prod) {
                     this.cart = this.cart.filter(function (cartProd) { return cartProd.id !== prod.id; });
                 };
                 CartService.prototype.limpiarCarrito = function () {
                     this.cart = [];
                 };
-                CartService.prototype.getCarrito = function () {
+                CartService.prototype.getItems = function () {
                     return this.cart;
                 };
                 CartService.prototype.getPrecioTotal = function () {

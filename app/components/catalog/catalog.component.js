@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../services/catalog/catalog.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,8 +10,8 @@ System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.s
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, cart_service_1;
-    var BasketComponent;
+    var core_1, router_1, catalog_service_1;
+    var CatalogComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -20,32 +20,30 @@ System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.s
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (cart_service_1_1) {
-                cart_service_1 = cart_service_1_1;
+            function (catalog_service_1_1) {
+                catalog_service_1 = catalog_service_1_1;
             }],
         execute: function() {
-            BasketComponent = (function () {
-                function BasketComponent(_cartService) {
-                    this._cartService = _cartService;
+            CatalogComponent = (function () {
+                function CatalogComponent(_catalogService) {
+                    this._catalogService = _catalogService;
+                    this.products = [];
                 }
-                BasketComponent.prototype.reloadItems = function () {
-                    this.items = this._cartService.getItems();
+                CatalogComponent.prototype.ngOnInit = function () {
+                    this.products = this._catalogService.loadProducts();
                 };
-                BasketComponent.prototype.ngOnInit = function () {
-                    this.reloadItems();
-                };
-                BasketComponent = __decorate([
+                CatalogComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/components/basket/basket.html',
+                        templateUrl: 'app/components/catalog/catalog.html',
                         directives: [router_1.ROUTER_DIRECTIVES],
-                        providers: [cart_service_1.CartService]
+                        providers: [catalog_service_1.CatalogService]
                     }), 
-                    __metadata('design:paramtypes', [cart_service_1.CartService])
-                ], BasketComponent);
-                return BasketComponent;
+                    __metadata('design:paramtypes', [catalog_service_1.CatalogService])
+                ], CatalogComponent);
+                return CatalogComponent;
             }());
-            exports_1("BasketComponent", BasketComponent);
+            exports_1("CatalogComponent", CatalogComponent);
         }
     }
 });
-//# sourceMappingURL=basket.component.js.map
+//# sourceMappingURL=catalog.component.js.map
