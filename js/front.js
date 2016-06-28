@@ -12,6 +12,8 @@ $(function() {
 });
 
 
+
+
 $(window).load(function() {
     $(this).alignElementsSameHeight();
 });
