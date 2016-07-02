@@ -73,90 +73,7 @@ _________________________________________________________ -->
                 </div>
             </div>
 
-            <div class="panel panel-default sidebar-menu">
-
-                <div class="panel-heading">
-                    <h3 class="panel-title">Brands <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a></h3>
-                </div>
-
-                <div class="panel-body">
-
-                    <form>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">Armani (10)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">Versace (12)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">Carlo Bruni (15)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">Jack Honey (14)
-                                </label>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
-
-                    </form>
-
-                </div>
-            </div>
-
-            <div class="panel panel-default sidebar-menu">
-
-                <div class="panel-heading">
-                    <h3 class="panel-title">Colours <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a></h3>
-                </div>
-
-                <div class="panel-body">
-
-                    <form>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> <span class="colour white"></span> White (14)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> <span class="colour blue"></span> Blue (10)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> <span class="colour green"></span> Green (20)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> <span class="colour yellow"></span> Yellow (13)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> <span class="colour red"></span> Red (10)
-                                </label>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
-
-                    </form>
-
-                </div>
-            </div>
-
-            <!-- *** MENUS AND FILTERS END *** -->
+            <side-bar></side-bar>
 
             <div class="banner">
                 <a href="#">
@@ -208,25 +125,25 @@ _________________________________________________________ -->
                         <div class="flip-container">
                             <div class="flipper">
                                 <div class="front">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 1}]">
                                         <img src="img/product1.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                                 <div class="back">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 1}]">
                                         <img src="img/product1_2.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <a [routerLink]="['Detail']" class="invisible">
+                        <a [routerLink]="['Detail', {id : 1}]" class="invisible">
                             <img src="img/product1.jpg" alt="" class="img-responsive">
                         </a>
                         <div class="text">
-                            <h3><a [routerLink]="['Detail']">Fur coat with very but very very long name</a></h3>
+                            <h3><a [routerLink]="['Detail', {id : 1}]">Fur coat with very but very very long name</a></h3>
                             <p class="price">$143.00</p>
                             <p class="buttons">
-                                <a [routerLink]="['Detail']" class="btn btn-default">View detail</a>
+                                <a [routerLink]="['Detail', {id : 1}]" class="btn btn-default">View detail</a>
                                 <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </p>
                         </div>
@@ -240,25 +157,25 @@ _________________________________________________________ -->
                         <div class="flip-container">
                             <div class="flipper">
                                 <div class="front">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 2}]">
                                         <img src="img/product2.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                                 <div class="back">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 2}]">
                                         <img src="img/product2_2.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <a [routerLink]="['Detail']" class="invisible">
+                        <a [routerLink]="['Detail', {id : 2}]" class="invisible">
                             <img src="img/product2.jpg" alt="" class="img-responsive">
                         </a>
                         <div class="text">
-                            <h3><a [routerLink]="['Detail']">White Blouse Armani</a></h3>
+                            <h3><a [routerLink]="['Detail', {id : 2}]">White Blouse Armani</a></h3>
                             <p class="price"><del>$280</del> $143.00</p>
                             <p class="buttons">
-                                <a [routerLink]="['Detail']" class="btn btn-default">View detail</a>
+                                <a [routerLink]="['Detail', {id : 2}]" class="btn btn-default">View detail</a>
                                 <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </p>
                         </div>
@@ -290,25 +207,25 @@ _________________________________________________________ -->
                         <div class="flip-container">
                             <div class="flipper">
                                 <div class="front">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 3}]">
                                         <img src="img/product3.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                                 <div class="back">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 3}]">
                                         <img src="img/product3_2.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <a [routerLink]="['Detail']" class="invisible">
+                        <a [routerLink]="['Detail', {id : 3}]" class="invisible">
                             <img src="img/product3.jpg" alt="" class="img-responsive">
                         </a>
                         <div class="text">
-                            <h3><a [routerLink]="['Detail']">Black Blouse Versace</a></h3>
+                            <h3><a [routerLink]="['Detail', {id : 3}]">Black Blouse Versace</a></h3>
                             <p class="price">$143.00</p>
                             <p class="buttons">
-                                <a [routerLink]="['Detail']" class="btn btn-default">View detail</a>
+                                <a [routerLink]="['Detail', {id : 3}]" class="btn btn-default">View detail</a>
                                 <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </p>
 
@@ -323,25 +240,25 @@ _________________________________________________________ -->
                         <div class="flip-container">
                             <div class="flipper">
                                 <div class="front">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 4}]">
                                         <img src="img/product3.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                                 <div class="back">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 4}]">
                                         <img src="img/product3_2.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <a [routerLink]="['Detail']" class="invisible">
+                        <a [routerLink]="['Detail', {id : 4}]" class="invisible">
                             <img src="img/product3.jpg" alt="" class="img-responsive">
                         </a>
                         <div class="text">
-                            <h3><a [routerLink]="['Detail']">Black Blouse Versace</a></h3>
+                            <h3><a [routerLink]="['Detail', {id : 4}]">Black Blouse Versace</a></h3>
                             <p class="price">$143.00</p>
                             <p class="buttons">
-                                <a [routerLink]="['Detail']" class="btn btn-default">View detail</a>
+                                <a [routerLink]="['Detail', {id : 4}]" class="btn btn-default">View detail</a>
                                 <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </p>
 
@@ -356,25 +273,25 @@ _________________________________________________________ -->
                         <div class="flip-container">
                             <div class="flipper">
                                 <div class="front">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 5}]">
                                         <img src="img/product2.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                                 <div class="back">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 5}]">
                                         <img src="img/product2_2.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <a [routerLink]="['Detail']" class="invisible">
+                        <a [routerLink]="['Detail', {id : 5}]" class="invisible">
                             <img src="img/product2.jpg" alt="" class="img-responsive">
                         </a>
                         <div class="text">
-                            <h3><a [routerLink]="['Detail']">White Blouse Versace</a></h3>
+                            <h3><a [routerLink]="['Detail', {id : 5}]">White Blouse Versace</a></h3>
                             <p class="price">$143.00</p>
                             <p class="buttons">
-                                <a [routerLink]="['Detail']" class="btn btn-default">View detail</a>
+                                <a [routerLink]="['Detail', {id : 5}]" class="btn btn-default">View detail</a>
                                 <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </p>
 
@@ -395,25 +312,25 @@ _________________________________________________________ -->
                         <div class="flip-container">
                             <div class="flipper">
                                 <div class="front">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 6}]">
                                         <img src="img/product1.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                                 <div class="back">
-                                    <a [routerLink]="['Detail']">
+                                    <a [routerLink]="['Detail', {id : 6}]">
                                         <img src="img/product1_2.jpg" alt="" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <a [routerLink]="['Detail']" class="invisible">
+                        <a [routerLink]="['Detail', {id : 6}]" class="invisible">
                             <img src="img/product1.jpg" alt="" class="img-responsive">
                         </a>
                         <div class="text">
-                            <h3><a [routerLink]="['Detail']">Fur coat</a></h3>
+                            <h3><a [routerLink]="['Detail', {id : 6}]">Fur coat</a></h3>
                             <p class="price">$143.00</p>
                             <p class="buttons">
-                                <a [routerLink]="['Detail']" class="btn btn-default">View detail</a>
+                                <a [routerLink]="['Detail', {id : 6}]" class="btn btn-default">View detail</a>
                                 <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </p>
 
@@ -434,10 +351,6 @@ _________________________________________________________ -->
             <!-- /.products -->
 
             <div class="pages">
-
-                <p class="loadMore">
-                    <a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a>
-                </p>
 
                 <ul class="pagination">
                     <li><a href="#">&laquo;</a>

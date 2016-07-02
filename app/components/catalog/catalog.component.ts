@@ -4,9 +4,11 @@ import {Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import {Product} from '../../models/product/product.model';
 import {CatalogService} from '../../services/catalog/catalog.service';
 
+import {SideBarComponent} from '../_shared/sidebar/sidebar.component';
+
 @Component({
 	templateUrl : 'app/components/catalog/catalog.html',
-  directives : [ROUTER_DIRECTIVES],
+  directives : [SideBarComponent, ROUTER_DIRECTIVES],
 	providers : [CatalogService]
 })
 export class CatalogComponent implements OnInit {

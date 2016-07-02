@@ -25,7 +25,7 @@ import {ErrorComponent} from '../error/error.component';
 	new Route({path: '/contact', name: 'Contact', component: ContactComponent}),
 	new Route({path: '/basket', name: 'Basket', component: BasketComponent}),
 	new Route({path: '/catalog', name: 'Catalog', component: CatalogComponent}),
-	new Route({path: '/detail', name: 'Detail', component: DetailComponent}),
+	new Route({path: '/detail/:id', name: 'Detail', component: DetailComponent}),
 	new Route({path: '/**', name: 'Error', component: ErrorComponent})
 ])
 export class MainComponent {

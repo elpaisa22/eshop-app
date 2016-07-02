@@ -67,7 +67,7 @@ System.register(['angular2/core', 'angular2/router', '../_shared/topbar/topbar.c
                         new router_1.Route({ path: '/contact', name: 'Contact', component: contact_component_1.ContactComponent }),
                         new router_1.Route({ path: '/basket', name: 'Basket', component: basket_component_1.BasketComponent }),
                         new router_1.Route({ path: '/catalog', name: 'Catalog', component: catalog_component_1.CatalogComponent }),
-                        new router_1.Route({ path: '/detail', name: 'Detail', component: detail_component_1.DetailComponent }),
+                        new router_1.Route({ path: '/detail/:id', name: 'Detail', component: detail_component_1.DetailComponent }),
                         new router_1.Route({ path: '/**', name: 'Error', component: error_component_1.ErrorComponent })
                     ]), 
                     __metadata('design:paramtypes', [])
