@@ -4,6 +4,9 @@ export interface Product {
     categoria : Category;
     precio : number;
     nombre : string;
+    imagen1 : string;
+    imagen2 : string;
+    imagen3 : string;
     fabricante : string;
     image_src? : string;
     califacionPromedio? : number;

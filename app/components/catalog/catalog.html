@@ -1,11 +1,3 @@
-<p *ngIf="products != null"> {{products.length}} Productos! </p>
-
-<li *ngFor="#prod of products">
-  Producto:
-  {{ prod.id }} - {{ prod.descripcion }}
-</li>
-
-
 <div id="content">
     <div class="container">
 
@@ -120,233 +112,56 @@ _________________________________________________________ -->
 
             <div class="row products">
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="product">
-                        <div class="flip-container">
-                            <div class="flipper">
-                                <div class="front">
-                                    <a [routerLink]="['Detail', {id : 1}]">
-                                        <img src="img/product1.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                                <div class="back">
-                                    <a [routerLink]="['Detail', {id : 1}]">
-                                        <img src="img/product1_2.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <a [routerLink]="['Detail', {id : 1}]" class="invisible">
-                            <img src="img/product1.jpg" alt="" class="img-responsive">
-                        </a>
-                        <div class="text">
-                            <h3><a [routerLink]="['Detail', {id : 1}]">Fur coat with very but very very long name</a></h3>
-                            <p class="price">$143.00</p>
-                            <p class="buttons">
-                                <a [routerLink]="['Detail', {id : 1}]" class="btn btn-default">View detail</a>
-                                <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                            </p>
-                        </div>
-                        <!-- /.text -->
-                    </div>
-                    <!-- /.product -->
+                <div *ngFor="#prod of products" class="col-md-4 col-sm-6">
+                  <div class="product">
+                      <div class="flip-container">
+                          <div class="flipper">
+                              <div class="front">
+                                  <a [routerLink]="['Detail', {id : prod.id}]">
+                                      <img src="{{prod.imagen1}}" alt="" class="img-responsive">
+                                  </a>
+                              </div>
+                              <div class="back">
+                                  <a [routerLink]="['Detail', {id : prod.id}]">
+                                      <img src="{{prod.imagen2}}" alt="" class="img-responsive">
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                      <a [routerLink]="['Detail', {id : prod.id}]" class="invisible">
+                          <img src="{{prod.imagen1}}" alt="" class="img-responsive">
+                      </a>
+                      <div class="text">
+                          <h3><a [routerLink]="['Detail', {id : prod.id}]">{{prod.descripcion}}</a></h3>
+                          <p class="price">$ {{prod.precio}}</p>
+                          <p class="buttons">
+                              <a [routerLink]="['Detail', {id : prod.id}]" class="btn btn-default">Ver Detalle</a>
+                              <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Agregar al Carrito</a>
+                          </p>
+                      </div>
+                      <!-- /.text -->
+                  </div>
+                  <!-- /.product -->
+
+                  <div class="ribbon sale">
+                      <div class="theribbon">OFERTA</div>
+                      <div class="ribbon-background"></div>
+                  </div>
+                  <!-- /.ribbon -->
+
+                  <div class="ribbon new">
+                      <div class="theribbon">NUEVO</div>
+                      <div class="ribbon-background"></div>
+                  </div>
+                  <!-- /.ribbon -->
+
+                  <div class="ribbon gift">
+                      <div class="theribbon">AHORA</div>
+                      <div class="ribbon-background"></div>
+                  </div>
+                  <!-- /.ribbon -->
                 </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="product">
-                        <div class="flip-container">
-                            <div class="flipper">
-                                <div class="front">
-                                    <a [routerLink]="['Detail', {id : 2}]">
-                                        <img src="img/product2.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                                <div class="back">
-                                    <a [routerLink]="['Detail', {id : 2}]">
-                                        <img src="img/product2_2.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <a [routerLink]="['Detail', {id : 2}]" class="invisible">
-                            <img src="img/product2.jpg" alt="" class="img-responsive">
-                        </a>
-                        <div class="text">
-                            <h3><a [routerLink]="['Detail', {id : 2}]">White Blouse Armani</a></h3>
-                            <p class="price"><del>$280</del> $143.00</p>
-                            <p class="buttons">
-                                <a [routerLink]="['Detail', {id : 2}]" class="btn btn-default">View detail</a>
-                                <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                            </p>
-                        </div>
-                        <!-- /.text -->
-
-                        <div class="ribbon sale">
-                            <div class="theribbon">SALE</div>
-                            <div class="ribbon-background"></div>
-                        </div>
-                        <!-- /.ribbon -->
-
-                        <div class="ribbon new">
-                            <div class="theribbon">NEW</div>
-                            <div class="ribbon-background"></div>
-                        </div>
-                        <!-- /.ribbon -->
-
-                        <div class="ribbon gift">
-                            <div class="theribbon">GIFT</div>
-                            <div class="ribbon-background"></div>
-                        </div>
-                        <!-- /.ribbon -->
-                    </div>
-                    <!-- /.product -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="product">
-                        <div class="flip-container">
-                            <div class="flipper">
-                                <div class="front">
-                                    <a [routerLink]="['Detail', {id : 3}]">
-                                        <img src="img/product3.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                                <div class="back">
-                                    <a [routerLink]="['Detail', {id : 3}]">
-                                        <img src="img/product3_2.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <a [routerLink]="['Detail', {id : 3}]" class="invisible">
-                            <img src="img/product3.jpg" alt="" class="img-responsive">
-                        </a>
-                        <div class="text">
-                            <h3><a [routerLink]="['Detail', {id : 3}]">Black Blouse Versace</a></h3>
-                            <p class="price">$143.00</p>
-                            <p class="buttons">
-                                <a [routerLink]="['Detail', {id : 3}]" class="btn btn-default">View detail</a>
-                                <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                            </p>
-
-                        </div>
-                        <!-- /.text -->
-                    </div>
-                    <!-- /.product -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="product">
-                        <div class="flip-container">
-                            <div class="flipper">
-                                <div class="front">
-                                    <a [routerLink]="['Detail', {id : 4}]">
-                                        <img src="img/product3.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                                <div class="back">
-                                    <a [routerLink]="['Detail', {id : 4}]">
-                                        <img src="img/product3_2.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <a [routerLink]="['Detail', {id : 4}]" class="invisible">
-                            <img src="img/product3.jpg" alt="" class="img-responsive">
-                        </a>
-                        <div class="text">
-                            <h3><a [routerLink]="['Detail', {id : 4}]">Black Blouse Versace</a></h3>
-                            <p class="price">$143.00</p>
-                            <p class="buttons">
-                                <a [routerLink]="['Detail', {id : 4}]" class="btn btn-default">View detail</a>
-                                <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                            </p>
-
-                        </div>
-                        <!-- /.text -->
-                    </div>
-                    <!-- /.product -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="product">
-                        <div class="flip-container">
-                            <div class="flipper">
-                                <div class="front">
-                                    <a [routerLink]="['Detail', {id : 5}]">
-                                        <img src="img/product2.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                                <div class="back">
-                                    <a [routerLink]="['Detail', {id : 5}]">
-                                        <img src="img/product2_2.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <a [routerLink]="['Detail', {id : 5}]" class="invisible">
-                            <img src="img/product2.jpg" alt="" class="img-responsive">
-                        </a>
-                        <div class="text">
-                            <h3><a [routerLink]="['Detail', {id : 5}]">White Blouse Versace</a></h3>
-                            <p class="price">$143.00</p>
-                            <p class="buttons">
-                                <a [routerLink]="['Detail', {id : 5}]" class="btn btn-default">View detail</a>
-                                <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                            </p>
-
-                        </div>
-                        <!-- /.text -->
-
-                        <div class="ribbon new">
-                            <div class="theribbon">NEW</div>
-                            <div class="ribbon-background"></div>
-                        </div>
-                        <!-- /.ribbon -->
-                    </div>
-                    <!-- /.product -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="product">
-                        <div class="flip-container">
-                            <div class="flipper">
-                                <div class="front">
-                                    <a [routerLink]="['Detail', {id : 6}]">
-                                        <img src="img/product1.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                                <div class="back">
-                                    <a [routerLink]="['Detail', {id : 6}]">
-                                        <img src="img/product1_2.jpg" alt="" class="img-responsive">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <a [routerLink]="['Detail', {id : 6}]" class="invisible">
-                            <img src="img/product1.jpg" alt="" class="img-responsive">
-                        </a>
-                        <div class="text">
-                            <h3><a [routerLink]="['Detail', {id : 6}]">Fur coat</a></h3>
-                            <p class="price">$143.00</p>
-                            <p class="buttons">
-                                <a [routerLink]="['Detail', {id : 6}]" class="btn btn-default">View detail</a>
-                                <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                            </p>
-
-                        </div>
-                        <!-- /.text -->
-
-                        <div class="ribbon gift">
-                            <div class="theribbon">GIFT</div>
-                            <div class="ribbon-background"></div>
-                        </div>
-                        <!-- /.ribbon -->
-
-                    </div>
-                    <!-- /.product -->
-                </div>
-                <!-- /.col-md-4 -->
             </div>
             <!-- /.products -->
 

@@ -14,8 +14,36 @@ export class ProductRepository {
     constructor(private _http: Http){
     }
 
-    getAllProducts () : Observable<Product[]> {
-      return this._http.request(this.endpoint_url).map(res => (res.json() as Product[]));
+    private convertProductos(elems : any) : Product[] {
+      var productos = elems.json();
+
+      for (var i = 0; i < productos.length; i++) {
+          var prod = productos[i];
+
+          if (prod.imagen1) {
+              var url : String = "http://localhost:8080" + prod.imagen1.split("\\").join("/").replace(".bin",".jpg");
+              prod.imagen1 = url;
+          }
+          if (prod.imagen2) {
+              var url : String = "http://localhost:8080" + prod.imagen2.split("\\").join("/").replace(".bin",".jpg");
+              prod.imagen2 = url;
+          }
+          if (prod.imagen3) {
+              var url : String = "http://localhost:8080" + prod.imagen3.split("\\").join("/").replace(".bin",".jpg");
+              prod.imagen3 = url;
+          }
+
+          console.log(prod)
+      }
+
+      return productos;
     }
+
+    public getAllProducts () : Observable<Product[]> {
+      return this._http.request(this.endpoint_url).map( x => this.convertProductos(x));
+    }
+
+
+
 
 }

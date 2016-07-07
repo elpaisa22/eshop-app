@@ -27,8 +27,29 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map'], fun
                     this._http = _http;
                     this.endpoint_url = "http://localhost:8080/data/productos";
                 }
+                ProductRepository.prototype.convertProductos = function (elems) {
+                    var productos = elems.json();
+                    for (var i = 0; i < productos.length; i++) {
+                        var prod = productos[i];
+                        if (prod.imagen1) {
+                            var url = "http://localhost:8080" + prod.imagen1.split("\\").join("/").replace(".bin", ".jpg");
+                            prod.imagen1 = url;
+                        }
+                        if (prod.imagen2) {
+                            var url = "http://localhost:8080" + prod.imagen2.split("\\").join("/").replace(".bin", ".jpg");
+                            prod.imagen2 = url;
+                        }
+                        if (prod.imagen3) {
+                            var url = "http://localhost:8080" + prod.imagen3.split("\\").join("/").replace(".bin", ".jpg");
+                            prod.imagen3 = url;
+                        }
+                        console.log(prod);
+                    }
+                    return productos;
+                };
                 ProductRepository.prototype.getAllProducts = function () {
-                    return this._http.request(this.endpoint_url).map(function (res) { return (res.json()); });
+                    var _this = this;
+                    return this._http.request(this.endpoint_url).map(function (x) { return _this.convertProductos(x); });
                 };
                 ProductRepository = __decorate([
                     core_1.Injectable(), 
