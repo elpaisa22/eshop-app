@@ -1,4 +1,4 @@
-export interface Product {
+export class Product {
     id : string;
     descripcion : string;
     categoria : Category;
@@ -8,8 +8,8 @@ export interface Product {
     imagen2 : string;
     imagen3 : string;
     fabricante : string;
-    image_src? : string;
-    califacionPromedio? : number;
+    image_src : string;
+    califacionPromedio : number;
     comentarios : Comment[];
 }
 
