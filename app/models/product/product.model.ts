@@ -1,14 +1,17 @@
 export class Product {
-    id : string;
+    id : number;
     descripcion : string;
+    detalles : Blob;
+    pie : string;
     categoria : Category;
     precio : number;
     nombre : string;
     imagen1 : string;
     imagen2 : string;
-    imagen3 : string;
+    imagenDetalle1 : string;
+    imagenDetalle2 : string;
+    imagenDetalle3 : string;
     fabricante : string;
-    image_src : string;
     califacionPromedio : number;
     comentarios : Comment[];
 }

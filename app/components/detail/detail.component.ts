@@ -6,11 +6,13 @@ import {ProductRepository} from '../../repositories/product/product.repository';
 
 import {ProductDetailDirective} from '../../directives/product-detail/product-detail.directive';
 
-import {SideBarComponent} from '../_shared/sidebar/sidebar.component';
+import {SideNavComponent} from '../_shared/sidenav/sidenav.component';
+
+import {CartService} from '../../services/cart/cart.service';
 
 @Component({
 	templateUrl : 'app/components/detail/detail.html',
-	directives : [ProductDetailDirective, SideBarComponent, ROUTER_DIRECTIVES],
+	directives : [ProductDetailDirective, SideNavComponent, ROUTER_DIRECTIVES],
 	providers : [ProductRepository]
 })
 export class DetailComponent implements OnInit {
@@ -20,7 +22,8 @@ export class DetailComponent implements OnInit {
 	product : Product = new Product();
 
 	constructor(private _routeParams: RouteParams,
-		          private _productRepository : ProductRepository){
+		          private _productRepository : ProductRepository,
+						  private _cartService : CartService){
   }
 
 	ngOnInit() {
@@ -31,7 +34,10 @@ export class DetailComponent implements OnInit {
 			data => this.product = data,
       error => console.log(error)
 		);
-
-		console.log(this.product);
 	}
+
+	addToCart(prod : Product) {
+		this._cartService.agregarProducto(prod);
+	}
+
 }

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../services/catalog/catalog.service', '../_shared/sidebar/sidebar.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../services/catalog/catalog.service', '../_shared/sidebar/sidebar.component', '../_shared/sidenav/sidenav.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../../services/catalog/cat
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, catalog_service_1, sidebar_component_1;
+    var core_1, router_1, catalog_service_1, sidebar_component_1, sidenav_component_1;
     var CatalogComponent;
     return {
         setters:[
@@ -25,6 +25,9 @@ System.register(['angular2/core', 'angular2/router', '../../services/catalog/cat
             },
             function (sidebar_component_1_1) {
                 sidebar_component_1 = sidebar_component_1_1;
+            },
+            function (sidenav_component_1_1) {
+                sidenav_component_1 = sidenav_component_1_1;
             }],
         execute: function() {
             CatalogComponent = (function () {
@@ -38,7 +41,7 @@ System.register(['angular2/core', 'angular2/router', '../../services/catalog/cat
                 CatalogComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/components/catalog/catalog.html',
-                        directives: [sidebar_component_1.SideBarComponent, router_1.ROUTER_DIRECTIVES],
+                        directives: [sidebar_component_1.SideBarComponent, sidenav_component_1.SideNavComponent, router_1.ROUTER_DIRECTIVES],
                         providers: [catalog_service_1.CatalogService]
                     }), 
                     __metadata('design:paramtypes', [catalog_service_1.CatalogService])

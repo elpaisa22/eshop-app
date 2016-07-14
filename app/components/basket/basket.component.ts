@@ -1,27 +1,19 @@
 import {Component} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES } from 'angular2/router';
 
-import {Product} from '../../models/product/product.model';
+import {CartItem} from '../../models/cartitem/cartitem.model';
 import {CartService} from '../../services/cart/cart.service';
 
 @Component({
 	templateUrl : 'app/components/basket/basket.html',
-  directives : [ROUTER_DIRECTIVES],
-	providers : [CartService]
+  directives : [ROUTER_DIRECTIVES]
 })
-export class BasketComponent{
-
-		items: Product[];
+export class BasketComponent {
 
 		constructor(private _cartService: CartService) {
 		}
 
-	  reloadItems() {
-		    this.items = this._cartService.getItems();
-	  }
-
-	  ngOnInit() {
-	    this.reloadItems();
-	  }
-
+		eliminarItem(item : CartItem){
+			this._cartService.eliminarItem(item);
+		}
 }

@@ -1,32 +1,53 @@
 import {Injectable} from 'angular2/core';
+
 import {Product} from '../../models/product/product.model';
+import {CartItem} from '../../models/cartitem/cartitem.model';
+
+import {List} from 'immutable';
+
+import {BehaviorSubject} from "rxjs/Rx";
+import {Subject} from "rxjs/Subject";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class CartService {
 
-    private cart : Product[] = [];
+    private _cart : BehaviorSubject<List<CartItem>> = new BehaviorSubject(List([]));
 
-    agregarItem(prod : Product){
-        this.cart.push(prod);
+    agregarProducto(prod : Product){
+        var item : CartItem = new CartItem();
+        item.id = prod.id;
+        item.descripcion = prod.descripcion;
+        item.precio = prod.precio;
+        item.cantidad = 1;
+        item.imagen1 = prod.imagen1;
+
+        this._cart.next(this._cart.getValue().push(item));
     }
 
-    eliminarItem(prod : Product){
-        this.cart = this.cart.filter(cartProd=>cartProd.id!==prod.id);
+    eliminarItem(item : CartItem){
+        let all: List<CartItem> = this._cart.getValue();
+        let index = all.findIndex((i) => i.id === item.id);
+        this._cart.next(all.delete(index));
     }
 
     limpiarCarrito(){
-        this.cart = [];
+        this._cart.getValue().clear();
     }
 
-    getItems():Product[]{
-        return this.cart;
+    get items() {
+        return this.asObservable(this._cart);
     }
 
     getPrecioTotal(){
-        let totalPrice = this.cart.reduce((sum, cartProd)=>{
+        let totalPrice = this._cart.getValue().reduce((sum, cartProd)=>{
             return sum += cartProd.precio, sum;
         },0);
 
         return totalPrice;
+    }
+
+    private asObservable(subject: Subject<List<CartItem>>) {
+      return new Observable(fn => subject.subscribe(fn));
     }
 }

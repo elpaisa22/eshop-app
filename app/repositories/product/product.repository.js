@@ -27,22 +27,34 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map'], fun
                     this._http = _http;
                     this.endpoint_url = "http://localhost:8080";
                 }
+                ProductRepository.prototype.convertProducto = function (prod) {
+                    if (prod.imagen1) {
+                        var url = this.endpoint_url + prod.imagen1.split("\\").join("/").replace(".bin", ".jpg");
+                        prod.imagen1 = url;
+                    }
+                    if (prod.imagen2) {
+                        var url = this.endpoint_url + prod.imagen2.split("\\").join("/").replace(".bin", ".jpg");
+                        prod.imagen2 = url;
+                    }
+                    if (prod.imagenDetalle1) {
+                        var url = this.endpoint_url + prod.imagenDetalle1.split("\\").join("/").replace(".bin", ".jpg");
+                        prod.imagenDetalle1 = url;
+                    }
+                    if (prod.imagenDetalle2) {
+                        var url = this.endpoint_url + prod.imagenDetalle2.split("\\").join("/").replace(".bin", ".jpg");
+                        prod.imagenDetalle2 = url;
+                    }
+                    if (prod.imagenDetalle3) {
+                        var url = this.endpoint_url + prod.imagenDetalle3.split("\\").join("/").replace(".bin", ".jpg");
+                        prod.imagenDetalle3 = url;
+                    }
+                    return prod;
+                };
                 ProductRepository.prototype.convertProductos = function (elems) {
                     var productos = elems.json();
                     for (var i = 0; i < productos.length; i++) {
                         var prod = productos[i];
-                        if (prod.imagen1) {
-                            var url = this.endpoint_url + prod.imagen1.split("\\").join("/").replace(".bin", ".jpg");
-                            prod.imagen1 = url;
-                        }
-                        if (prod.imagen2) {
-                            var url = this.endpoint_url + prod.imagen2.split("\\").join("/").replace(".bin", ".jpg");
-                            prod.imagen2 = url;
-                        }
-                        if (prod.imagen3) {
-                            var url = this.endpoint_url + prod.imagen3.split("\\").join("/").replace(".bin", ".jpg");
-                            prod.imagen3 = url;
-                        }
+                        prod = this.convertProducto(prod);
                     }
                     return productos;
                 };
@@ -51,7 +63,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map'], fun
                     return this._http.request(this.endpoint_url + "/data/productos").map(function (x) { return _this.convertProductos(x); });
                 };
                 ProductRepository.prototype.getProduct = function (id) {
-                    return this._http.request(this.endpoint_url + "/data/producto/" + id).map(function (x) { return x.json(); });
+                    var _this = this;
+                    return this._http.request(this.endpoint_url + "/data/producto/" + id).map(function (x) { return _this.convertProducto(x.json()); });
                 };
                 ProductRepository = __decorate([
                     core_1.Injectable(), 

@@ -5,10 +5,11 @@ import {Product} from '../../models/product/product.model';
 import {CatalogService} from '../../services/catalog/catalog.service';
 
 import {SideBarComponent} from '../_shared/sidebar/sidebar.component';
+import {SideNavComponent} from '../_shared/sidenav/sidenav.component';
 
 @Component({
 	templateUrl : 'app/components/catalog/catalog.html',
-  directives : [SideBarComponent, ROUTER_DIRECTIVES],
+  directives : [SideBarComponent, SideNavComponent, ROUTER_DIRECTIVES],
 	providers : [CatalogService]
 })
 export class CatalogComponent implements OnInit {

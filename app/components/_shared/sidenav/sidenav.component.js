@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,8 +10,8 @@ System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.s
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, cart_service_1;
-    var BasketComponent;
+    var core_1, router_1;
+    var SideNavComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -19,29 +19,24 @@ System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.s
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-            },
-            function (cart_service_1_1) {
-                cart_service_1 = cart_service_1_1;
             }],
         execute: function() {
-            BasketComponent = (function () {
-                function BasketComponent(_cartService) {
-                    this._cartService = _cartService;
+            SideNavComponent = (function () {
+                function SideNavComponent(_router) {
+                    this._router = _router;
                 }
-                BasketComponent.prototype.eliminarItem = function (item) {
-                    this._cartService.eliminarItem(item);
-                };
-                BasketComponent = __decorate([
+                SideNavComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/components/basket/basket.html',
+                        templateUrl: 'app/components/_shared/sidenav/sidenav.html',
+                        selector: 'side-nav',
                         directives: [router_1.ROUTER_DIRECTIVES]
                     }), 
-                    __metadata('design:paramtypes', [cart_service_1.CartService])
-                ], BasketComponent);
-                return BasketComponent;
+                    __metadata('design:paramtypes', [router_1.Router])
+                ], SideNavComponent);
+                return SideNavComponent;
             }());
-            exports_1("BasketComponent", BasketComponent);
+            exports_1("SideNavComponent", SideNavComponent);
         }
     }
 });
-//# sourceMappingURL=basket.component.js.map
+//# sourceMappingURL=sidenav.component.js.map

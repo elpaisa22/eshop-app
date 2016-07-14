@@ -29,40 +29,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr *ngFor="#item of _cartService.items | async">
                                     <td>
-                                        <a [routerLink]="['Detail', {id : 1}]">
-                                            <img src="img/detailsquare.jpg" alt="White Blouse Armani">
+                                        <a [routerLink]="['Detail', {id : item.id}]">
+                                            <img src="{{item.imagen1}}" alt="White Blouse Armani">
                                         </a>
                                     </td>
-                                    <td><a [routerLink]="['Detail', {id : 1}]">White Blouse Armani</a>
+                                    <td><a [routerLink]="['Detail', {id : item.id}]">{{item.descripcion}}</a>
                                     </td>
                                     <td>
                                         <input type="number" value="2" class="form-control">
                                     </td>
-                                    <td>$123.00</td>
+                                    <td>{{item.precio}}</td>
                                     <td>$0.00</td>
                                     <td>$246.00</td>
-                                    <td><a href="#"><i class="fa fa-trash-o"></i></a>
+                                    <td><a (click)="eliminarItem(item)"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <a [routerLink]="['Detail', {id : 3}]">
-                                            <img src="img/basketsquare.jpg" alt="Black Blouse Armani">
-                                        </a>
-                                    </td>
-                                    <td><a [routerLink]="['Detail', {id : 3}]">Black Blouse Armani</a>
-                                    </td>
-                                    <td>
-                                        <input type="number" value="1" class="form-control">
-                                    </td>
-                                    <td>$200.00</td>
-                                    <td>$0.00</td>
-                                    <td>$200.00</td>
-                                    <td><a href="#"><i class="fa fa-trash-o"></i></a>
-                                    </td>
-                                </tr>
+
                             </tbody>
                             <tfoot>
                                 <tr>

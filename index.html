@@ -17,6 +17,8 @@
     <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
 
+    <script src="node_modules/immutable/dist/immutable.js"></script>
+
     <!--Import Google Font-->
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
 
@@ -46,7 +48,8 @@
                 }
             },
             map: {
-                'angular2': 'node_modules/angular2'
+                'angular2': 'node_modules/angular2',
+                'immutable': 'node_modules/immutable/dist/immutable'
             },
         });
         System.import('app/boot').then(null, console.error.bind(console));
