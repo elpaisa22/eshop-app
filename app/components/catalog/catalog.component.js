@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../services/catalog/catalog.service', '../../services/cart/cart.service', '../_shared/sidebar/sidebar.component', '../_shared/sidenav/sidenav.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.service', '../../repositories/product/product.repository', '../_shared/sidebar/sidebar.component', '../_shared/sidenav/sidenav.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../../services/catalog/cat
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, catalog_service_1, cart_service_1, sidebar_component_1, sidenav_component_1;
+    var core_1, router_1, cart_service_1, product_repository_1, sidebar_component_1, sidenav_component_1;
     var CatalogComponent;
     return {
         setters:[
@@ -20,11 +20,11 @@ System.register(['angular2/core', 'angular2/router', '../../services/catalog/cat
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (catalog_service_1_1) {
-                catalog_service_1 = catalog_service_1_1;
-            },
             function (cart_service_1_1) {
                 cart_service_1 = cart_service_1_1;
+            },
+            function (product_repository_1_1) {
+                product_repository_1 = product_repository_1_1;
             },
             function (sidebar_component_1_1) {
                 sidebar_component_1 = sidebar_component_1_1;
@@ -34,13 +34,21 @@ System.register(['angular2/core', 'angular2/router', '../../services/catalog/cat
             }],
         execute: function() {
             CatalogComponent = (function () {
-                function CatalogComponent(_catalogService, _cartService) {
-                    this._catalogService = _catalogService;
+                function CatalogComponent(_productRepository, _cartService) {
+                    this._productRepository = _productRepository;
                     this._cartService = _cartService;
                     this.products = [];
                 }
                 CatalogComponent.prototype.ngOnInit = function () {
-                    this.products = this._catalogService.loadProducts();
+                    var _this = this;
+                    this.products.length = 0;
+                    this._productRepository.getAllProducts()
+                        .subscribe(function (data) {
+                        data.forEach(function (prod, i) {
+                            _this.products.push(prod);
+                        });
+                    }, function (error) { return console.log(error); });
+                    window.scrollTo(0, 0);
                 };
                 CatalogComponent.prototype.addToCart = function (prod) {
                     this._cartService.agregarProducto(prod);
@@ -48,10 +56,9 @@ System.register(['angular2/core', 'angular2/router', '../../services/catalog/cat
                 CatalogComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/components/catalog/catalog.html',
-                        directives: [sidebar_component_1.SideBarComponent, sidenav_component_1.SideNavComponent, router_1.ROUTER_DIRECTIVES],
-                        providers: [catalog_service_1.CatalogService]
+                        directives: [sidebar_component_1.SideBarComponent, sidenav_component_1.SideNavComponent, router_1.ROUTER_DIRECTIVES]
                     }), 
-                    __metadata('design:paramtypes', [catalog_service_1.CatalogService, cart_service_1.CartService])
+                    __metadata('design:paramtypes', [product_repository_1.ProductRepository, cart_service_1.CartService])
                 ], CatalogComponent);
                 return CatalogComponent;
             }());

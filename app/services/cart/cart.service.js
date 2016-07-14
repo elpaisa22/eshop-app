@@ -45,12 +45,6 @@ System.register(['angular2/core', '../../models/cartitem/cartitem.model', 'immut
                         item.imagen1 = prod.imagen1;
                         this._cart.next(this._cart.getValue().push(item));
                     }
-                    else {
-                        var item = this._cart.getValue().get(index);
-                        item.cantidad = item.cantidad + 1;
-                        this._cart.next(this._cart.getValue().delete(index));
-                        this._cart.next(this._cart.getValue().push(item));
-                    }
                 };
                 CartService.prototype.eliminarItem = function (item) {
                     //let all: List<CartItem> = this._cart.getValue();
@@ -77,7 +71,7 @@ System.register(['angular2/core', '../../models/cartitem/cartitem.model', 'immut
                 Object.defineProperty(CartService.prototype, "precioTotal", {
                     get: function () {
                         var totalPrice = this._cart.getValue().reduce(function (sum, cartProd) {
-                            return sum += cartProd.precio, sum;
+                            return sum += cartProd.precio * cartProd.cantidad, sum;
                         }, 0);
                         return totalPrice;
                     },

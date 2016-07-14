@@ -28,12 +28,13 @@ export class DetailComponent implements OnInit {
 
 	ngOnInit() {
 		this.selectedId = this._routeParams.get('id');
-		console.log(this.selectedId);
 
 		this._productRepository.getProduct(this.selectedId).subscribe(
 			data => this.product = data,
       error => console.log(error)
 		);
+
+		window.scrollTo(0, 0);
 	}
 
 	addToCart(prod : Product) {

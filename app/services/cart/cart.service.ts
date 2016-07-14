@@ -25,14 +25,7 @@ export class CartService {
           item.imagen1 = prod.imagen1;
 
           this._cart.next(this._cart.getValue().push(item));
-        } else {
-          var item = this._cart.getValue().get(index);
-          item.cantidad = item.cantidad + 1;
-          this._cart.next(this._cart.getValue().delete(index));
-          this._cart.next(this._cart.getValue().push(item));
         }
-
-
     }
 
     eliminarItem(item : CartItem){
@@ -55,7 +48,7 @@ export class CartService {
 
     get precioTotal(){
         let totalPrice = this._cart.getValue().reduce((sum, cartProd)=>{
-            return sum += cartProd.precio, sum;
+            return sum += cartProd.precio * cartProd.cantidad, sum;
         },0);
 
         return totalPrice;

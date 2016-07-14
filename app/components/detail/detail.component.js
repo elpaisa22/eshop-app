@@ -46,8 +46,8 @@ System.register(['angular2/core', 'angular2/router', '../../models/product/produ
                 DetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.selectedId = this._routeParams.get('id');
-                    console.log(this.selectedId);
                     this._productRepository.getProduct(this.selectedId).subscribe(function (data) { return _this.product = data; }, function (error) { return console.log(error); });
+                    window.scrollTo(0, 0);
                 };
                 DetailComponent.prototype.addToCart = function (prod) {
                     this._cartService.agregarProducto(prod);
