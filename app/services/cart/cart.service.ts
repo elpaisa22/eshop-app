@@ -15,20 +15,30 @@ export class CartService {
     private _cart : BehaviorSubject<List<CartItem>> = new BehaviorSubject(List([]));
 
     agregarProducto(prod : Product){
-        var item : CartItem = new CartItem();
-        item.id = prod.id;
-        item.descripcion = prod.descripcion;
-        item.precio = prod.precio;
-        item.cantidad = 1;
-        item.imagen1 = prod.imagen1;
+        let index = this._cart.getValue().findIndex((i) => i.id == prod.id);
+        if (index < 0) {
+          var item : CartItem = new CartItem();
+          item.id = prod.id;
+          item.descripcion = prod.descripcion;
+          item.precio = prod.precio;
+          item.cantidad = 1;
+          item.imagen1 = prod.imagen1;
 
-        this._cart.next(this._cart.getValue().push(item));
+          this._cart.next(this._cart.getValue().push(item));
+        } else {
+          var item = this._cart.getValue().get(index);
+          item.cantidad = item.cantidad + 1;
+          this._cart.next(this._cart.getValue().delete(index));
+          this._cart.next(this._cart.getValue().push(item));
+        }
+
+
     }
 
     eliminarItem(item : CartItem){
-        let all: List<CartItem> = this._cart.getValue();
-        let index = all.findIndex((i) => i.id === item.id);
-        this._cart.next(all.delete(index));
+        //let all: List<CartItem> = this._cart.getValue();
+        let index = this._cart.getValue().findIndex((i) => i.id === item.id);
+        this._cart.next(this._cart.getValue().delete(index));
     }
 
     limpiarCarrito(){
@@ -39,7 +49,11 @@ export class CartService {
         return this.asObservable(this._cart);
     }
 
-    getPrecioTotal(){
+    get itemsCount() {
+        return this._cart.getValue().size;
+    }
+
+    get precioTotal(){
         let totalPrice = this._cart.getValue().reduce((sum, cartProd)=>{
             return sum += cartProd.precio, sum;
         },0);

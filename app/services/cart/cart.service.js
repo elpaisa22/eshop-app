@@ -35,18 +35,27 @@ System.register(['angular2/core', '../../models/cartitem/cartitem.model', 'immut
                     this._cart = new Rx_1.BehaviorSubject(immutable_1.List([]));
                 }
                 CartService.prototype.agregarProducto = function (prod) {
-                    var item = new cartitem_model_1.CartItem();
-                    item.id = prod.id;
-                    item.descripcion = prod.descripcion;
-                    item.precio = prod.precio;
-                    item.cantidad = 1;
-                    item.imagen1 = prod.imagen1;
-                    this._cart.next(this._cart.getValue().push(item));
+                    var index = this._cart.getValue().findIndex(function (i) { return i.id == prod.id; });
+                    if (index < 0) {
+                        var item = new cartitem_model_1.CartItem();
+                        item.id = prod.id;
+                        item.descripcion = prod.descripcion;
+                        item.precio = prod.precio;
+                        item.cantidad = 1;
+                        item.imagen1 = prod.imagen1;
+                        this._cart.next(this._cart.getValue().push(item));
+                    }
+                    else {
+                        var item = this._cart.getValue().get(index);
+                        item.cantidad = item.cantidad + 1;
+                        this._cart.next(this._cart.getValue().delete(index));
+                        this._cart.next(this._cart.getValue().push(item));
+                    }
                 };
                 CartService.prototype.eliminarItem = function (item) {
-                    var all = this._cart.getValue();
-                    var index = all.findIndex(function (i) { return i.id === item.id; });
-                    this._cart.next(all.delete(index));
+                    //let all: List<CartItem> = this._cart.getValue();
+                    var index = this._cart.getValue().findIndex(function (i) { return i.id === item.id; });
+                    this._cart.next(this._cart.getValue().delete(index));
                 };
                 CartService.prototype.limpiarCarrito = function () {
                     this._cart.getValue().clear();
@@ -58,12 +67,23 @@ System.register(['angular2/core', '../../models/cartitem/cartitem.model', 'immut
                     enumerable: true,
                     configurable: true
                 });
-                CartService.prototype.getPrecioTotal = function () {
-                    var totalPrice = this._cart.getValue().reduce(function (sum, cartProd) {
-                        return sum += cartProd.precio, sum;
-                    }, 0);
-                    return totalPrice;
-                };
+                Object.defineProperty(CartService.prototype, "itemsCount", {
+                    get: function () {
+                        return this._cart.getValue().size;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(CartService.prototype, "precioTotal", {
+                    get: function () {
+                        var totalPrice = this._cart.getValue().reduce(function (sum, cartProd) {
+                            return sum += cartProd.precio, sum;
+                        }, 0);
+                        return totalPrice;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 CartService.prototype.asObservable = function (subject) {
                     return new Observable_1.Observable(function (fn) { return subject.subscribe(fn); });
                 };

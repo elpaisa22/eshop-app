@@ -3,6 +3,7 @@ import {Router, ROUTER_DIRECTIVES } from 'angular2/router';
 
 import {Product} from '../../models/product/product.model';
 import {CatalogService} from '../../services/catalog/catalog.service';
+import {CartService} from '../../services/cart/cart.service';
 
 import {SideBarComponent} from '../_shared/sidebar/sidebar.component';
 import {SideNavComponent} from '../_shared/sidenav/sidenav.component';
@@ -17,11 +18,15 @@ export class CatalogComponent implements OnInit {
 
 	products : Product[] = [];
 
-	constructor(private _catalogService : CatalogService) {
+	constructor(private _catalogService : CatalogService,
+	            private _cartService : CartService) {
 	}
 
 	ngOnInit(){
 		this.products = this._catalogService.loadProducts();
 	}
 
+	addToCart(prod : Product) {
+		this._cartService.agregarProducto(prod);
+	}
 }

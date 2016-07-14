@@ -19,8 +19,11 @@ System.register(['angular2/core'], function(exports_1, context_1) {
             }],
         execute: function() {
             ProductSliderDirective = (function () {
-                function ProductSliderDirective(el) {
-                    jQuery(el.nativeElement).owlCarousel({
+                function ProductSliderDirective(_el) {
+                    this._el = _el;
+                }
+                ProductSliderDirective.prototype.ngOnInit = function () {
+                    jQuery(this._el.nativeElement).owlCarousel({
                         navigation: true,
                         slideSpeed: 300,
                         paginationSpeed: 400,
@@ -28,7 +31,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                             jQuery('.product-slider .item').css('visibility', 'visible');
                         }
                     });
-                }
+                };
                 ProductSliderDirective = __decorate([
                     core_1.Directive({
                         selector: '[product-slider]'

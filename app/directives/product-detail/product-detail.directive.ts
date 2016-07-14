@@ -6,21 +6,29 @@ declare var jQuery:any;
     selector: '[product-detail]'
 })
 export class ProductDetailDirective {
-    constructor(el: ElementRef) {
-      var confDetailSwitch = 4000;
 
-      jQuery(el.nativeElement).find('.thumb:first').addClass('active');
+    _el: ElementRef;
+
+    constructor(el: ElementRef) {
+      this._el = el;
+    }
+
+    ngOnInit() {
+      var confDetailSwitch = 4000;
+      var parent = jQuery(this._el.nativeElement);
+
+      parent.find('.thumb:first').addClass('active');
 
       var timer = setInterval(autoSwitch, confDetailSwitch);
 
-      jQuery(el.nativeElement).find(".thumb").click(function(e) {
+      parent.find(".thumb").click(function(e) {
         	switchImage(jQuery(this));
         	clearInterval(timer);
         	timer = setInterval(autoSwitch, confDetailSwitch);
         	e.preventDefault();
       });
 
-      jQuery(el.nativeElement).find('#mainImage').hover(
+      parent.find('#mainImage').hover(
           function() {
       	    clearInterval(timer);
           },
@@ -38,10 +46,10 @@ export class ProductDetailDirective {
       }
 
       function switchImage(thumb) {
-        	jQuery(el.nativeElement).find('.thumb').removeClass('active');
+        	parent.find('.thumb').removeClass('active');
         	var bigUrl = thumb.attr('href');
         	thumb.addClass('active');
-        	jQuery(el.nativeElement).find('#mainImage img').attr('src', bigUrl);
+        	parent.find('#mainImage img').attr('src', bigUrl);
       }
     }
 }

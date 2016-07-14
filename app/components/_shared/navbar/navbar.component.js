@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../../services/cart/cart.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1;
+    var core_1, router_1, cart_service_1;
     var NavBarComponent;
     return {
         setters:[
@@ -19,11 +19,15 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (cart_service_1_1) {
+                cart_service_1 = cart_service_1_1;
             }],
         execute: function() {
             NavBarComponent = (function () {
-                function NavBarComponent(_router) {
+                function NavBarComponent(_router, _cartService) {
                     this._router = _router;
+                    this._cartService = _cartService;
                 }
                 NavBarComponent = __decorate([
                     core_1.Component({
@@ -31,7 +35,7 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
                         selector: 'nav-bar',
                         directives: [router_1.ROUTER_DIRECTIVES]
                     }), 
-                    __metadata('design:paramtypes', [router_1.Router])
+                    __metadata('design:paramtypes', [router_1.Router, cart_service_1.CartService])
                 ], NavBarComponent);
                 return NavBarComponent;
             }());

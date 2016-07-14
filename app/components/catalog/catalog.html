@@ -61,7 +61,7 @@ _________________________________________________________ -->
 
             <div class="row products">
 
-                <div *ngFor="#prod of products" class="col-md-4 col-sm-6">
+                <div *ngFor="let prod of products" class="col-md-4 col-sm-6">
                   <div class="product">
                       <div class="flip-container">
                           <div class="flipper">
@@ -85,7 +85,7 @@ _________________________________________________________ -->
                           <p class="price">$ {{prod.precio}}</p>
                           <p class="buttons">
                               <a [routerLink]="['Detail', {id : prod.id}]" class="btn btn-default">Ver Detalle</a>
-                              <a [routerLink]="['Basket']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Agregar al Carrito</a>
+                              <a class="btn btn-primary" (click)="addToCart(prod)"><i class="fa fa-shopping-cart"></i>Agregar al Carrito</a>
                           </p>
                       </div>
                       <!-- /.text -->

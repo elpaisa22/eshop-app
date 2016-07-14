@@ -19,8 +19,11 @@ System.register(['angular2/core'], function(exports_1, context_1) {
             }],
         execute: function() {
             GetInspiredDirective = (function () {
-                function GetInspiredDirective(el) {
-                    jQuery(el.nativeElement).owlCarousel({
+                function GetInspiredDirective(_el) {
+                    this._el = _el;
+                }
+                GetInspiredDirective.prototype.ngOnInit = function () {
+                    jQuery(this._el.nativeElement).owlCarousel({
                         navigation: true,
                         slideSpeed: 300,
                         paginationSpeed: 400,
@@ -29,7 +32,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         singleItem: true,
                         afterInit: ''
                     });
-                }
+                };
                 GetInspiredDirective = __decorate([
                     core_1.Directive({
                         selector: '[get-inspired]'

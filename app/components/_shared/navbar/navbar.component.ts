@@ -1,6 +1,8 @@
 import {Component} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES } from 'angular2/router';
 
+import {CartService} from '../../../services/cart/cart.service';
+
 @Component({
 	templateUrl : 'app/components/_shared/navbar/navbar.html',
   selector : 'nav-bar',
@@ -8,7 +10,8 @@ import {Router, ROUTER_DIRECTIVES } from 'angular2/router';
 })
 export class NavBarComponent {
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router,
+	            private _cartService : CartService) {
   }
 
 }

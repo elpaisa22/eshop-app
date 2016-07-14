@@ -20,16 +20,20 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         execute: function() {
             ProductDetailDirective = (function () {
                 function ProductDetailDirective(el) {
+                    this._el = el;
+                }
+                ProductDetailDirective.prototype.ngOnInit = function () {
                     var confDetailSwitch = 4000;
-                    jQuery(el.nativeElement).find('.thumb:first').addClass('active');
+                    var parent = jQuery(this._el.nativeElement);
+                    parent.find('.thumb:first').addClass('active');
                     var timer = setInterval(autoSwitch, confDetailSwitch);
-                    jQuery(el.nativeElement).find(".thumb").click(function (e) {
+                    parent.find(".thumb").click(function (e) {
                         switchImage(jQuery(this));
                         clearInterval(timer);
                         timer = setInterval(autoSwitch, confDetailSwitch);
                         e.preventDefault();
                     });
-                    jQuery(el.nativeElement).find('#mainImage').hover(function () {
+                    parent.find('#mainImage').hover(function () {
                         clearInterval(timer);
                     }, function () {
                         timer = setInterval(autoSwitch, confDetailSwitch);
@@ -42,12 +46,12 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         switchImage(nextThumb);
                     }
                     function switchImage(thumb) {
-                        jQuery(el.nativeElement).find('.thumb').removeClass('active');
+                        parent.find('.thumb').removeClass('active');
                         var bigUrl = thumb.attr('href');
                         thumb.addClass('active');
-                        jQuery(el.nativeElement).find('#mainImage img').attr('src', bigUrl);
+                        parent.find('#mainImage img').attr('src', bigUrl);
                     }
-                }
+                };
                 ProductDetailDirective = __decorate([
                     core_1.Directive({
                         selector: '[product-detail]'

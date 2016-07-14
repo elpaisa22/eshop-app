@@ -267,7 +267,7 @@ _________________________________________________________ -->
         <div class="navbar-buttons">
 
             <div class="navbar-collapse collapse right" id="basket-overview">
-                <a [routerLink]="['Basket']" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">3 items en el carrito</span></a>
+                <a [routerLink]="['Basket']" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">{{_cartService.itemsCount}} items en el carrito</span></a>
             </div>
             <!--/.nav-collapse -->
 

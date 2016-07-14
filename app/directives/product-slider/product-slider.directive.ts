@@ -6,8 +6,12 @@ declare var jQuery:any;
     selector: '[product-slider]'
 })
 export class ProductSliderDirective {
-    constructor(el: ElementRef) {
-      jQuery(el.nativeElement).owlCarousel({
+
+    constructor(private _el: ElementRef) {
+    }
+
+    ngOnInit() {
+      jQuery(this._el.nativeElement).owlCarousel({
         navigation: true, // Show next and prev buttons
         slideSpeed: 300,
         paginationSpeed: 400,
