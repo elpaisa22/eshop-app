@@ -14,6 +14,29 @@ export class CartService {
 
     private _cart : BehaviorSubject<List<CartItem>> = new BehaviorSubject(List([]));
 
+    constructor() {
+      //Verifica si ya existen items anteriores
+      this.levantarItems();
+    }
+
+    //Levanta lo items del localStorage
+    private levantarItems() {
+      var cart = localStorage.getItem("cart");
+      if (cart) {
+        var items = JSON.parse(cart);
+        for (var i = 0; i < items.length; i++) {
+            var elem : CartItem = <CartItem> items[i];
+            this._cart.next(this._cart.getValue().push(elem));
+        }
+      }
+    }
+
+    //Guarda los items en el localStorage
+    private guardarItems() {
+      localStorage.setItem("cart", JSON.stringify(this._cart.getValue()));
+    }
+
+    //Agrega un producto como item del carrito
     agregarProducto(prod : Product){
         let index = this._cart.getValue().findIndex((i) => i.id == prod.id);
         if (index < 0) {
@@ -26,26 +49,37 @@ export class CartService {
 
           this._cart.next(this._cart.getValue().push(item));
         }
+
+        this.guardarItems();
     }
 
+    //Elimina un item del carrito
     eliminarItem(item : CartItem){
         //let all: List<CartItem> = this._cart.getValue();
         let index = this._cart.getValue().findIndex((i) => i.id === item.id);
         this._cart.next(this._cart.getValue().delete(index));
+
+        this.guardarItems();
     }
 
+    //Limpia el carrito eliminando todos los items
     limpiarCarrito(){
         this._cart.getValue().clear();
+
+        this.guardarItems();
     }
 
+    //Retorna todos lo items del carrito
     get items() {
         return this.asObservable(this._cart);
     }
 
+    //Retorna la cantidad de items del carrito
     get itemsCount() {
         return this._cart.getValue().size;
     }
 
+    //Obtiene el precio total de los items
     get precioTotal(){
         let totalPrice = this._cart.getValue().reduce((sum, cartProd)=>{
             return sum += cartProd.precio * cartProd.cantidad, sum;
