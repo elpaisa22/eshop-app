@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.service', '../../repositories/product/product.repository', '../_shared/sidebar/sidebar.component', '../_shared/sidenav/sidenav.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.service', '../../repositories/product/product.repository', '../_shared/sidebar/sidebar.component', '../_shared/sidenav/sidenav.component', '../_shared/paginator/paginator.component', '../_shared/pager/pager.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.s
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, cart_service_1, product_repository_1, sidebar_component_1, sidenav_component_1;
+    var core_1, router_1, cart_service_1, product_repository_1, sidebar_component_1, sidenav_component_1, paginator_component_1, pager_component_1;
     var CatalogComponent;
     return {
         setters:[
@@ -31,6 +31,12 @@ System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.s
             },
             function (sidenav_component_1_1) {
                 sidenav_component_1 = sidenav_component_1_1;
+            },
+            function (paginator_component_1_1) {
+                paginator_component_1 = paginator_component_1_1;
+            },
+            function (pager_component_1_1) {
+                pager_component_1 = pager_component_1_1;
             }],
         execute: function() {
             CatalogComponent = (function () {
@@ -40,23 +46,48 @@ System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.s
                     this.products = [];
                 }
                 CatalogComponent.prototype.ngOnInit = function () {
-                    var _this = this;
-                    this.products.length = 0;
-                    this._productRepository.getAllProducts()
-                        .subscribe(function (data) {
-                        data.forEach(function (prod, i) {
-                            _this.products.push(prod);
-                        });
-                    }, function (error) { return console.log(error); });
+                    this.pagina = 1;
+                    this.limite = 12;
+                    this.ordenarPor = "nombre";
+                    this.totalPaginas = 0;
+                    this.cantidadProductos = 0;
+                    this.reloadProducts();
                     window.scrollTo(0, 0);
                 };
                 CatalogComponent.prototype.addToCart = function (prod) {
                     this._cartService.agregarProducto(prod);
                 };
+                CatalogComponent.prototype.reloadProducts = function () {
+                    var _this = this;
+                    this.products.length = 0;
+                    this._productRepository.getProducts(this.pagina, this.limite)
+                        .subscribe(function (data) {
+                        data.content.forEach(function (prod, i) {
+                            _this.products.push(prod);
+                        });
+                        _this.totalPaginas = data.totalPages;
+                        _this.cantidadProductos = data.content.length;
+                        _this.totalProductos = data.totalElements;
+                    }, function (error) { return console.log(error); });
+                };
+                CatalogComponent.prototype.onPageChange = function ($event) {
+                    this.pagina = $event.value;
+                    this.reloadProducts();
+                };
+                CatalogComponent.prototype.onPageSizeChange = function ($event) {
+                    this.limite = $event.value;
+                    this.reloadProducts();
+                };
+                CatalogComponent.prototype.onSortByChange = function ($event) {
+                    this.ordenarPor = $event.value;
+                    this.reloadProducts();
+                };
                 CatalogComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/components/catalog/catalog.html',
-                        directives: [sidebar_component_1.SideBarComponent, sidenav_component_1.SideNavComponent, router_1.ROUTER_DIRECTIVES]
+                        directives: [sidebar_component_1.SideBarComponent, sidenav_component_1.SideNavComponent,
+                            paginator_component_1.PaginatorComponent, pager_component_1.PagerComponent,
+                            router_1.ROUTER_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [product_repository_1.ProductRepository, cart_service_1.CartService])
                 ], CatalogComponent);

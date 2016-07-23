@@ -50,17 +50,25 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map'], fun
                     }
                     return prod;
                 };
-                ProductRepository.prototype.convertProductos = function (elems) {
-                    var productos = elems.json();
-                    for (var i = 0; i < productos.length; i++) {
-                        var prod = productos[i];
+                ProductRepository.prototype.convertResult = function (result) {
+                    for (var i = 0; i < result.content.length; i++) {
+                        var prod = result.content[i];
                         prod = this.convertProducto(prod);
                     }
-                    return productos;
+                    return result;
                 };
-                ProductRepository.prototype.getAllProducts = function () {
+                ProductRepository.prototype.getProducts = function (page, size) {
                     var _this = this;
-                    return this._http.request(this.endpoint_url + "/data/productos").map(function (x) { return _this.convertProductos(x); });
+                    var params = "";
+                    if (page != null) {
+                        params = "?page=" + page;
+                    }
+                    var limitParam;
+                    if (size != null) {
+                        var divider = (params ? "&" : "?");
+                        params = params + divider + "limit=" + size;
+                    }
+                    return this._http.request(this.endpoint_url + "/data/productos" + params).map(function (x) { return _this.convertResult(x.json()); });
                 };
                 ProductRepository.prototype.getProduct = function (id) {
                     var _this = this;

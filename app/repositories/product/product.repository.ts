@@ -5,6 +5,7 @@ import {Observable}     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import {Product} from '../../models/product/product.model';
+import {ProductResult} from '../../models/product/productresult.model';
 
 @Injectable()
 export class ProductRepository {
@@ -39,20 +40,28 @@ export class ProductRepository {
       return prod;
     }
 
-    private convertProductos(elems : any) : Product[] {
-      var productos = elems.json();
-
-      for (var i = 0; i < productos.length; i++) {
-          var prod = productos[i];
+    private convertResult(result : ProductResult) : ProductResult {
+      for (var i = 0; i < result.content.length; i++) {
+          var prod = result.content[i];
 
           prod = this.convertProducto(prod);
       }
 
-      return productos;
+      return result;
     }
 
-    public getAllProducts () : Observable<Product[]> {
-      return this._http.request(this.endpoint_url + "/data/productos").map( x => this.convertProductos(x));
+    public getProducts (page : number, size : number) : Observable<ProductResult> {
+      var params : string = "";
+      if (page != null) {
+        params = "?page=" + page;
+      }
+
+      var limitParam : string;
+      if (size != null) {
+        var divider = (params ? "&" : "?");
+        params = params + divider + "limit=" + size;
+      }
+      return this._http.request(this.endpoint_url + "/data/productos" + params).map(x => this.convertResult(x.json()));
     }
 
     public getProduct(id: number) : Observable<Product> {
