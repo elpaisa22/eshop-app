@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 
 import {Product} from '../../models/product/product.model';
 import {CartItem} from '../../models/cartitem/cartitem.model';

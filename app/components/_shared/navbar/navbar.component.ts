@@ -1,17 +1,15 @@
-import {Component} from 'angular2/core';
-import {Router, ROUTER_DIRECTIVES } from 'angular2/router';
+import {Component} from '@angular/core';
 
 import {CartService} from '../../../services/cart/cart.service';
 
 @Component({
 	templateUrl : 'app/components/_shared/navbar/navbar.html',
   selector : 'nav-bar',
-  directives : [ROUTER_DIRECTIVES]
+	providers: [CartService]
 })
 export class NavBarComponent {
 
-  constructor(private _router: Router,
-	            private _cartService : CartService) {
+  constructor(private _cartService : CartService) {
   }
 
 }

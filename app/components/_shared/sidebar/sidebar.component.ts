@@ -1,13 +1,8 @@
-import {Component} from 'angular2/core';
-import {Router, ROUTER_DIRECTIVES } from 'angular2/router';
+import {Component} from '@angular/core';
 
 @Component({
 	templateUrl : 'app/components/_shared/sidebar/sidebar.html',
-  selector : 'side-bar',
-	directives : [ROUTER_DIRECTIVES]
+  selector : 'side-bar'
 })
 export class SideBarComponent {
-
-	constructor(private _router: Router) {
-  }
 }

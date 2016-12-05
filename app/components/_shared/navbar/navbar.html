@@ -5,7 +5,7 @@ _________________________________________________________ -->
     <div class="container">
         <div class="navbar-header">
 
-            <a class="navbar-brand home" [routerLink]="['Home']" data-animate-hover="bounce">
+            <a class="navbar-brand home" [routerLink]="['home']" data-animate-hover="bounce">
                 <img src="/img/logo.png" alt="Obaju logo" class="hidden-xs">
                 <img src="/img/logo-small.png" alt="Obaju logo" class="visible-xs"><span class="sr-only">Obaju - ir a la portada</span>
             </a>
@@ -18,7 +18,7 @@ _________________________________________________________ -->
                     <span class="sr-only">Toggle search</span>
                     <i class="fa fa-search"></i>
                 </button>
-                <a class="btn btn-default navbar-toggle" [routerLink]="['Basket']">
+                <a class="btn btn-default navbar-toggle" [routerLink]="['basket']">
                     <i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">3 items in cart</span>
                 </a>
             </div>
@@ -28,7 +28,7 @@ _________________________________________________________ -->
         <div class="navbar-collapse collapse" id="navigation">
 
             <ul class="nav navbar-nav navbar-left">
-                <li [class.active]="_router.isRouteActive(_router.generate(['Home']))"><a [routerLink]="['Home']">Inicio</a>
+                <li [routerLinkActive]="['active']"><a [routerLink]="['home']">Inicio</a>
                 </li>
                 <li class="dropdown yamm-fw">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Hombre <b class="caret"></b></a>
@@ -39,63 +39,63 @@ _________________________________________________________ -->
                                     <div class="col-sm-3">
                                         <h5>Ropa</h5>
                                         <ul>
-                                            <li><a [routerLink]="['Catalog']">Camisas</a>
+                                            <li><a [routerLink]="['/catalog']">Camisas</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Remeras</a>
+                                            <li><a [routerLink]="['/catalog']">Remeras</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Pantalones</a>
+                                            <li><a [routerLink]="['/catalog']">Pantalones</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Accessorios</a>
+                                            <li><a [routerLink]="['/catalog']">Accessorios</a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="col-sm-3">
                                         <h5>Zapatos</h5>
                                         <ul>
-                                            <li><a [routerLink]="['Catalog']">Trainers</a>
+                                            <li><a [routerLink]="['/catalog']">Trainers</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Sandals</a>
+                                            <li><a [routerLink]="['/catalog']">Sandals</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Hiking shoes</a>
+                                            <li><a [routerLink]="['/catalog']">Hiking shoes</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Casual</a>
+                                            <li><a [routerLink]="['/catalog']">Casual</a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="col-sm-3">
                                         <h5>Accessories</h5>
                                         <ul>
-                                            <li><a [routerLink]="['Catalog']">Trainers</a>
+                                            <li><a [routerLink]="['/catalog']">Trainers</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Sandals</a>
+                                            <li><a [routerLink]="['/catalog']">Sandals</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Hiking shoes</a>
+                                            <li><a [routerLink]="['/catalog']">Hiking shoes</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Casual</a>
+                                            <li><a [routerLink]="['/catalog']">Casual</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Hiking shoes</a>
+                                            <li><a [routerLink]="['/catalog']">Hiking shoes</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Casual</a>
+                                            <li><a [routerLink]="['/catalog']">Casual</a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="col-sm-3">
                                         <h5>Featured</h5>
                                         <ul>
-                                            <li><a [routerLink]="['Catalog']">Trainers</a>
+                                            <li><a [routerLink]="['/catalog']">Trainers</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Sandals</a>
+                                            <li><a [routerLink]="['/catalog']">Sandals</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Hiking shoes</a>
+                                            <li><a [routerLink]="['/catalog']">Hiking shoes</a>
                                             </li>
                                         </ul>
                                         <h5>Looks and trends</h5>
                                         <ul>
-                                            <li><a [routerLink]="['Catalog']">Trainers</a>
+                                            <li><a [routerLink]="['/catalog']">Trainers</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Sandals</a>
+                                            <li><a [routerLink]="['/catalog']">Sandals</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Hiking shoes</a>
+                                            <li><a [routerLink]="['/catalog']">Hiking shoes</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -115,52 +115,52 @@ _________________________________________________________ -->
                                     <div class="col-sm-3">
                                         <h5>Clothing</h5>
                                         <ul>
-                                            <li><a [routerLink]="['Catalog']">T-shirts</a>
+                                            <li><a [routerLink]="['/catalog']">T-shirts</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Shirts</a>
+                                            <li><a [routerLink]="['/catalog']">Shirts</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Pants</a>
+                                            <li><a [routerLink]="['/catalog']">Pants</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Accessories</a>
+                                            <li><a [routerLink]="['/catalog']">Accessories</a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="col-sm-3">
                                         <h5>Shoes</h5>
                                         <ul>
-                                            <li><a [routerLink]="['Catalog']">Trainers</a>
+                                            <li><a [routerLink]="['/catalog']">Trainers</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Sandals</a>
+                                            <li><a [routerLink]="['/catalog']">Sandals</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Hiking shoes</a>
+                                            <li><a [routerLink]="['/catalog']">Hiking shoes</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Casual</a>
+                                            <li><a [routerLink]="['/catalog']">Casual</a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="col-sm-3">
                                         <h5>Accessories</h5>
                                         <ul>
-                                            <li><a [routerLink]="['Catalog']">Trainers</a>
+                                            <li><a [routerLink]="['/catalog']">Trainers</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Sandals</a>
+                                            <li><a [routerLink]="['/catalog']">Sandals</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Hiking shoes</a>
+                                            <li><a [routerLink]="['/catalog']">Hiking shoes</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Casual</a>
+                                            <li><a [routerLink]="['/catalog']">Casual</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Hiking shoes</a>
+                                            <li><a [routerLink]="['/catalog']">Hiking shoes</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Casual</a>
+                                            <li><a [routerLink]="['/catalog']">Casual</a>
                                             </li>
                                         </ul>
                                         <h5>Looks and trends</h5>
                                         <ul>
-                                            <li><a [routerLink]="['Catalog']">Trainers</a>
+                                            <li><a [routerLink]="['/catalog']">Trainers</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Sandals</a>
+                                            <li><a [routerLink]="['/catalog']">Sandals</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Hiking shoes</a>
+                                            <li><a [routerLink]="['/catalog']">Hiking shoes</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -194,7 +194,7 @@ _________________________________________________________ -->
                                         <ul>
                                             <li><a href="index.html">Homepage</a>
                                             </li>
-                                            <li><a [routerLink]="['Catalog']">Category - sidebar left</a>
+                                            <li><a [routerLink]="['/catalog']">Category - sidebar left</a>
                                             </li>
                                             <li><a href="category-right.html">Category - sidebar right</a>
                                             </li>
@@ -267,7 +267,7 @@ _________________________________________________________ -->
         <div class="navbar-buttons">
 
             <div class="navbar-collapse collapse right" id="basket-overview">
-                <a [routerLink]="['Basket']" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">{{_cartService.itemsCount}} items en el carrito</span></a>
+                <a [routerLink]="['basket']" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">{{_cartService.itemsCount}} items en el carrito</span></a>
             </div>
             <!--/.nav-collapse -->
 

@@ -1,6 +1,5 @@
-System.register(['angular2/core', 'angular2/router', '../../directives/get-inspired/get-inspired.directive', '../../directives/main-slider/main-slider.directive', '../../directives/product-slider/product-slider.directive'], function(exports_1, context_1) {
+System.register(["@angular/core"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,40 +9,28 @@ System.register(['angular2/core', 'angular2/router', '../../directives/get-inspi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, get_inspired_directive_1, main_slider_directive_1, product_slider_directive_1;
-    var HomeComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, HomeComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (router_1_1) {
-                router_1 = router_1_1;
-            },
-            function (get_inspired_directive_1_1) {
-                get_inspired_directive_1 = get_inspired_directive_1_1;
-            },
-            function (main_slider_directive_1_1) {
-                main_slider_directive_1 = main_slider_directive_1_1;
-            },
-            function (product_slider_directive_1_1) {
-                product_slider_directive_1 = product_slider_directive_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             HomeComponent = (function () {
                 function HomeComponent() {
                 }
-                HomeComponent = __decorate([
-                    core_1.Component({
-                        templateUrl: 'app/components/home/home.html',
-                        directives: [get_inspired_directive_1.GetInspiredDirective, main_slider_directive_1.MainSliderDirective, product_slider_directive_1.ProductSliderDirective, router_1.ROUTER_DIRECTIVES]
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], HomeComponent);
                 return HomeComponent;
             }());
+            HomeComponent = __decorate([
+                core_1.Component({
+                    templateUrl: 'app/components/home/home.html'
+                }),
+                __metadata("design:paramtypes", [])
+            ], HomeComponent);
             exports_1("HomeComponent", HomeComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=home.component.js.map

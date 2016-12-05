@@ -1,10 +1,9 @@
-import {Component} from 'angular2/core';
-import {Router, ROUTER_DIRECTIVES } from 'angular2/router';
+import {Component} from '@angular/core';
+import {Router } from '@angular/router';
 
 @Component({
 	templateUrl : 'app/components/_shared/sidenav/sidenav.html',
-  selector : 'side-nav',
-	directives : [ROUTER_DIRECTIVES]
+  selector : 'side-nav'
 })
 export class SideNavComponent {
 

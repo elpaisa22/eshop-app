@@ -1,6 +1,5 @@
-System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.service', '../../repositories/product/product.repository', '../_shared/sidebar/sidebar.component', '../_shared/sidenav/sidenav.component', '../_shared/paginator/paginator.component', '../_shared/pager/pager.component'], function(exports_1, context_1) {
+System.register(["@angular/core", "../../services/cart/cart.service", "../../repositories/product/product.repository"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,35 +9,21 @@ System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.s
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, cart_service_1, product_repository_1, sidebar_component_1, sidenav_component_1, paginator_component_1, pager_component_1;
-    var CatalogComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, cart_service_1, product_repository_1, CatalogComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (router_1_1) {
-                router_1 = router_1_1;
             },
             function (cart_service_1_1) {
                 cart_service_1 = cart_service_1_1;
             },
             function (product_repository_1_1) {
                 product_repository_1 = product_repository_1_1;
-            },
-            function (sidebar_component_1_1) {
-                sidebar_component_1 = sidebar_component_1_1;
-            },
-            function (sidenav_component_1_1) {
-                sidenav_component_1 = sidenav_component_1_1;
-            },
-            function (paginator_component_1_1) {
-                paginator_component_1 = paginator_component_1_1;
-            },
-            function (pager_component_1_1) {
-                pager_component_1 = pager_component_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             CatalogComponent = (function () {
                 function CatalogComponent(_productRepository, _cartService) {
                     this._productRepository = _productRepository;
@@ -82,19 +67,18 @@ System.register(['angular2/core', 'angular2/router', '../../services/cart/cart.s
                     this.ordenarPor = $event.value;
                     this.reloadProducts();
                 };
-                CatalogComponent = __decorate([
-                    core_1.Component({
-                        templateUrl: 'app/components/catalog/catalog.html',
-                        directives: [sidebar_component_1.SideBarComponent, sidenav_component_1.SideNavComponent,
-                            paginator_component_1.PaginatorComponent, pager_component_1.PagerComponent,
-                            router_1.ROUTER_DIRECTIVES]
-                    }), 
-                    __metadata('design:paramtypes', [product_repository_1.ProductRepository, cart_service_1.CartService])
-                ], CatalogComponent);
                 return CatalogComponent;
             }());
+            CatalogComponent = __decorate([
+                core_1.Component({
+                    templateUrl: 'app/components/catalog/catalog.html',
+                    providers: [cart_service_1.CartService, product_repository_1.ProductRepository]
+                }),
+                __metadata("design:paramtypes", [product_repository_1.ProductRepository,
+                    cart_service_1.CartService])
+            ], CatalogComponent);
             exports_1("CatalogComponent", CatalogComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=catalog.component.js.map

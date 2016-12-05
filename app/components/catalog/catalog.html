@@ -3,7 +3,7 @@
 
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li><a [routerLink]="['Home']">Inicio</a>
+                <li><a [routerLink]="['home']">Inicio</a>
                 </li>
                 <li>Ladies</li>
             </ul>
@@ -47,25 +47,25 @@ _________________________________________________________ -->
                       <div class="flip-container">
                           <div class="flipper">
                               <div class="front">
-                                  <a [routerLink]="['Detail', {id : prod.id}]">
+                                  <a [routerLink]="['/detail', prod.id]">
                                       <img src="{{prod.imagen1}}" alt="" class="img-responsive">
                                   </a>
                               </div>
                               <div class="back">
-                                  <a [routerLink]="['Detail', {id : prod.id}]">
+                                  <a [routerLink]="['/detail', prod.id]">
                                       <img src="{{prod.imagen2}}" alt="" class="img-responsive">
                                   </a>
                               </div>
                           </div>
                       </div>
-                      <a [routerLink]="['Detail', {id : prod.id}]" class="invisible">
+                      <a [routerLink]="['/detail', prod.id]" class="invisible">
                           <img src="{{prod.imagen1}}" alt="" class="img-responsive">
                       </a>
                       <div class="text">
-                          <h3><a [routerLink]="['Detail', {id : prod.id}]">{{prod.descripcion}}</a></h3>
+                          <h3><a [routerLink]="['/detail', prod.id]">{{prod.descripcion}}</a></h3>
                           <p class="price">$ {{prod.precio}}</p>
                           <p class="buttons">
-                              <a [routerLink]="['Detail', {id : prod.id}]" class="btn btn-default">Ver Detalle</a>
+                              <a [routerLink]="['/detail', prod.id]" class="btn btn-default">Ver Detalle</a>
                               <a class="btn btn-primary" (click)="addToCart(prod)"><i class="fa fa-shopping-cart"></i>Agregar al Carrito</a>
                           </p>
                       </div>

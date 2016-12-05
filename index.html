@@ -10,14 +10,12 @@
     <link rel="icon" href="favicon.png?v=2" type="image/x-icon">
 
     <!-- 1. Load libraries -->
-    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
-    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
 
-    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
-
-    <script src="node_modules/immutable/dist/immutable.js"></script>
 
     <!--Import Google Font-->
     <!--<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>-->
@@ -38,27 +36,10 @@
     <script src="js/respond.min.js"></script>
 
     <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
     <script>
-        System.config({
-            defaultJSExtensions: true,
-            packages: {
-                app: {
-                  format: 'register',
-                  defaultExtension: 'js'
-                }
-            },
-            map: {
-                'angular2': 'node_modules/angular2',
-                'immutable': 'node_modules/immutable/dist/immutable'
-            },
-        });
-        System.import('app/boot').then(null, console.error.bind(console));
+      System.import('app').catch(function(err){ console.error(err); });
     </script>
-
-    <script src="node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
-    <script src="node_modules/angular2/bundles/http.dev.js"></script>
-    <script src="node_modules/angular2/bundles/router.dev.js"></script>
 
   </head>
   <!-- 3. Display the application -->

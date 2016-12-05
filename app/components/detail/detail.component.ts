@@ -1,5 +1,5 @@
-import {Component, OnInit} from 'angular2/core';
-import {Router, RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
+import {Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 
 import {Product} from '../../models/product/product.model';
 import {ProductRepository} from '../../repositories/product/product.repository';
@@ -12,8 +12,7 @@ import {CartService} from '../../services/cart/cart.service';
 
 @Component({
 	templateUrl : 'app/components/detail/detail.html',
-	directives : [ProductDetailDirective, SideNavComponent, ROUTER_DIRECTIVES],
-	providers : [ProductRepository]
+	providers : [ProductRepository, CartService]
 })
 export class DetailComponent implements OnInit {
 
@@ -21,13 +20,13 @@ export class DetailComponent implements OnInit {
 
 	product : Product = new Product();
 
-	constructor(private _routeParams: RouteParams,
+	constructor(private _routeParams: Router,
 		          private _productRepository : ProductRepository,
 						  private _cartService : CartService){
   }
 
 	ngOnInit() {
-		this.selectedId = this._routeParams.get('id');
+		//this.selectedId = this._routeParams.get('id');
 
 		this._productRepository.getProduct(this.selectedId).subscribe(
 			data => this.product = data,

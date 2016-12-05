@@ -3,7 +3,7 @@
 
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li><a [routerLink]="['Home']">Inicio</a>
+                <li><a [routerLink]="['home']">Inicio</a>
 
                 <li>{{product.descripcion}}</li>
             </ul>
@@ -45,13 +45,13 @@
                 <div class="col-sm-6">
                     <div class="box">
                         <h1 class="text-center">{{product.descripcion}}</h1>
-                        <p class="goToDescription"><a [routerLink]="['Detail', {id : product.id}]" href="#details" class="scroll-to">Ver detalles del producto, materiales y medidas</a>
+                        <p class="goToDescription"><a [routerLink]="['detail', {id : product.id}]" href="#details" class="scroll-to">Ver detalles del producto, materiales y medidas</a>
                         </p>
                         <p class="price">$ {{product.precio}}</p>
 
                         <p class="text-center buttons">
                             <button class="btn btn-primary" (click)="addToCart(product)"><i class="fa fa-shopping-cart"></i> Agregar al carrito</button>
-                            <a [routerLink]="['Basket']" class="btn btn-default"><i class="fa fa-heart"></i> Me gusta </a>
+                            <a [routerLink]="['basket']" class="btn btn-default"><i class="fa fa-heart"></i> Me gusta </a>
                         </p>
 
 

@@ -1,6 +1,5 @@
-System.register(['angular2/core', 'angular2/router'], function(exports_1, context_1) {
+System.register(["@angular/core", "@angular/router"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,33 +9,33 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1;
-    var TopBarComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, router_1, TopBarComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             TopBarComponent = (function () {
                 function TopBarComponent(_router) {
                     this._router = _router;
                 }
-                TopBarComponent = __decorate([
-                    core_1.Component({
-                        templateUrl: 'app/components/_shared/topbar/topbar.html',
-                        selector: 'top-bar',
-                        directives: [router_1.ROUTER_DIRECTIVES]
-                    }), 
-                    __metadata('design:paramtypes', [router_1.Router])
-                ], TopBarComponent);
                 return TopBarComponent;
             }());
+            TopBarComponent = __decorate([
+                core_1.Component({
+                    templateUrl: 'app/components/_shared/topbar/topbar.html',
+                    selector: 'top-bar'
+                }),
+                __metadata("design:paramtypes", [router_1.Router])
+            ], TopBarComponent);
             exports_1("TopBarComponent", TopBarComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=topbar.component.js.map

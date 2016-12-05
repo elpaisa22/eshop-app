@@ -1,5 +1,5 @@
-import {Component, OnInit} from 'angular2/core';
-import {Router, ROUTER_DIRECTIVES } from 'angular2/router';
+import {Component, OnInit} from '@angular/core';
+import {Router } from '@angular/router';
 
 import {Product} from '../../models/product/product.model';
 
@@ -14,9 +14,7 @@ import {PagerComponent} from '../_shared/pager/pager.component';
 
 @Component({
 	templateUrl : 'app/components/catalog/catalog.html',
-  directives : [SideBarComponent, SideNavComponent,
-                PaginatorComponent, PagerComponent,
-                ROUTER_DIRECTIVES]
+	providers: [CartService, ProductRepository]
 })
 export class CatalogComponent implements OnInit {
 
