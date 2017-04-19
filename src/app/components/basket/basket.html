@@ -1,0 +1,234 @@
+<div id="content">
+    <div class="container">
+
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li><a [routerLink]="['/home']">Inicio</a>
+                </li>
+                <li>Carrito de Compras</li>
+            </ul>
+        </div>
+
+        <div class="col-md-9" id="basket">
+
+            <div class="box">
+
+                <form (ngSubmit)="onSubmit()">
+
+                    <h1>Carrito de Compras</h1>
+                    <p class="text-muted">Actualmente posee {{_cartService.itemsCount}} item(s) en su carrito.</p>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Descuento</th>
+                                    <th colspan="2">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of _cartService.items | async">
+                                    <td>
+                                        <a [routerLink]="['/detail', item.id]">
+                                            <img src="{{item.imagen1}}" alt="White Blouse Armani">
+                                        </a>
+                                    </td>
+                                    <td><a [routerLink]="['/detail', item.id]">{{item.descripcion}}</a>
+                                    </td>
+                                    <td>
+                                        <input type="number" [(ngModel)]="item.cantidad" class="form-control" [ngModelOptions]="{standalone: true}">
+                                    </td>
+                                    <td>$ {{item.precio}}</td>
+                                    <td>$0.00</td>
+                                    <td>$ {{item.precio * item.cantidad}}</td>
+                                    <td><a (click)="eliminarItem(item)"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="5">Total</th>
+                                    <th colspan="2">$ {{_cartService.precioTotal}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <!-- /.table-responsive -->
+
+                    <div class="box-footer">
+                        <div class="pull-left">
+                            <a [routerLink]="['/catalog']" class="btn btn-default"><i class="fa fa-chevron-left"></i> Seguir Comprando</a>
+                        </div>
+                        <div class="pull-right">
+                            <!-- <button class="btn btn-default"><i class="fa fa-refresh"></i> Update basket</button> -->
+                            <button type="submit" class="btn btn-primary">Finalizar <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <!-- /.box -->
+
+
+            <div class="row same-height-row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="box same-height">
+                        <h3>Podria interesarte</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="product same-height">
+                        <div class="flip-container">
+                            <div class="flipper">
+                                <div class="front">
+                                    <a [routerLink]="['/detail', 3]">
+                                        <img src="/assets/images/product2.jpg" alt="" class="img-responsive">
+                                    </a>
+                                </div>
+                                <div class="back">
+                                    <a [routerLink]="['/detail', 3]">
+                                        <img src="/assets/images/product2_2.jpg" alt="" class="img-responsive">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <a [routerLink]="['/detail', 3]" class="invisible">
+                            <img src="/assets/images/product2.jpg" alt="" class="img-responsive">
+                        </a>
+                        <div class="text">
+                            <h3>Fur coat</h3>
+                            <p class="price">$143</p>
+                        </div>
+                    </div>
+                    <!-- /.product -->
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="product same-height">
+                        <div class="flip-container">
+                            <div class="flipper">
+                                <div class="front">
+                                    <a [routerLink]="['/detail', 3]">
+                                        <img src="/assets/images/product1.jpg" alt="" class="img-responsive">
+                                    </a>
+                                </div>
+                                <div class="back">
+                                    <a [routerLink]="['/detail', 3]">
+                                        <img src="/assets/images/product1_2.jpg" alt="" class="img-responsive">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <a [routerLink]="['/detail', 3]" class="invisible">
+                            <img src="/assets/images/product1.jpg" alt="" class="img-responsive">
+                        </a>
+                        <div class="text">
+                            <h3>Fur coat</h3>
+                            <p class="price">$143</p>
+                        </div>
+                    </div>
+                    <!-- /.product -->
+                </div>
+
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="product same-height">
+                        <div class="flip-container">
+                            <div class="flipper">
+                                <div class="front">
+                                    <a [routerLink]="['/detail', 3]">
+                                        <img src="/assets/images/product3.jpg" alt="" class="img-responsive">
+                                    </a>
+                                </div>
+                                <div class="back">
+                                    <a [routerLink]="['/detail', 3]">
+                                        <img src="/assets/images/product3_2.jpg" alt="" class="img-responsive">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <a [routerLink]="['/detail', 3]" class="invisible">
+                            <img src="/assets/images/product3.jpg" alt="" class="img-responsive">
+                        </a>
+                        <div class="text">
+                            <h3>Fur coat</h3>
+                            <p class="price">$143</p>
+
+                        </div>
+                    </div>
+                    <!-- /.product -->
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- /.col-md-9 -->
+
+        <div class="col-md-3">
+            <div class="box" id="order-summary">
+                <div class="box-header">
+                    <h3>Resumen</h3>
+                </div>
+                <p class="text-muted">Los costos de envio y adicionales son calculados de acuerdo a los valores que ha ingresado.</p>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Subtotal</td>
+                                <th>$ {{_cartService.precioTotal}}</th>
+                            </tr>
+                            <tr>
+                                <td>Envio</td>
+                                <th>$10.00</th>
+                            </tr>
+                            <tr>
+                                <td>Impuestos</td>
+                                <th>$0.00</th>
+                            </tr>
+                            <tr class="total">
+                                <td>Total</td>
+                                <th>$ {{_cartService.precioTotal}}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+            <div class="box">
+                <div class="box-header">
+                    <h4>Cupon</h4>
+                </div>
+                <p class="text-muted">Si posee un cupon, ingrese el numero en la casilla inferior.</p>
+                <form>
+                    <div class="input-group">
+
+                        <input type="text" class="form-control">
+
+                        <span class="input-group-btn">
+
+  <button class="btn btn-primary" type="button"><i class="fa fa-gift"></i></button>
+
+    </span>
+                    </div>
+                    <!-- /input-group -->
+                </form>
+            </div>
+
+        </div>
+        <!-- /.col-md-3 -->
+
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /#content -->

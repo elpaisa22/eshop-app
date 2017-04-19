@@ -1,0 +1,44 @@
+import {Component, OnInit} from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+
+import {Product} from '../../models/product/product.model';
+import {ProductRepository} from '../../repositories/product/product.repository';
+
+import {SideNavComponent} from '../_shared/sidenav/sidenav.component';
+
+import {CartService} from '../../services/cart/cart.service';
+
+@Component({
+	templateUrl : './detail.html',
+	providers : [ProductRepository, CartService]
+})
+export class DetailComponent implements OnInit {
+
+	private selectedId : any;
+
+	product : Product = new Product();
+
+	constructor(private _activatedRoute: ActivatedRoute,
+		          private _routeParams: Router,
+		          private _productRepository : ProductRepository,
+						  private _cartService : CartService){
+  }
+
+	ngOnInit() {
+		this._activatedRoute.params.subscribe((params: Params) => {
+			this.selectedId = +params['id'];
+			this._productRepository.getProduct(this.selectedId).subscribe(
+				data => this.product = data,
+	      error => console.log(error)
+			);
+			window.scrollTo(0, 0);
+	 	});
+
+
+	}
+
+	addToCart(prod : Product) {
+		this._cartService.agregarProducto(prod);
+	}
+
+}
