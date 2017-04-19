@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params} from '@angular/router';
 
 import {Product} from '../../models/product/product.model';
 import {ProductRepository} from '../../repositories/product/product.repository';
@@ -14,20 +14,19 @@ import {CartService} from '../../services/cart/cart.service';
 })
 export class DetailComponent implements OnInit {
 
-	private selectedId : any;
+	private _selectedId : any;
 
 	product : Product = new Product();
 
 	constructor(private _activatedRoute: ActivatedRoute,
-		          private _routeParams: Router,
 		          private _productRepository : ProductRepository,
 						  private _cartService : CartService){
   }
 
 	ngOnInit() {
 		this._activatedRoute.params.subscribe((params: Params) => {
-			this.selectedId = +params['id'];
-			this._productRepository.getProduct(this.selectedId).subscribe(
+			this._selectedId = params['id'];
+			this._productRepository.getProduct(this._selectedId).subscribe(
 				data => this.product = data,
 	      error => console.log(error)
 			);
