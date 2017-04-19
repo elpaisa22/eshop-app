@@ -5,8 +5,7 @@ import {CartItem} from '../../models/cartitem/cartitem.model';
 import {CartService} from '../../services/cart/cart.service';
 
 @Component({
-	templateUrl : './basket.html',
-	providers: [CartService]
+	templateUrl : './basket.html'
 })
 export class BasketComponent {
 

@@ -10,7 +10,7 @@ import {CartService} from '../../services/cart/cart.service';
 
 @Component({
 	templateUrl : './detail.html',
-	providers : [ProductRepository, CartService]
+	providers : [ProductRepository]
 })
 export class DetailComponent implements OnInit {
 

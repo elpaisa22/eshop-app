@@ -14,7 +14,7 @@ import {PagerComponent} from '../_shared/pager/pager.component';
 
 @Component({
 	templateUrl : './catalog.html',
-	providers: [CartService, ProductRepository]
+	providers: [ProductRepository]
 })
 export class CatalogComponent implements OnInit {
 

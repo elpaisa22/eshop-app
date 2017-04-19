@@ -4,8 +4,7 @@ import {CartService} from '../../../services/cart/cart.service';
 
 @Component({
 	templateUrl : './navbar.html',
-  selector : 'nav-bar',
-	providers: [CartService]
+  selector : 'nav-bar'
 })
 export class NavBarComponent {
 

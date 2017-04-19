@@ -31,6 +31,8 @@ import {MainSliderDirective} from './directives/main-slider/main-slider.directiv
 import {ProductDetailDirective} from './directives/product-detail/product-detail.directive';
 import {ProductSliderDirective} from './directives/product-slider/product-slider.directive';
 
+import {CartService} from './services/cart/cart.service';
+
 export const appRoutes : Routes = [
 	{path: '', component: HomeComponent},
 	{path: 'home', component: HomeComponent},
@@ -73,7 +75,9 @@ export const appRoutes : Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes, { useHash: false })
   ],
-  providers: [],
+  providers: [
+		CartService
+	],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
