@@ -10,47 +10,45 @@ import {ProductResult} from '../../models/product/productresult.model';
 @Injectable()
 export class ProductRepository {
 
-    endpoint_url : string = "http://localhost:8080";
+    endpoint_url : string = "http://localhost:8000";
+
+    products : Product[] = [];
 
     constructor(private _http: Http){
     }
 
-    private convertProducto(prod : any) : any {
-      if (prod.imagen1) {
-          var url : String = this.endpoint_url + prod.imagen1.split("\\").join("/").replace(".bin",".jpg");
-          prod.imagen1 = url;
-      }
-      if (prod.imagen2) {
-          var url : String = this.endpoint_url + prod.imagen2.split("\\").join("/").replace(".bin",".jpg");
-          prod.imagen2 = url;
-      }
-      if (prod.imagenDetalle1) {
-          var url : String = this.endpoint_url + prod.imagenDetalle1.split("\\").join("/").replace(".bin",".jpg");
-          prod.imagenDetalle1 = url;
-      }
-      if (prod.imagenDetalle2) {
-          var url : String = this.endpoint_url + prod.imagenDetalle2.split("\\").join("/").replace(".bin",".jpg");
-          prod.imagenDetalle2 = url;
-      }
-      if (prod.imagenDetalle3) {
-          var url : String = this.endpoint_url + prod.imagenDetalle3.split("\\").join("/").replace(".bin",".jpg");
-          prod.imagenDetalle3 = url;
+    private convertProducto(prod : Product) : Product {
+
+      for (var i = 0; i < prod.images.length; i++) {
+        var url : string = this.endpoint_url + prod.images[i].image;
+        prod.images[i].image = url;
       }
 
       return prod;
     }
 
-    private convertResult(result : ProductResult) : ProductResult {
-      for (var i = 0; i < result.content.length; i++) {
-          var prod = result.content[i];
-
+    private convertResult(result : Product[]) : Product[] {
+      for (var i = 0; i < result.length; i++) {
+          var prod = result[i];
           prod = this.convertProducto(prod);
       }
 
       return result;
     }
 
-    public getProducts (page : number, size : number) : Observable<ProductResult> {
+    public fillProducts() {
+      this._http.request(this.endpoint_url + "/api/product")
+                .map(x => this.convertResult(x.json()))
+                .subscribe(data => {
+                              data.forEach((prod, i) => {
+                                  this.products.push(prod);
+                              });
+                           },
+                  	       error => console.log(error)
+        		   	);
+    }
+
+    public getProducts (page : number, size : number) : Observable<Product[]> {
       var params : string = "";
       if (page != null) {
         params = "?page=" + page;
@@ -61,14 +59,13 @@ export class ProductRepository {
         var divider = (params ? "&" : "?");
         params = params + divider + "limit=" + size;
       }
-      return this._http.request(this.endpoint_url + "/data/productos" + params).map(x => this.convertResult(x.json()));
+      return this._http.request(this.endpoint_url + "/api/product").map(x => this.convertResult(x.json()));
+      //return Observable.of(this.products);
     }
 
     public getProduct(id: number) : Observable<Product> {
-      return this._http.request(this.endpoint_url + "/data/producto/" + id).map( x => this.convertProducto(x.json()));
+      return this._http.request(this.endpoint_url + "/api/product/" + id + "/").map(x => this.convertProducto(x.json()));
+      //return Observable.of(this.products[0]);
     }
-
-
-
 
 }

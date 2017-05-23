@@ -5,7 +5,7 @@
             <ul class="breadcrumb">
                 <li><a [routerLink]="['/home']">Inicio</a>
 
-                <li>{{product.descripcion}}</li>
+                <li>{{product.name}}</li>
             </ul>
 
         </div>
@@ -26,7 +26,7 @@
             <div class="row" id="productMain" product-detail>
                 <div class="col-sm-6">
                     <div id="mainImage">
-                        <img src="{{product.imagenDetalle1}}" alt="" class="img-responsive" style="width: 100%;">
+                        <img *ngIf="product.images" src="{{product.images[0].image}}" alt="" class="img-responsive" style="width: 100%;">
                     </div>
 
                     <div class="ribbon sale">
@@ -44,10 +44,10 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="box">
-                        <h1 class="text-center">{{product.descripcion}}</h1>
-                        <p class="goToDescription"><a [routerLink]="['detail', {id : product.id}]" href="#details" class="scroll-to">Ver detalles del producto, materiales y medidas</a>
+                        <h1 class="text-center">{{product.name}}</h1>
+                        <p class="goToDescription"><a [routerLink]="['/detail', product.id]" fragment="details" class="scroll-to">Ver detalles del producto, materiales y medidas</a>
                         </p>
-                        <p class="price">$ {{product.precio}}</p>
+                        <p class="price">$ {{product.price}}</p>
 
                         <p class="text-center buttons">
                             <button class="btn btn-primary" (click)="addToCart(product)"><i class="fa fa-shopping-cart"></i> Agregar al carrito</button>
@@ -58,19 +58,9 @@
                     </div>
 
                     <div class="row" id="thumbs">
-                        <div class="col-xs-4">
-                            <a href="{{product.imagenDetalle1}}" class="thumb">
-                                <img src="{{product.imagenDetalle1}}" alt="" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="col-xs-4">
-                            <a href="{{product.imagenDetalle2}}" class="thumb">
-                                <img src="{{product.imagenDetalle2}}" alt="" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="col-xs-4">
-                            <a href="{{product.imagenDetalle3}}" class="thumb">
-                                <img src="{{product.imagenDetalle3}}" alt="" class="img-responsive">
+                        <div *ngFor="let img of product.images" class="col-xs-4">
+                            <a href="{{img.image}}" class="thumb">
+                                <img src="{{img.image}}" alt="" class="img-responsive">
                             </a>
                         </div>
                     </div>
@@ -81,10 +71,10 @@
 
             <div class="box" id="details">
                 <p>
-                    <div [innerHTML]="product.detalles"></div>
+                    <div [innerHTML]="product.details"></div>
 
                     <blockquote>
-                        <p><em>{{product.pie}}</em>
+                        <p><em>{{product.foot_desc}}</em>
                         </p>
                     </blockquote>
 

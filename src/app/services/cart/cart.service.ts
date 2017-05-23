@@ -38,10 +38,10 @@ export class CartService {
         if (index < 0) {
           var item : CartItem = new CartItem();
           item.id = prod.id;
-          item.descripcion = prod.descripcion;
-          item.precio = prod.precio;
-          item.cantidad = 1;
-          item.imagen1 = prod.imagen1;
+          item.details = prod.details;
+          item.price = prod.price;
+          item.count = 1;
+          item.image = prod.images[0].image;
 
           this._cart.push(item);
         }
@@ -80,7 +80,7 @@ export class CartService {
     //Obtiene el precio total de los items
     get precioTotal(){
         let totalPrice = this._cart.reduce((sum, cartProd)=>{
-            return sum += cartProd.precio * cartProd.cantidad, sum;
+            return sum += cartProd.price * cartProd.count, sum;
         },0);
 
         return totalPrice;

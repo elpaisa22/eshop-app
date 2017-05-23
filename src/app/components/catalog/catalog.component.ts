@@ -55,12 +55,14 @@ export class CatalogComponent implements OnInit {
 		this._productRepository.getProducts(this.pagina, this.limite)
 													 .subscribe(
 															data => {
-																data.content.forEach((prod, i) => {
+																data.forEach((prod, i) => {
 																		this.products.push(prod);
 																});
+																/*
 																this.totalPaginas = data.totalPages;
                                 this.cantidadProductos = data.content.length;
                                 this.totalProductos = data.totalElements;
+																*/
 															},
 															error => console.log(error)
 													 );

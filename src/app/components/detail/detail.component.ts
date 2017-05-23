@@ -26,10 +26,11 @@ export class DetailComponent implements OnInit {
 	ngOnInit() {
 		this._activatedRoute.params.subscribe((params: Params) => {
 			this._selectedId = params['id'];
-			this._productRepository.getProduct(this._selectedId).subscribe(
-				data => this.product = data,
-	      error => console.log(error)
-			);
+			this._productRepository.getProduct(this._selectedId)
+			                       .subscribe(
+																data => this.product = data,
+													      error => console.log(error)
+														 );
 			window.scrollTo(0, 0);
 	 	});
 
