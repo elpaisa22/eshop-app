@@ -37,7 +37,7 @@ export class CatalogComponent implements OnInit {
 		this.pageSize = 12;
 		this.totalPages = 1;
 
-    this.sortBy = "nombre";
+    this.sortBy = "name";
 
     this.productsCount = 0;
 		this.totalProducts = 0;
@@ -109,6 +109,17 @@ export class CatalogComponent implements OnInit {
 		if (this.totalProducts > size && this.totalProducts % size > 0) {
 			this.totalPages++;
 		}
+
+		result = this.sortProducts(result, this.sortBy);
+
 		return result;
+	}
+
+	private sortProducts(data : Product[], orderBy: string) : Product[] {
+		if (orderBy == "name") {
+				return data.sort((a, b) => (a.name < b.name) ? -1 : (a.name > b.name ? 1 : 0));
+		} else {
+			return data.sort((a, b) => (a.price < b.price) ? -1 : (a.price > b.price ? 1 : 0));
+		}
 	}
 }

@@ -25,8 +25,8 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
                                         <select name="sort-by" class="form-control"
                                                  [(ngModel)]="sortBy"
                                                  (ngModelChange)="changeSortBy($event)">
-                                            <option value="nombre">Nombre</option>
-                                            <option value="precio">Precio</option>
+                                            <option value="name">Nombre</option>
+                                            <option value="price">Precio</option>
                                         </select>
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@ export class PagerComponent {
   }
 
   private changeSortBy(event?:MouseEvent){
-  
+
     this.sortByChange.emit({
       value : event,
     });
