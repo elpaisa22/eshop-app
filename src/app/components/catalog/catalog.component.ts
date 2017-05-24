@@ -17,13 +17,13 @@ import {PagerComponent} from '../_shared/pager/pager.component';
 })
 export class CatalogComponent implements OnInit {
 
-	pagina : number;
-	limite : number;
-	totalPaginas : number;
+	page : number;
+	pageSize : number;
+	totalPages : number;
 
-  cantidadProductos : number;
-  totalProductos : number;
-  ordenarPor : string;
+  productsCount : number;
+  totalProducts : number;
+  sortBy : string;
 
 	products : Product[] = [];
 
@@ -33,13 +33,14 @@ export class CatalogComponent implements OnInit {
 	}
 
 	ngOnInit(){
-		this.pagina = 1;
+		this.page = 1;
+		this.pageSize = 12;
+		this.totalPages = 1;
 
-		this.limite = 12;
-    this.ordenarPor = "nombre";
+    this.sortBy = "nombre";
 
-    this.totalPaginas = 0;
-    this.cantidadProductos = 0;
+    this.productsCount = 0;
+		this.totalProducts = 0;
 
 		this.reloadProducts();
 
@@ -52,13 +53,14 @@ export class CatalogComponent implements OnInit {
 
 	reloadProducts(){
 		this.products.length = 0;
-		this._productRepository.getProducts(this.pagina, this.limite)
+		this._productRepository.getProducts()
 													 .subscribe(
 															data => {
 																data.forEach((prod, i) => {
 																		this.products.push(prod);
 																});
-																this.cantidadProductos = this.products.length;
+																this.totalProducts = this.products.length;
+																this.products = this.filterProducts(this.products);
 															},
 															error => console.log(error)
 													 );
@@ -66,17 +68,47 @@ export class CatalogComponent implements OnInit {
 	}
 
 	onPageChange($event){
-		this.pagina = $event.value;
+		this.page = $event.value;
 		this.reloadProducts();
 	}
 
   onPageSizeChange($event){
-		this.limite = $event.value;
+		this.pageSize = $event.value;
 		this.reloadProducts();
 	}
 
   onSortByChange($event){
-		this.ordenarPor = $event.value;
+		this.sortBy = $event.value;
 		this.reloadProducts();
+	}
+
+	private filterProducts(data : Product[]) : Product[] {
+		var result : Product[] = [];
+		var size = this.pageSize;
+		if (this.pageSize == null) {
+			size = data.length;
+		}
+		var from : number = size * (this.page - 1);
+		var to : number = from + size - 1;
+		if (to > data.length) {
+			to = data.length - 1;
+		}
+		if (from <= data.length) {
+			for (var i = from; i <= to; i++) {
+				result.push(data[i]);
+			}
+		}
+
+		this.productsCount = data.length;
+
+		if (this.pageSize == null) {
+				this.totalPages = 1;
+		} else {
+				this.totalPages = Math.floor(this.totalProducts/size) + 1;
+		}
+		if (this.totalProducts > size && this.totalProducts % size > 0) {
+			this.totalPages++;
+		}
+		return result;
 	}
 }

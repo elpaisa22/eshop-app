@@ -5,7 +5,7 @@
             <ul class="breadcrumb">
                 <li><a [routerLink]="['/home']">Inicio</a>
                 </li>
-                <li>Ladies</li>
+                <li>Catalogo</li>
             </ul>
         </div>
 
@@ -32,10 +32,10 @@ _________________________________________________________ -->
             </div>
           -->
 
-            <pager [pageSize]="limite"
-                   [sortBy]="ordenarPor"
-                   [countElements]="cantidadProductos"
-                   [totalElements]="totalProductos"
+            <pager [pageSize]="pageSize"
+                   [sortBy]="sortBy"
+                   [countElements]="productsCount"
+                   [totalElements]="totalProducts"
                    (pageSizeChange)="onPageSizeChange($event)"
                    (sortByChange)="onSortByChange($event)">
             </pager>
@@ -95,8 +95,8 @@ _________________________________________________________ -->
             </div>
             <!-- /.products -->
 
-            <paginator [page]="pagina"
-                       [totalPages]="totalPaginas"
+            <paginator [page]="page"
+                       [totalPages]="totalPages"
                        (pageChange)="onPageChange($event);"></paginator>
 
 
