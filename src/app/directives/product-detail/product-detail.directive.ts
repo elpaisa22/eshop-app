@@ -57,7 +57,7 @@ export class ProductDetailDirective implements AfterViewInit, OnDestroy {
           	thumb.addClass('active');
           	parent.find('#mainImage img').attr('src', bigUrl);
         }
-      }, 1000)
+      }, 500)
 
     }
 

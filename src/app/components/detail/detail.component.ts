@@ -9,8 +9,7 @@ import {SideNavComponent} from '../_shared/sidenav/sidenav.component';
 import {CartService} from '../../services/cart/cart.service';
 
 @Component({
-	templateUrl : './detail.html',
-	providers : [ProductRepository]
+	templateUrl : './detail.html'
 })
 export class DetailComponent implements OnInit {
 

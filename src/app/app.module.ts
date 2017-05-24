@@ -31,6 +31,8 @@ import {ProductDetailDirective} from './directives/product-detail/product-detail
 import {ProductSliderDirective} from './directives/product-slider/product-slider.directive';
 
 import {CartService} from './services/cart/cart.service';
+import {FilterService} from './services/filter/filter.service';
+import {ProductRepository} from './repositories/product/product.repository';
 
 export const appRoutes : Routes = [
 	{path: '', component: HomeComponent},
@@ -75,7 +77,9 @@ export const appRoutes : Routes = [
     RouterModule.forRoot(appRoutes, { useHash: false })
   ],
   providers: [
-		CartService
+		CartService,
+		FilterService,
+		ProductRepository
 	],
   bootstrap: [AppComponent]
 })

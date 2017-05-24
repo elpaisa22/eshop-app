@@ -12,7 +12,7 @@ export class ProductRepository {
 
     endpoint_url : string = "http://localhost:8000";
 
-    products : Product[] = [];
+    _products : Product[] = [];
 
     constructor(private _http: Http){
     }
@@ -36,36 +36,31 @@ export class ProductRepository {
       return result;
     }
 
-    public fillProducts() {
-      this._http.request(this.endpoint_url + "/api/product")
-                .map(x => this.convertResult(x.json()))
-                .subscribe(data => {
-                              data.forEach((prod, i) => {
-                                  this.products.push(prod);
-                              });
-                           },
-                  	       error => console.log(error)
-        		   	);
+    public getProducts (page : number, size : number) : Observable<Product[]> {
+      if (this._products == null || this._products.length == 0) {
+        var response = this._http.request(this.endpoint_url + "/api/product").map(x => this.convertResult(x.json()));
+        return this.handleResponse(response);
+      } else {
+        return Observable.of(this._products);
+      }
     }
 
-    public getProducts (page : number, size : number) : Observable<Product[]> {
-      var params : string = "";
-      if (page != null) {
-        params = "?page=" + page;
-      }
-
-      var limitParam : string;
-      if (size != null) {
-        var divider = (params ? "&" : "?");
-        params = params + divider + "limit=" + size;
-      }
-      return this._http.request(this.endpoint_url + "/api/product").map(x => this.convertResult(x.json()));
-      //return Observable.of(this.products);
+    private handleResponse(response : Observable<Product[]>) : Observable<Product[]> {
+        return response.do(data => {
+          this._products = data;
+        });
     }
 
     public getProduct(id: number) : Observable<Product> {
-      return this._http.request(this.endpoint_url + "/api/product/" + id + "/").map(x => this.convertProducto(x.json()));
-      //return Observable.of(this.products[0]);
+      if (this._products == null || this._products.length == 0) {
+        return this._http.request(this.endpoint_url + "/api/product/" + id + "/").map(x => this.convertProducto(x.json()));
+      } else {
+        for (var i = 0; i < this._products.length; i++) {
+            if (this._products[i].id == id) {
+              return Observable.of(this._products[i]);
+            }
+        }
+      }
     }
 
 }

@@ -4,7 +4,7 @@ import {Router } from '@angular/router';
 import {Product} from '../../models/product/product.model';
 
 import {CartService} from '../../services/cart/cart.service';
-
+import {FilterService} from '../../services/filter/filter.service';
 import {ProductRepository} from '../../repositories/product/product.repository';
 
 import {SideBarComponent} from '../_shared/sidebar/sidebar.component';
@@ -13,8 +13,7 @@ import {PaginatorComponent} from '../_shared/paginator/paginator.component';
 import {PagerComponent} from '../_shared/pager/pager.component';
 
 @Component({
-	templateUrl : './catalog.html',
-	providers: [ProductRepository]
+	templateUrl : './catalog.html'
 })
 export class CatalogComponent implements OnInit {
 
@@ -29,6 +28,7 @@ export class CatalogComponent implements OnInit {
 	products : Product[] = [];
 
 	constructor(private _productRepository : ProductRepository,
+		          private _filterService : FilterService,
 	            private _cartService : CartService) {
 	}
 
@@ -58,14 +58,11 @@ export class CatalogComponent implements OnInit {
 																data.forEach((prod, i) => {
 																		this.products.push(prod);
 																});
-																/*
-																this.totalPaginas = data.totalPages;
-                                this.cantidadProductos = data.content.length;
-                                this.totalProductos = data.totalElements;
-																*/
+																this.cantidadProductos = this.products.length;
 															},
 															error => console.log(error)
 													 );
+
 	}
 
 	onPageChange($event){
