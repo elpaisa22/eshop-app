@@ -32,10 +32,10 @@ _________________________________________________________ -->
             </div>
           -->
 
-            <pager [pageSize]="pageSize"
-                   [sortBy]="sortBy"
-                   [countElements]="productsCount"
-                   [totalElements]="totalProducts"
+            <pager [pageSize]="_filterService.pageSize"
+                   [sortBy]="_filterService.sortBy"
+                   [countElements]="_filterService.productsCount"
+                   [totalElements]="_filterService.totalProducts"
                    (pageSizeChange)="onPageSizeChange($event)"
                    (sortByChange)="onSortByChange($event)">
             </pager>
@@ -95,8 +95,8 @@ _________________________________________________________ -->
             </div>
             <!-- /.products -->
 
-            <paginator [page]="page"
-                       [totalPages]="totalPages"
+            <paginator [page]="_filterService.page"
+                       [totalPages]="_filterService.totalPages"
                        (pageChange)="onPageChange($event);"></paginator>
 
 

@@ -5,7 +5,6 @@ import {Product} from '../../models/product/product.model';
 
 import {CartService} from '../../services/cart/cart.service';
 import {FilterService} from '../../services/filter/filter.service';
-import {ProductRepository} from '../../repositories/product/product.repository';
 
 import {SideBarComponent} from '../_shared/sidebar/sidebar.component';
 import {SideNavComponent} from '../_shared/sidenav/sidenav.component';
@@ -17,32 +16,21 @@ import {PagerComponent} from '../_shared/pager/pager.component';
 })
 export class CatalogComponent implements OnInit {
 
-	page : number;
-	pageSize : number;
-	totalPages : number;
-
-  productsCount : number;
-  totalProducts : number;
-  sortBy : string;
-
 	products : Product[] = [];
 
-	constructor(private _productRepository : ProductRepository,
-		          private _filterService : FilterService,
+	constructor(private _filterService : FilterService,
 	            private _cartService : CartService) {
 	}
 
 	ngOnInit(){
-		this.page = 1;
-		this.pageSize = 12;
-		this.totalPages = 1;
-
-    this.sortBy = "name";
-
-    this.productsCount = 0;
-		this.totalProducts = 0;
-
-		this.reloadProducts();
+		if (!this._filterService.isInitialized()) {
+			this._filterService.loadProducts()
+												 .subscribe(
+													 data => this.products = this._filterService.getActualPage(),
+													 error => console.log(error));
+		} else {
+			this.products = this._filterService.getActualPage();
+		}
 
 		window.scrollTo(0, 0);
 	}
@@ -51,75 +39,16 @@ export class CatalogComponent implements OnInit {
 		this._cartService.agregarProducto(prod);
 	}
 
-	reloadProducts(){
-		this.products.length = 0;
-		this._productRepository.getProducts()
-													 .subscribe(
-															data => {
-																data.forEach((prod, i) => {
-																		this.products.push(prod);
-																});
-																this.totalProducts = this.products.length;
-																this.products = this.filterProducts(this.products);
-															},
-															error => console.log(error)
-													 );
-
-	}
-
 	onPageChange($event){
-		this.page = $event.value;
-		this.reloadProducts();
+		this.products = this._filterService.changeActualPage($event.value);
 	}
 
   onPageSizeChange($event){
-		this.pageSize = $event.value;
-		this.reloadProducts();
+		this.products = this._filterService.changePageSize($event.value);
 	}
 
   onSortByChange($event){
-		this.sortBy = $event.value;
-		this.reloadProducts();
+		this.products = this._filterService.changeSortOrder($event.value);
 	}
 
-	private filterProducts(data : Product[]) : Product[] {
-		var result : Product[] = [];
-		var size = this.pageSize;
-		if (this.pageSize == null) {
-			size = data.length;
-		}
-		var from : number = size * (this.page - 1);
-		var to : number = from + size - 1;
-		if (to > data.length) {
-			to = data.length - 1;
-		}
-		if (from <= data.length) {
-			for (var i = from; i <= to; i++) {
-				result.push(data[i]);
-			}
-		}
-
-		this.productsCount = data.length;
-
-		if (this.pageSize == null) {
-				this.totalPages = 1;
-		} else {
-				this.totalPages = Math.floor(this.totalProducts/size) + 1;
-		}
-		if (this.totalProducts > size && this.totalProducts % size > 0) {
-			this.totalPages++;
-		}
-
-		result = this.sortProducts(result, this.sortBy);
-
-		return result;
-	}
-
-	private sortProducts(data : Product[], orderBy: string) : Product[] {
-		if (orderBy == "name") {
-				return data.sort((a, b) => (a.name < b.name) ? -1 : (a.name > b.name ? 1 : 0));
-		} else {
-			return data.sort((a, b) => (a.price < b.price) ? -1 : (a.price > b.price ? 1 : 0));
-		}
-	}
 }
