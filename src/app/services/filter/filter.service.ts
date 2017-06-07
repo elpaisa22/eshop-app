@@ -35,18 +35,12 @@ export class FilterService {
 
   public loadProducts() : Observable<Product[]> {
     this._products.length = 0;
-    var result = this._productRepository.getProducts();
-    result.subscribe(
-        data => {
-          data.forEach((prod, i) => {
-              this._products.push(prod);
-          });
-          this.totalProducts = this._products.length;
-          this._products = this.sortProducts(this._products, this.sortBy);
-        },
-        error => console.log(error)
-     );
-     return result;
+    return this._productRepository.getProducts()
+                                  .map(data => {
+                                    this._products = this.sortProducts(data, this.sortBy);
+                                    this.initialized = true;
+                                    return this.getActualPage()
+                                  });
   }
 
   public getActualPage() : Product[] {

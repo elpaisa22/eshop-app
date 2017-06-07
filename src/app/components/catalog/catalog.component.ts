@@ -26,7 +26,7 @@ export class CatalogComponent implements OnInit {
 		if (!this._filterService.isInitialized()) {
 			this._filterService.loadProducts()
 												 .subscribe(
-													 data => this.products = this._filterService.getActualPage(),
+													 data => this.products = data,
 													 error => console.log(error));
 		} else {
 			this.products = this._filterService.getActualPage();
