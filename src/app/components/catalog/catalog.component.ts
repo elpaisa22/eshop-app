@@ -16,22 +16,11 @@ import {PagerComponent} from '../_shared/pager/pager.component';
 })
 export class CatalogComponent implements OnInit {
 
-	products : Product[] = [];
-
 	constructor(private _filterService : FilterService,
 	            private _cartService : CartService) {
 	}
 
 	ngOnInit(){
-		if (!this._filterService.isInitialized()) {
-			this._filterService.loadProducts()
-												 .subscribe(
-													 data => this.products = data,
-													 error => console.log(error));
-		} else {
-			this.products = this._filterService.getActualPage();
-		}
-
 		window.scrollTo(0, 0);
 	}
 
@@ -40,15 +29,15 @@ export class CatalogComponent implements OnInit {
 	}
 
 	onPageChange($event){
-		this.products = this._filterService.changeActualPage($event.value);
+		this._filterService.changeActualPage($event.value);
 	}
 
   onPageSizeChange($event){
-		this.products = this._filterService.changePageSize($event.value);
+		this._filterService.changePageSize($event.value);
 	}
 
   onSortByChange($event){
-		this.products = this._filterService.changeSortOrder($event.value);
+		this._filterService.changeSortOrder($event.value);
 	}
 
 }

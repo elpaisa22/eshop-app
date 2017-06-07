@@ -10,7 +10,7 @@ export class ProductRepository {
 
     endpoint_url : string = "http://localhost:8000";
 
-    _products : Product[] = [];
+    _productsCache : Product[] = [];
 
     constructor(private _http: Http){
     }
@@ -31,30 +31,30 @@ export class ProductRepository {
       return result;
     }
 
-    public getProducts () : Observable<Product[]> {
-      if (this._products == null || this._products.length == 0) {
+    public getProducts (forceReload : boolean = false) : Observable<Product[]> {
+      if (this._productsCache == null || this._productsCache.length == 0 || forceReload) {
         var response = this._http.request(this.endpoint_url + "/api/product")
                                  .map(x => this.convertResult(x.json()));
         return this.handleResponse(response);
       } else {
-        return Observable.of(this._products);
+        return Observable.of(this._productsCache);
       }
     }
 
     private handleResponse(response : Observable<Product[]>) : Observable<Product[]> {
       return response.do(data => {
-        this._products = data;
+        this._productsCache = data;
       });
     }
 
     public getProduct(id: number) : Observable<Product> {
-      if (this._products == null || this._products.length == 0) {
+      if (this._productsCache == null || this._productsCache.length == 0) {
         return this._http.request(this.endpoint_url + "/api/product/" + id + "/")
                          .map(x => this.convertProducto(x.json()));
       } else {
-        for (var i = 0; i < this._products.length; i++) {
-            if (this._products[i].id == id) {
-              return Observable.of(this._products[i]);
+        for (var i = 0; i < this._productsCache.length; i++) {
+            if (this._productsCache[i].id == id) {
+              return Observable.of(this._productsCache[i]);
             }
         }
       }

@@ -42,7 +42,7 @@ _________________________________________________________ -->
 
             <div class="row products">
 
-                <div *ngFor="let prod of products" class="col-md-4 col-sm-6">
+                <div *ngFor="let prod of _filterService.actualPage | async" class="col-md-4 col-sm-6">
                   <div class="product">
                       <div class="flip-container">
                           <div class="flipper">

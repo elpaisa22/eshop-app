@@ -17,6 +17,7 @@ export class FilterService {
   sortBy : string;
 
 	_products : Product[] = [];
+  _actualPage : Product[] = [];
 
   initialized : boolean;
 
@@ -31,19 +32,24 @@ export class FilterService {
 		this.totalProducts = 0;
 
     this.initialized = false;
+
+    this.loadProducts().subscribe(
+      elem => console.log("Elements loaded: " + elem.length));
   }
 
-  public loadProducts() : Observable<Product[]> {
+  private loadProducts(forceReload : boolean = false) : Observable<Product[]> {
     this._products.length = 0;
-    return this._productRepository.getProducts()
+    return this._productRepository.getProducts(forceReload)
                                   .map(data => {
                                     this._products = this.sortProducts(data, this.sortBy);
                                     this.initialized = true;
-                                    return this.getActualPage()
+                                    this.totalProducts = this._products.length;
+                                    this._actualPage = this.calculateActualPage();
+                                    return this._actualPage;
                                   });
   }
 
-  public getActualPage() : Product[] {
+  private calculateActualPage() : Product[] {
     var result : Product[] = [];
     var size = this.pageSize;
     if (this.pageSize == null) {
@@ -60,7 +66,7 @@ export class FilterService {
       }
     }
 
-    this.productsCount = this._products.length;
+    this.productsCount = result.length;
 
     if (this.pageSize == null) {
         this.totalPages = 1;
@@ -82,24 +88,28 @@ export class FilterService {
     }
   }
 
-  public isInitialized() : boolean {
+  get isInitialized() : boolean {
       return this.initialized;
   }
 
-  public changeSortOrder(orderBy : string) : Product[] {
+  get actualPage() : Observable<Product[]> {
+    return Observable.of(this._actualPage);
+  }
+
+  public changeSortOrder(orderBy : string) {
     this._products = this.sortProducts(this._products, orderBy);
     this.sortBy = orderBy;
-    return this.getActualPage();
+    this._actualPage = this.calculateActualPage();
   }
 
-  public changeActualPage(page : number) : Product[] {
+  public changeActualPage(page : number) {
     this.page = page;
-    return this.getActualPage();
+    this._actualPage = this.calculateActualPage();
   }
 
-  public changePageSize(pageSize : number) : Product[] {
+  public changePageSize(pageSize : number) {
     this.pageSize = pageSize;
-    return this.getActualPage();
+    this._actualPage = this.calculateActualPage();
   }
 
 }

@@ -68,17 +68,17 @@ export class CartService {
     }
 
     //Retorna todos lo items del carrito
-    get items() {
+    get items() : Observable<CartItem[]> {
         return this.asObservable(this._cart);
     }
 
     //Retorna la cantidad de items del carrito
-    get itemsCount() {
+    get itemsCount() : number {
         return this._cart.length;
     }
 
     //Obtiene el precio total de los items
-    get precioTotal(){
+    get precioTotal() : number {
         let totalPrice = this._cart.reduce((sum, cartProd)=>{
             return sum += cartProd.price * cartProd.count, sum;
         },0);
