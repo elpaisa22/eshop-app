@@ -4,8 +4,6 @@ import { ActivatedRoute, Params} from '@angular/router';
 import {Product} from '../../models/product/product.model';
 import {ProductRepository} from '../../repositories/product/product.repository';
 
-import {SideNavComponent} from '../_shared/sidenav/sidenav.component';
-
 import {CartService} from '../../services/cart/cart.service';
 
 @Component({
@@ -37,7 +35,7 @@ export class DetailComponent implements OnInit {
 	}
 
 	addToCart(prod : Product) {
-		this._cartService.agregarProducto(prod);
+		this._cartService.addProduct(prod);
 	}
 
 }

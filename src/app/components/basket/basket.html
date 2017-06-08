@@ -13,7 +13,7 @@
 
             <div class="box">
 
-                <form (ngSubmit)="onSubmit()">
+                <form>
 
                     <h1>Carrito de Compras</h1>
                     <p class="text-muted">Actualmente posee {{_cartService.itemsCount}} item(s) en su carrito.</p>
@@ -35,15 +35,16 @@
                                             <img src="{{item.image}}" alt="{{item.name}}">
                                         </a>
                                     </td>
-                                    <td><a [routerLink]="['/detail', item.id]">{{item.name}}</a>
+                                    <td>
+                                      <a [routerLink]="['/detail', item.id]">{{item.name}}</a>
                                     </td>
                                     <td>
-                                        <input type="number" [(ngModel)]="item.count" class="form-control" [ngModelOptions]="{standalone: true}">
+                                        <input type="number" [(ngModel)]="item.count" (ngModelChange)="_cartService.saveItems()" class="form-control" [ngModelOptions]="{standalone: true}">
                                     </td>
                                     <td>$ {{item.price}}</td>
                                     <td>$0.00</td>
                                     <td>$ {{item.price * item.count}}</td>
-                                    <td><a (click)="eliminarItem(item)"><i class="fa fa-trash-o"></i></a>
+                                    <td><a href="javascript:void(0)" (click)="deleteItem(item)"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
 
@@ -51,7 +52,7 @@
                             <tfoot>
                                 <tr>
                                     <th colspan="5">Total</th>
-                                    <th colspan="2">$ {{_cartService.precioTotal}}</th>
+                                    <th colspan="2">$ {{_cartService.totalPrice}}</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -65,7 +66,7 @@
                         </div>
                         <div class="pull-right">
                             <!-- <button class="btn btn-default"><i class="fa fa-refresh"></i> Update basket</button> -->
-                            <button type="submit" class="btn btn-primary">Finalizar <i class="fa fa-chevron-right"></i>
+                            <button type="submit" class="btn btn-primary" [routerLink]="['/address']">Finalizar compra <i class="fa fa-chevron-right"></i>
                             </button>
                         </div>
                     </div>
@@ -173,37 +174,8 @@
         <!-- /.col-md-9 -->
 
         <div class="col-md-3">
-            <div class="box" id="order-summary">
-                <div class="box-header">
-                    <h3>Resumen</h3>
-                </div>
-                <p class="text-muted">Los costos de envio y adicionales son calculados de acuerdo a los valores que ha ingresado.</p>
 
-                <div class="table-responsive">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>Subtotal</td>
-                                <th>$ {{_cartService.precioTotal}}</th>
-                            </tr>
-                            <tr>
-                                <td>Envio</td>
-                                <th>$10.00</th>
-                            </tr>
-                            <tr>
-                                <td>Impuestos</td>
-                                <th>$0.00</th>
-                            </tr>
-                            <tr class="total">
-                                <td>Total</td>
-                                <th>$ {{_cartService.precioTotal}}</th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
+            <summary></summary>
 
             <div class="box">
                 <div class="box-header">
@@ -216,10 +188,8 @@
                         <input type="text" class="form-control">
 
                         <span class="input-group-btn">
-
-  <button class="btn btn-primary" type="button"><i class="fa fa-gift"></i></button>
-
-    </span>
+                          <button class="btn btn-primary" type="button"><i class="fa fa-gift"></i></button>
+                        </span>
                     </div>
                     <!-- /input-group -->
                 </form>

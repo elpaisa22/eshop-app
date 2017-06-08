@@ -1,0 +1,30 @@
+<div class="box" id="order-summary">
+    <div class="box-header">
+        <h3>Resumen</h3>
+    </div>
+    <p class="text-muted">Los costos de envio y adicionales son calculados de acuerdo a los valores que ha ingresado.</p>
+
+    <div class="table-responsive">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Subtotal</td>
+                    <th>$ {{_cartService.totalPrice}}</th>
+                </tr>
+                <tr>
+                    <td>Envio</td>
+                    <th>$10.00</th>
+                </tr>
+                <tr>
+                    <td>Impuestos</td>
+                    <th>$0.00</th>
+                </tr>
+                <tr class="total">
+                    <td>Total</td>
+                    <th>$ {{_cartService.totalPrice}}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
