@@ -1,0 +1,98 @@
+<div id="content">
+  <div class="container">
+
+      <div class="col-md-12">
+          <ul class="breadcrumb">
+              <li><a [routerLink]="['/basket']">Carrito de Compras</a></li>
+              <li>Finalizar compra</li>
+          </ul>
+      </div>
+
+      <div class="col-md-9" id="checkout">
+
+          <div class="box">
+              <form>
+                  <h1>Finalizar compra</h1>
+                  <ul class="nav nav-pills nav-justified">
+                      <li><a [routerLink]="['/address']"><i class="fa fa-map-marker"></i><br>Direccion</a>
+                      </li>
+                      <li><a [routerLink]="['/delivery']"><i class="fa fa-truck"></i><br>Metodo de Envio</a>
+                      </li>
+                      <li><a [routerLink]="['/payment']"><i class="fa fa-money"></i><br>Metodo de Pago</a>
+                      </li>
+                      <li class="active"><a><i class="fa fa-eye"></i><br>Revisar Orden</a>
+                      </li>
+                  </ul>
+
+                  <div class="content">
+                      <div class="table-responsive">
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th colspan="2">Producto</th>
+                                      <th>Cantidad</th>
+                                      <th>Precio</th>
+                                      <th>Descuento</th>
+                                      <th>Total</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let item of _cartService.items | async">
+                                      <td>
+                                          <a [routerLink]="['/detail', item.id]">
+                                              <img src="{{item.image}}" alt="{{item.name}}">
+                                          </a>
+                                      </td>
+                                      <td>
+                                        <a [routerLink]="['/detail', item.id]">{{item.name}}</a>
+                                      </td>
+                                      <td>
+                                          {{item.count}}
+                                      </td>
+                                      <td>$ {{item.price}}</td>
+                                      <td>$0.00</td>
+                                      <td>$ {{item.price * item.count}}</td>
+                                  </tr>
+
+                              </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th colspan="5">Total</th>
+                                      <th colspan="2">$ {{_cartService.totalPrice}}</th>
+                                  </tr>
+                              </tfoot>
+                          </table>
+
+                      </div>
+                      <!-- /.table-responsive -->
+                  </div>
+                  <!-- /.content -->
+
+                  <div class="box-footer">
+                      <div class="pull-left">
+                          <a [routerLink]="['/payment']" class="btn btn-default"><i class="fa fa-chevron-left"></i>Volver a Metodo de Pago</a>
+                      </div>
+                      <div class="pull-right">
+                          <button [routerLink]="['/finish']" class="btn btn-primary">Confirmar Compra<i class="fa fa-chevron-right"></i>
+                          </button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <!-- /.box -->
+
+
+      </div>
+      <!-- /.col-md-9 -->
+
+      <div class="col-md-3">
+
+          <summary></summary>
+
+      </div>
+      <!-- /.col-md-3 -->
+
+  </div>
+  <!-- /.container -->
+</div>
+<!-- /#content -->

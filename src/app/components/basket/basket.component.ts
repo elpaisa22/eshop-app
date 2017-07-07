@@ -12,7 +12,7 @@ export class BasketComponent {
 		constructor(private _cartService: CartService) {
 		}
 
-		eliminarItem(item : CartItem){
-			this._cartService.eliminarItem(item);
+		deleteItem(item : CartItem){
+			this._cartService.deleteItem(item);
 		}
 }

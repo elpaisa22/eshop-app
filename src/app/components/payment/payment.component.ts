@@ -1,0 +1,9 @@
+import {Component} from '@angular/core';
+import {Router } from '@angular/router';
+
+@Component({
+	templateUrl : './payment.html'
+})
+export class PaymentComponent {
+
+}

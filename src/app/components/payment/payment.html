@@ -1,0 +1,102 @@
+<div id="content">
+  <div class="container">
+
+      <div class="col-md-12">
+          <ul class="breadcrumb">
+              <li><a [routerLink]="['/basket']">Carrito de Compras</a></li>
+              <li>Finalizar compra</li>
+          </ul>
+      </div>
+
+      <div class="col-md-9" id="checkout">
+
+          <div class="box">
+              <form>
+                  <h1>Finalizar compra</h1>
+                  <ul class="nav nav-pills nav-justified">
+                      <li class="disabled"><a><i class="fa fa-map-marker"></i><br>Direccion</a>
+                      </li>
+                      <li class="disabled"><a><i class="fa fa-truck"></i><br>Metodo de Envio</a>
+                      </li>
+                      <li class="active"><a><i class="fa fa-money"></i><br>Metodo de Pago</a>
+                      </li>
+                      <li class="disabled"><a><i class="fa fa-eye"></i><br>Revisar Orden</a>
+                      </li>
+                  </ul>
+
+                  <div class="content">
+                      <div class="row">
+                          <div class="col-sm-6">
+                              <div class="box payment-method">
+
+                                  <h4>Paypal</h4>
+
+                                  <p>We like it all.</p>
+
+                                  <div class="box-footer text-center">
+
+                                      <input type="radio" name="payment" value="payment1">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-sm-6">
+                              <div class="box payment-method">
+
+                                  <h4>Payment gateway</h4>
+
+                                  <p>VISA and Mastercard only.</p>
+
+                                  <div class="box-footer text-center">
+
+                                      <input type="radio" name="payment" value="payment2">
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-sm-6">
+                              <div class="box payment-method">
+
+                                  <h4>Cash on delivery</h4>
+
+                                  <p>You pay when you get it.</p>
+
+                                  <div class="box-footer text-center">
+
+                                      <input type="radio" name="payment" value="payment3">
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- /.row -->
+
+                  </div>
+                  <!-- /.content -->
+
+                  <div class="box-footer">
+                      <div class="pull-left">
+                          <a [routerLink]="['/delivery']" class="btn btn-default"><i class="fa fa-chevron-left"></i>Volver al Metodo de Envio</a>
+                      </div>
+                      <div class="pull-right">
+                          <button [routerLink]="['/orderReview']" class="btn btn-primary">Revisar Orden<i class="fa fa-chevron-right"></i>
+                          </button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <!-- /.box -->
+
+
+      </div>
+      <!-- /.col-md-9 -->
+
+      <div class="col-md-3">
+
+          <summary></summary>
+
+      </div>
+      <!-- /.col-md-3 -->
+
+  </div>
+  <!-- /.container -->
+</div>
+<!-- /#content -->

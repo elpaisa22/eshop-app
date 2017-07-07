@@ -32,17 +32,17 @@ _________________________________________________________ -->
             </div>
           -->
 
-            <pager [pageSize]="pageSize"
-                   [sortBy]="sortBy"
-                   [countElements]="productsCount"
-                   [totalElements]="totalProducts"
+            <pager [pageSize]="_filterService.pageSize"
+                   [sortBy]="_filterService.sortBy"
+                   [countElements]="_filterService.productsCount"
+                   [totalElements]="_filterService.totalProducts"
                    (pageSizeChange)="onPageSizeChange($event)"
                    (sortByChange)="onSortByChange($event)">
             </pager>
 
             <div class="row products">
 
-                <div *ngFor="let prod of products" class="col-md-4 col-sm-6">
+                <div *ngFor="let prod of _filterService.actualPage | async" class="col-md-4 col-sm-6">
                   <div class="product">
                       <div class="flip-container">
                           <div class="flipper">
@@ -95,8 +95,8 @@ _________________________________________________________ -->
             </div>
             <!-- /.products -->
 
-            <paginator [page]="page"
-                       [totalPages]="totalPages"
+            <paginator [page]="_filterService.page"
+                       [totalPages]="_filterService.totalPages"
                        (pageChange)="onPageChange($event);"></paginator>
 
 
