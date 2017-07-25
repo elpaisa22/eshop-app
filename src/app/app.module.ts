@@ -88,7 +88,7 @@ export const appRoutes : Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes, { useHash: false })
+    RouterModule.forRoot(appRoutes, { useHash: true })
   ],
   providers: [
 		CartService,

@@ -8,7 +8,7 @@ import {ProductResult} from '../../models/product/productresult.model';
 @Injectable()
 export class ProductRepository {
 
-    endpoint_url : string = "http://localhost:8000";
+    endpoint_url : string = "http://shophaus.iarmenda.webfactional.com/";
 
     _productsCache : Product[] = [];
 
