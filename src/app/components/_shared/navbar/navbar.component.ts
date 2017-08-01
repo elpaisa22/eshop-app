@@ -1,4 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+
+import {Section} from '../../../models/category/section.model';
+import {CategoryRepository} from '../../../repositories/category/category.repository';
 
 import {CartService} from '../../../services/cart/cart.service';
 
@@ -6,9 +9,18 @@ import {CartService} from '../../../services/cart/cart.service';
 	templateUrl : './navbar.html',
   selector : 'nav-bar'
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit {
 
-  constructor(private _cartService : CartService) {
+	_sections : Section[];
+
+  constructor(private _cartService : CartService, private _categoryRepository : CategoryRepository,) {
   }
 
+	ngOnInit() {
+		this._categoryRepository.getCategories()
+													  .subscribe(
+															data => this._sections = data,
+															error => console.log(error)
+													  );
+	}
 }

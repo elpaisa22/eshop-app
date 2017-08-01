@@ -35,9 +35,13 @@ import {MainSliderDirective} from './directives/main-slider/main-slider.directiv
 import {ProductDetailDirective} from './directives/product-detail/product-detail.directive';
 import {ProductSliderDirective} from './directives/product-slider/product-slider.directive';
 
+/* Services */
 import {CartService} from './services/cart/cart.service';
 import {FilterService} from './services/filter/filter.service';
+
+/* Repositories */
 import {ProductRepository} from './repositories/product/product.repository';
+import {CategoryRepository} from './repositories/category/category.repository';
 
 export const appRoutes : Routes = [
 	{path: '', component: HomeComponent},
@@ -93,7 +97,8 @@ export const appRoutes : Routes = [
   providers: [
 		CartService,
 		FilterService,
-		ProductRepository
+		ProductRepository,
+		CategoryRepository
 	],
   bootstrap: [AppComponent]
 })

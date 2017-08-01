@@ -3,7 +3,6 @@ import {Http, Headers, Response} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 
 import {Product} from '../../models/product/product.model';
-import {ProductResult} from '../../models/product/productresult.model';
 
 @Injectable()
 export class ProductRepository {
