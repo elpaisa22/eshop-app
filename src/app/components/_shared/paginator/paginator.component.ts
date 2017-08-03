@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
 	template : `
@@ -38,9 +38,12 @@ export class PaginatorComponent implements OnChanges {
 
   @Output() pageChange = new EventEmitter();
 
-	private pages : any[] = [];
+	pages : any[] = [];
+	align = false;
 
-  ngOnChanges() {
+	constructor(){}
+
+  ngOnChanges(changes: SimpleChanges) {
 		this.pages = [];
 
 		var min = this.page - 3;
@@ -55,15 +58,15 @@ export class PaginatorComponent implements OnChanges {
 
   }
 
-  private noPrevious():boolean {
+  public noPrevious():boolean {
      return this.page === 1;
   }
 
-   private noNext():boolean {
+   public noNext():boolean {
        return this.page === this.totalPages;
    }
 
-   private makePage(number:number, text:string, isActive:boolean):{number: number, text: string, active: boolean} {
+   public makePage(number:number, text:string, isActive:boolean):{number: number, text: string, active: boolean} {
        return {
            number: number,
            text: text,
@@ -71,7 +74,7 @@ export class PaginatorComponent implements OnChanges {
        };
    }
 
-	 private selectPage(num : number, event?:MouseEvent) {
+	 public selectPage(num : number, event?:MouseEvent) {
 		 if (event) {
         event.preventDefault();
      }

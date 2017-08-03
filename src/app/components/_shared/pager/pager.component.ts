@@ -49,7 +49,7 @@ export class PagerComponent {
   @Output() pageSizeChange = new EventEmitter();
   @Output() sortByChange = new EventEmitter();
 
-  private changePageSize(tam : number, event?:MouseEvent) {
+  public changePageSize(tam : number, event?:MouseEvent) {
     if (event) {
        event.preventDefault();
     }
@@ -59,7 +59,7 @@ export class PagerComponent {
     });
   }
 
-  private changeSortBy(event?:MouseEvent){
+  public changeSortBy(event?:MouseEvent){
 
     this.sortByChange.emit({
       value : event,

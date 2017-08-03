@@ -16,7 +16,7 @@ export class CatalogComponent implements OnInit {
 	private _subcategory : Number;
 
 	constructor(private _activatedRoute: ActivatedRoute,
-		          private _filterService : FilterService,
+		          public _filterService : FilterService,
 	            private _cartService : CartService) {
 	}
 

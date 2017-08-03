@@ -8,7 +8,7 @@ import {CartService} from '../../services/cart/cart.service';
 })
 export class OrderReviewComponent {
 
-    constructor(private _cartService: CartService) {
+    constructor(public _cartService: CartService) {
     }
 
 }

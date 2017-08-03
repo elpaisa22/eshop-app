@@ -13,7 +13,7 @@ export class NavBarComponent implements OnInit {
 
 	_sections : Section[];
 
-  constructor(private _cartService : CartService, private _categoryRepository : CategoryRepository,) {
+  constructor(public _cartService : CartService, private _categoryRepository : CategoryRepository,) {
   }
 
 	ngOnInit() {

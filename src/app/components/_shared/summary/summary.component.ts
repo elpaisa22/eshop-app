@@ -10,6 +10,6 @@ import {CartService} from '../../../services/cart/cart.service';
 export class SummaryComponent {
 
 	constructor(private _router: Router,
-              private _cartService : CartService) {
+              public _cartService : CartService) {
   }
 }

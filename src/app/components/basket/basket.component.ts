@@ -9,7 +9,7 @@ import {CartService} from '../../services/cart/cart.service';
 })
 export class BasketComponent {
 
-		constructor(private _cartService: CartService) {
+		constructor(public _cartService: CartService) {
 		}
 
 		deleteItem(item : CartItem){
