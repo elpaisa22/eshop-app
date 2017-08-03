@@ -6,6 +6,7 @@ export class Product {
     //category : Category;
     price : number;
     stock: number;
+    sub_category : number;
     images : Image[];
     //brand : string;
     //averageRate : number;

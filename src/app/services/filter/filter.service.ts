@@ -33,8 +33,8 @@ export class FilterService {
 
     this.initialized = false;
 
-    this.loadProducts().subscribe(
-      elem => console.log("Elements loaded: " + elem.length));
+    //this.loadProducts().subscribe(
+      //elem => console.log("Elements loaded: " + elem.length));
   }
 
   private loadProducts(forceReload : boolean = false) : Observable<Product[]> {
@@ -42,6 +42,20 @@ export class FilterService {
     return this._productRepository.getProducts(forceReload)
                                   .map(data => {
                                     this._products = this.sortProducts(data, this.sortBy);
+                                    this.initialized = true;
+                                    this.totalProducts = this._products.length;
+                                    this._actualPage = this.calculateActualPage();
+                                    return this._actualPage;
+                                  });
+  }
+
+
+  public loadProductsBySubcategory(subcategory : Number) {
+    this._products.length = 0;
+    this._productRepository.getProducts()
+                                  .subscribe(data => {
+                                    this._products = this.filterBySubcategory(data, subcategory);
+                                    this._products = this.sortProducts(this._products, this.sortBy);
                                     this.initialized = true;
                                     this.totalProducts = this._products.length;
                                     this._actualPage = this.calculateActualPage();
@@ -78,6 +92,17 @@ export class FilterService {
     }
 
     return result;
+  }
+
+  private filterBySubcategory(data : Product[], subcategory : Number) : Product[] {
+    var result : Product[] = [];
+    for (let prod of data) {
+      if (prod.sub_category == subcategory) {
+          result.push(prod);
+      }
+    }
+    return result;
+
   }
 
   private sortProducts(data : Product[], orderBy: string) : Product[] {

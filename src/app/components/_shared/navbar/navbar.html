@@ -73,7 +73,7 @@ _________________________________________________________ -->
                     <li [routerLinkActive]="['active']"><a [routerLink]="['/home']">Inicio</a>
                     </li>
                     <li *ngFor="let section of _sections" class="dropdown yamm-fw">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">{{section.name}} <b class="caret"></b></a>
+                        <a href="#" [routerLinkActive]="['active']" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">{{section.name}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="yamm-content">
@@ -82,7 +82,7 @@ _________________________________________________________ -->
                                             <h5>{{category.name}}</h5>
                                             <ul>
                                                 <li *ngFor="let subcategory of category.subcategories">
-                                                  <a [routerLink]="['/catalog']">{{subcategory.name}}</a>
+                                                  <a [routerLink]="['/catalog/section', section.id, 'category' , category.id, 'sub-category',subcategory.id]">{{subcategory.name}}</a>
                                                 </li>
                                             </ul>
                                         </div>
