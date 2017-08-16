@@ -97,7 +97,7 @@ export class FilterService {
   private filterBySubcategory(data : Product[], subcategory : Number) : Product[] {
     var result : Product[] = [];
     for (let prod of data) {
-      if (prod.sub_category == subcategory) {
+      if (prod.sub_category.id == subcategory) {
           result.push(prod);
       }
     }

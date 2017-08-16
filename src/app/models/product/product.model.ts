@@ -1,14 +1,15 @@
+import {SubCategory} from '../category/section.model';
+
 export class Product {
     id : number;
     name : string;
     details : string;
     foot_desc : string;
-    //category : Category;
     price : number;
     stock: number;
-    sub_category : number;
+    sub_category : SubCategory;
     images : Image[];
-    //brand : string;
+    brand : string;
     //averageRate : number;
     //comments : Comment[];
 }
@@ -19,10 +20,6 @@ export interface Comment {
     rate? : number;
 }
 
-export interface Category {
-    id : string;
-    description : string;
-}
 
 export interface Image {
     image : string;

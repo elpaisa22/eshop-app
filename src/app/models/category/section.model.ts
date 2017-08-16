@@ -13,4 +13,6 @@ export class Category {
 export class SubCategory {
   id : number;
   name : string;
+  root_category: number;
+  category: number;
 }
