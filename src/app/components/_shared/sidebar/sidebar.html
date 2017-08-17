@@ -1,5 +1,31 @@
-<div class="panel panel-default sidebar-menu">
 
+<div class="panel panel-default sidebar-menu" *ngFor="let group of tags | keys">
+
+  <div class="panel-heading">
+      <h3 class="panel-title">
+        {{tags.get(group).name}}
+        <a class="btn btn-xs btn-danger pull-right" href="#">
+          <i class="fa fa-times-circle"></i> Limpiar
+        </a>
+      </h3>
+  </div>
+
+  <div class="panel-body">
+    <form>
+      <div class="form-group" *ngFor="let value of tags.get(group).tags">
+          <div class="checkbox">
+              <label>
+                  <input type="checkbox">{{value.value}} ({{value.count}})
+              </label>
+          </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<!--
+<div class="panel panel-default sidebar-menu">
     <div class="panel-heading">
         <h3 class="panel-title">Brands <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a></h3>
     </div>
@@ -80,7 +106,7 @@
 
     </div>
 </div>
-
+-->
 
 
 <!-- *** MENUS AND FILTERS END *** -->

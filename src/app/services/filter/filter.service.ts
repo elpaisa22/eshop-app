@@ -3,6 +3,9 @@ import {Injectable} from '@angular/core';
 import {Product} from '../../models/product/product.model';
 import {ProductRepository} from '../../repositories/product/product.repository';
 
+import {Tag} from '../../models/tag/tag.model';
+import {TagGroup, TagValue} from '../../models/tag/taggroup.model';
+
 import {Observable} from "rxjs/Rx";
 
 @Injectable()
@@ -18,6 +21,8 @@ export class FilterService {
 
 	_products : Product[] = [];
   _actualPage : Product[] = [];
+
+  _tags: Map<number, TagGroup> = new Map<number, TagGroup>();
 
   initialized : boolean;
 
@@ -45,6 +50,7 @@ export class FilterService {
                                     this.initialized = true;
                                     this.totalProducts = this._products.length;
                                     this._actualPage = this.calculateActualPage();
+                                    this._tags = this.loadTags(data);
                                     return this._actualPage;
                                   });
   }
@@ -59,6 +65,7 @@ export class FilterService {
                                     this.initialized = true;
                                     this.totalProducts = this._products.length;
                                     this._actualPage = this.calculateActualPage();
+                                    this._tags = this.loadTags(data);
                                     return this._actualPage;
                                   });
   }
@@ -96,11 +103,7 @@ export class FilterService {
 
   private filterBySubcategory(data : Product[], subcategory : Number) : Product[] {
     var result : Product[] = [];
-    for (let prod of data) {
-      if (prod.sub_category.id == subcategory) {
-          result.push(prod);
-      }
-    }
+    result = data.filter(x => x.sub_category.id == subcategory);
     return result;
 
   }
@@ -113,12 +116,56 @@ export class FilterService {
     }
   }
 
+  private loadTags(data : Product[]) : Map<number, TagGroup> {
+    var result: Map<number, TagGroup> = new Map<number, TagGroup>();
+    for (let prod of data) {
+      for (let tag of prod.tags) {
+          if (!result.has(tag.tag_group)) {
+            this.createTagGroup(result, tag);
+          } else {
+            /*
+            var tagGroup = result.get(tag.tag_group);
+            var tagVal = tagGroup.tags.find(x => x.id == tag.id);
+            if (tagVal != null) {
+              tagVal.count = tagVal.count + 1;
+            } else {
+              var tagVal = new TagValue();
+              tagVal.count = 1;
+              tagVal.id = tag.id;
+              tagVal.value = tag.tag;
+              tagGroup.tags.push(tagVal);
+            }
+            */
+          }
+      }
+    }
+
+    return result;
+  }
+
+  createTagGroup(map : Map<number, TagGroup>, tag : Tag){
+    var tagGroup = new TagGroup();
+    tagGroup.id = tag.tag_group;
+    tagGroup.name = tag.tag_group_name;
+    tagGroup.tags = [];
+    var tagVal = new TagValue();
+    tagVal.count = 1;
+    tagVal.id = tag.id;
+    tagVal.value = tag.tag;
+    tagGroup.tags.push(tagVal);
+    map.set(tagGroup.id, tagGroup);
+  }
+
   get isInitialized() : boolean {
       return this.initialized;
   }
 
   get actualPage() : Observable<Product[]> {
     return Observable.of(this._actualPage);
+  }
+
+  get tagsGroup(): Map<number, TagGroup> {
+    return this._tags;
   }
 
   public changeSortOrder(orderBy : string) {

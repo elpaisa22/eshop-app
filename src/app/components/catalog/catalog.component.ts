@@ -28,7 +28,7 @@ export class CatalogComponent implements OnInit {
 			if (this._subcategory != null) {
 					this._filterService.loadProductsBySubcategory(this._subcategory);
 			}
-			window.scrollTo(0, 0);
+			//window.scrollTo(0, 0);
 	 	});
 
 	}
@@ -49,4 +49,15 @@ export class CatalogComponent implements OnInit {
 		this._filterService.changeSortOrder($event.value);
 	}
 
+	get section() : Number {
+		return this._section;
+	}
+
+	get category() : Number {
+		return this._category;
+	}
+
+	get subcategory() : Number {
+		return this._subcategory;
+	}
 }

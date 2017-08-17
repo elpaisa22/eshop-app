@@ -12,9 +12,9 @@
         <div class="col-md-3">
             <!-- *** MENUS AND FILTERS ***
 _________________________________________________________ -->
-            <side-nav></side-nav>
+            <side-nav [section]="section" [category]="category" [subcategory]="subcategory"></side-nav>
 
-            <side-bar></side-bar>
+            <side-bar [tags]="_filterService.tagsGroup"></side-bar>
 
             <div class="banner">
                 <a href="#">

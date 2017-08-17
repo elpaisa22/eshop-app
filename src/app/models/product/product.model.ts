@@ -1,4 +1,5 @@
 import {SubCategory} from '../category/section.model';
+import {Tag} from '../tag/tag.model';
 
 export class Product {
     id : number;
@@ -8,6 +9,7 @@ export class Product {
     price : number;
     stock: number;
     sub_category : SubCategory;
+    tags: Tag[];
     images : Image[];
     brand : string;
     //averageRate : number;

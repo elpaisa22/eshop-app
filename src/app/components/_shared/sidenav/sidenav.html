@@ -1,51 +1,22 @@
 <div class="panel panel-default sidebar-menu">
 
     <div class="panel-heading">
-        <h3 class="panel-title">Categories</h3>
+        <h3 class="panel-title">{{_section.name}}</h3>
     </div>
 
     <div class="panel-body">
         <ul class="nav nav-pills nav-stacked category-menu">
-            <li>
-                <a [routerLink]="['/catalog']">Men <span class="badge pull-right">42</span></a>
-                <ul>
-                    <li><a [routerLink]="['/catalog']">T-shirts</a>
-                    </li>
-                    <li><a [routerLink]="['/catalog']">Shirts</a>
-                    </li>
-                    <li><a [routerLink]="['/catalog']">Pants</a>
-                    </li>
-                    <li><a [routerLink]="['/catalog']">Accessories</a>
-                    </li>
-                </ul>
+            <li *ngFor="let cat of _section.categories" [ngClass]="{'active' : cat.id == category}">
+                <a href="#ul_{{cat.id}}" data-toggle="collapse">{{cat.name}}</a>
+                <div id="ul_{{cat.id}}" class="collapse subcategories" [ngClass]="{'in' : cat.id == category}">
+                  <ul>
+                      <li *ngFor="let subcat of cat.subcategories" [ngClass]="{'active' : subcat.id == subcategory}">
+                        <a [routerLink]="['/catalog/section', _section.id, 'category', cat.id, 'sub-category',subcat.id]" *ngIf="subcat.id != subcategory">{{subcat.name}}</a>
+                        <a *ngIf="subcat.id == subcategory">{{subcat.name}}</a>
+                      </li>
+                  </ul>
+                </div>
             </li>
-            <li class="active">
-                <a [routerLink]="['/catalog']">Ladies  <span class="badge pull-right">123</span></a>
-                <ul>
-                    <li><a [routerLink]="['/catalog']">T-shirts</a>
-                    </li>
-                    <li><a [routerLink]="['/catalog']">Skirts</a>
-                    </li>
-                    <li><a [routerLink]="['/catalog']">Pants</a>
-                    </li>
-                    <li><a [routerLink]="['/catalog']">Accessories</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a [routerLink]="['/catalog']">Kids  <span class="badge pull-right">11</span></a>
-                <ul>
-                    <li><a [routerLink]="['/catalog']">T-shirts</a>
-                    </li>
-                    <li><a [routerLink]="['/catalog']">Skirts</a>
-                    </li>
-                    <li><a [routerLink]="['/catalog']">Pants</a>
-                    </li>
-                    <li><a [routerLink]="['/catalog']">Accessories</a>
-                    </li>
-                </ul>
-            </li>
-
         </ul>
 
     </div>

@@ -29,6 +29,9 @@ import {PagerComponent} from './components/_shared/pager/pager.component';
 import {PaginatorComponent} from './components/_shared/paginator/paginator.component';
 import {SummaryComponent} from './components/_shared/summary/summary.component';
 
+/* Pipes */
+import {KeysPipe} from './pipes/keys/keys.pipe';
+
 /* Directives */
 import {GetInspiredDirective} from './directives/get-inspired/get-inspired.directive';
 import {MainSliderDirective} from './directives/main-slider/main-slider.directive';
@@ -83,6 +86,8 @@ export const appRoutes : Routes = [
     PagerComponent,
     PaginatorComponent,
 		SummaryComponent,
+		/* Pipes */
+		KeysPipe,
 		/* Directives */
 		GetInspiredDirective,
     MainSliderDirective,
