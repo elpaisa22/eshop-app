@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <ul class="breadcrumb">
                 <li><a [routerLink]="['/home']">Inicio</a>
-                <li><a [routerLink]="['/catalog']">Catalogo</a>
+                <li><a [routerLink]="['/catalog/section', product.sub_category?.root_category, 'category', product.sub_category?.category, 'sub-category', product.sub_category?.id]">Catalogo</a>
 
                 <li>{{product.name}}</li>
             </ul>
@@ -13,7 +13,10 @@
 
         <div class="col-md-3">
 
-            <side-nav></side-nav>
+            <side-nav [section]="product.sub_category.root_category"
+                      [category]="product.sub_category.category"
+                      [subcategory]="product.sub_category.id">
+            </side-nav>
 
             <div class="banner">
                 <a href="#">
