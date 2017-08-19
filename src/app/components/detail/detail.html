@@ -1,11 +1,26 @@
 <div id="content">
-    <div class="container">
+    <div class="container" *ngIf="product">
 
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li><a [routerLink]="['/home']">Inicio</a>
-                <li><a [routerLink]="['/catalog/section', product.sub_category?.root_category, 'category', product.sub_category?.category, 'sub-category', product.sub_category?.id]">Catalogo</a>
-
+                <li>
+                  <a [routerLink]="['/home']">Inicio</a>
+                </li>
+                <li *ngIf="section">
+                  <a [routerLink]="['/catalog/section', product.sub_category?.root_category]">
+                    {{section.name}}
+                  </a>
+                </li>
+                <li *ngIf="category">
+                  <a [routerLink]="['/catalog/section', product.sub_category?.root_category, 'category', product.sub_category?.category]">
+                    {{category.name}}
+                  </a>
+                </li>
+                <li *ngIf="subcategory">
+                  <a [routerLink]="['/catalog/section', product.sub_category?.root_category, 'category', product.sub_category?.category, 'sub-category', product.sub_category?.id]">
+                    {{subcategory.name}}
+                  </a>
+                </li>
                 <li>{{product.name}}</li>
             </ul>
 
@@ -13,7 +28,7 @@
 
         <div class="col-md-3">
 
-            <side-nav [section]="product.sub_category.root_category"
+            <side-nav [section]="section"
                       [category]="product.sub_category.category"
                       [subcategory]="product.sub_category.id">
             </side-nav>

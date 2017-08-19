@@ -47,10 +47,7 @@ export class FilterService {
     return this._productRepository.getProducts(forceReload)
                                   .map(data => {
                                     this._products = this.sortProducts(data, this.sortBy);
-                                    this.initialized = true;
-                                    this.totalProducts = this._products.length;
-                                    this._actualPage = this.calculateActualPage();
-                                    this._tags = this.loadTags(data);
+                                    this.commonInitialize();
                                     return this._actualPage;
                                   });
   }
@@ -62,12 +59,38 @@ export class FilterService {
                                   .subscribe(data => {
                                     this._products = this.filterBySubcategory(data, subcategory);
                                     this._products = this.sortProducts(this._products, this.sortBy);
-                                    this.initialized = true;
-                                    this.totalProducts = this._products.length;
-                                    this._actualPage = this.calculateActualPage();
-                                    this._tags = this.loadTags(data);
+                                    this.commonInitialize();
                                     return this._actualPage;
                                   });
+  }
+
+  public loadProductsByCategory(subcategory : Number) {
+    this._products.length = 0;
+    this._productRepository.getProducts()
+                                  .subscribe(data => {
+                                    this._products = this.filterByCategory(data, subcategory);
+                                    this._products = this.sortProducts(this._products, this.sortBy);
+                                    this.commonInitialize();
+                                    return this._actualPage;
+                                  });
+  }
+
+  public loadProductsBySection(section : Number) {
+    this._products.length = 0;
+    this._productRepository.getProducts()
+                                  .subscribe(data => {
+                                    this._products = this.filterBySection(data, section);
+                                    this._products = this.sortProducts(this._products, this.sortBy);
+                                    this.commonInitialize();
+                                    return this._actualPage;
+                                  });
+  }
+
+  private commonInitialize() {
+    this.initialized = true;
+    this.totalProducts = this._products.length;
+    this._actualPage = this.calculateActualPage();
+    this._tags = this.loadTagsByBrand(this._products);
   }
 
   private calculateActualPage() : Product[] {
@@ -105,7 +128,18 @@ export class FilterService {
     var result : Product[] = [];
     result = data.filter(x => x.sub_category.id == subcategory);
     return result;
+  }
 
+  private filterByCategory(data : Product[], category : Number) : Product[] {
+    var result : Product[] = [];
+    result = data.filter(x => x.sub_category.category == category);
+    return result;
+  }
+
+  private filterBySection(data : Product[], section : Number) : Product[] {
+    var result : Product[] = [];
+    result = data.filter(x => x.sub_category.root_category == section);
+    return result;
   }
 
   private sortProducts(data : Product[], orderBy: string) : Product[] {
@@ -142,6 +176,40 @@ export class FilterService {
 
     return result;
   }
+
+  private loadTagsByBrand(data : Product[]) : Map<number, TagGroup> {
+    var result: Map<number, TagGroup> = new Map<number, TagGroup>();
+
+    var tg : TagGroup = new TagGroup();
+    tg.id = 1;
+    tg.name = "Marca";
+    tg.tags = [];
+    result.set(tg.id, tg);
+
+    for (let prod of data) {
+        if (prod.brand) {
+          var tag : Tag = new Tag();
+          tag.tag_group = tg.id;
+          tag.tag_group_name = tg.name;
+          tag.tag = prod.brand;
+
+          var tagGroup = result.get(tag.tag_group);
+          var tagVal = tagGroup.tags.find(x => x.value == tag.tag);
+          if (tagVal != null) {
+            tagVal.count = tagVal.count + 1;
+          } else {
+            var tagVal = new TagValue();
+            tagVal.count = 1;
+            tagVal.value = tag.tag;
+            tagGroup.tags.push(tagVal);
+          }
+        }
+
+      }
+
+    return result;
+  }
+
 
   createTagGroup(map : Map<number, TagGroup>, tag : Tag){
     var tagGroup = new TagGroup();

@@ -3,16 +3,32 @@
 
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li><a [routerLink]="['/home']">Inicio</a>
+                <li>
+                  <a [routerLink]="['/home']">Inicio</a>
                 </li>
-                <li>Catalogo</li>
+                <li *ngIf="section">
+                  <a [routerLink]="['/catalog/section', section.id]">
+                    {{section.name}}
+                  </a>
+                </li>
+                <li *ngIf="category">
+                  <a [routerLink]="['/catalog/section', section.id, 'category', category.id]">
+                    {{category.name}}
+                  </a>
+                </li>
+                <li *ngIf="subcategory">
+                  {{subcategory.name}}
+                </li>
             </ul>
         </div>
 
         <div class="col-md-3">
             <!-- *** MENUS AND FILTERS ***
-_________________________________________________________ -->
-            <side-nav [section]="section" [category]="category" [subcategory]="subcategory"></side-nav>
+            -->
+            <side-nav [section]="section"
+                      [category]="category?.id"
+                      [subcategory]="subcategory?.id"
+                      *ngIf="!category || !subcategory"></side-nav>
 
             <side-bar [tags]="_filterService.tagsGroup"></side-bar>
 

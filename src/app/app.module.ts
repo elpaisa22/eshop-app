@@ -56,7 +56,8 @@ export const appRoutes : Routes = [
 	{path: 'delivery', component: DeliveryComponent},
 	{path: 'payment', component: PaymentComponent},
 	{path: 'orderReview', component: OrderReviewComponent},
-	{path: 'catalog', component: CatalogComponent},
+	{path: 'catalog/section/:section', component: CatalogComponent},
+	{path: 'catalog/section/:section/category/:category', component: CatalogComponent},
 	{path: 'catalog/section/:section/category/:category/sub-category/:subcategory', component: CatalogComponent},
 	{path: 'detail/:id', component: DetailComponent},
 	{path: '**', component: ErrorComponent}

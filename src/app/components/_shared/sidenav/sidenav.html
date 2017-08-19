@@ -1,17 +1,17 @@
-<div class="panel panel-default sidebar-menu">
+<div class="panel panel-default sidebar-menu" *ngIf="section">
 
     <div class="panel-heading">
-        <h3 class="panel-title">{{_section.name}}</h3>
+        <h3 class="panel-title">{{section.name}}</h3>
     </div>
 
     <div class="panel-body">
         <ul class="nav nav-pills nav-stacked category-menu">
-            <li *ngFor="let cat of _section.categories" [ngClass]="{'active' : cat.id == category}">
+            <li *ngFor="let cat of section.categories" [ngClass]="{'active' : cat.id == category}">
                 <a href="#ul_{{cat.id}}" data-toggle="collapse">{{cat.name}}</a>
                 <div id="ul_{{cat.id}}" class="collapse subcategories" [ngClass]="{'in' : cat.id == category}">
                   <ul>
                       <li *ngFor="let subcat of cat.subcategories" [ngClass]="{'active' : subcat.id == subcategory}">
-                        <a [routerLink]="['/catalog/section', _section.id, 'category', cat.id, 'sub-category',subcat.id]" *ngIf="subcat.id != subcategory">{{subcat.name}}</a>
+                        <a [routerLink]="['/catalog/section', section.id, 'category', cat.id, 'sub-category',subcat.id]" *ngIf="subcat.id != subcategory">{{subcat.name}}</a>
                         <a *ngIf="subcat.id == subcategory">{{subcat.name}}</a>
                       </li>
                   </ul>

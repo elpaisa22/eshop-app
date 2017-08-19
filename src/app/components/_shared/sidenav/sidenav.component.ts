@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Router } from '@angular/router';
 
 import {Section} from '../../../models/category/section.model';
@@ -8,20 +8,14 @@ import {CategoryRepository} from '../../../repositories/category/category.reposi
 	templateUrl : './sidenav.html',
   selector : 'side-nav'
 })
-export class SideNavComponent implements OnChanges {
+export class SideNavComponent {
 
-	@Input() section : number;
-	@Input() category : number;
-	@Input() subcategory : number;
+	@Input() section : Section;
 
-	_section : Section = new Section();
+	@Input() category : Number;
+	@Input() subcategory : Number;
 
-	constructor(private _router: Router, private _categoryRepository: CategoryRepository) {
+	constructor(private _router: Router) {
   }
 
-	ngOnChanges(changes: SimpleChanges){
-		this._categoryRepository.getCategories().subscribe(
-			data => {this._section = data.find(x => x.id == this.section)}
-		);
-	}
 }
