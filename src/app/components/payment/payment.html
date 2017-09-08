@@ -19,9 +19,9 @@
 
                   <h1>Finalizar compra</h1>
                   <ul class="nav nav-pills nav-justified">
-                      <li class="disabled"><a><i class="fa fa-map-marker"></i><br>Direccion</a>
-                      </li>
                       <li class="disabled"><a><i class="fa fa-truck"></i><br>Metodo de Envio</a>
+                      </li>
+                      <li class="disabled"><a><i class="fa fa-map-marker"></i><br>Direccion</a>
                       </li>
                       <li class="active"><a><i class="fa fa-money"></i><br>Metodo de Pago</a>
                       </li>
@@ -32,20 +32,21 @@
                   <form (ngSubmit)="sendForm()" #paymentForm="ngForm" class="form-horizontal">
 
                   <div class="content">
-                              <div class="form-group">
-                                  <div [hidden]="!errorsWithCard" class="alert alert-danger alert-dismissible" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <strong>Error!</strong> Verifique los datos ingresados e intentelo nuevamente.
-                                  </div>
+                              <div class="row">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <div [hidden]="!errorsWithCard" class="alert alert-danger" role="alert">
+                                      <strong>Error!</strong> Verifique los datos ingresados e intentelo nuevamente.
+                                    </div>
+                                </div>
                               </div>
 
                               <div class="form-group">
-                                  <label for="email" class="col-sm-2 control-label">E-Mail</label>
+                                  <label for="email" class="col-sm-2 control-label">Email</label>
                                   <div class="col-sm-10">
                                     <input id="email" data-checkout="email" name="email" [(ngModel)]="model.email" required class="form-control"
                                            type="email" placeholder="unadireccion@dominio.com" #email="ngModel"/>
                                     <div [hidden]="email.valid || email.pristine" class="validation-msg alert alert-danger">
-                                      Ingrese su E-Mail
+                                      Ingrese su Email
                                     </div>
                                   </div>
                               </div>
@@ -62,7 +63,7 @@
 
                                   <label for="securityCode" class="col-sm-2 control-label">Cod Seguridad</label>
                                   <div class="col-sm-4">
-                                    <input type="number" id="securityCode" required maxlength="3" class="form-control" data-checkout="securityCode"
+                                    <input type="number" id="securityCode" required class="form-control" data-checkout="securityCode"
                                            name="securityCode" [(ngModel)]="model.securityCode" placeholder="XXX" #securityCode="ngModel"/>
                                     <div [hidden]="securityCode.valid || securityCode.pristine" class="validation-msg alert alert-danger">
                                       Ingrese su Codigo de Verificacion
@@ -128,7 +129,7 @@
 
                   <div class="box-footer">
                       <div class="pull-left">
-                          <a [routerLink]="['/delivery']" class="btn btn-default"><i class="fa fa-chevron-left"></i>Volver al Metodo de Envio</a>
+                          <a [routerLink]="['/address']" class="btn btn-default"><i class="fa fa-chevron-left"></i>Direccion</a>
                       </div>
                       <div class="pull-right">
                           <button type="submit" class="btn btn-primary" [disabled]="!paymentForm.form.valid">

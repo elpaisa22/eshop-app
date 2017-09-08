@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {Router } from '@angular/router';
 
-import {Checkout} from '../../models/checkout/checkout.model';
+import {Payment} from '../../models/checkout/checkout.model';
 
 declare var Mercadopago:any;
 
@@ -11,11 +11,11 @@ declare var Mercadopago:any;
 export class PaymentComponent implements OnInit {
 
 	private _documentTypes : any;
-	private _model : Checkout = new Checkout();
+	private _model : Payment = new Payment();
 	private _token : any = [];
 	private _errorsWithCard : boolean = false;
 
-	constructor(private el: ElementRef) {
+	constructor(private el: ElementRef, private router : Router) {
 	}
 
 	public ngOnInit() {
@@ -26,17 +26,14 @@ export class PaymentComponent implements OnInit {
 	}
 
 	public sendForm() {
-			console.log('Datos de la Tarjeta ' + JSON.stringify(this._model,null,2));
-
 			Mercadopago.createToken(this._model, (status, response) => {
 				if (status != 200 && status != 201) {
 					this._errorsWithCard = true;
 				} else {
-					console.log("OK!");
+					console.log("Token OK!");
 					this._token = response;
+					this.router.navigate(['/orderReview']);
 				}
-
-				console.log('Respuesta ' + JSON.stringify(this._token, null,2));
 			});
 
 	}

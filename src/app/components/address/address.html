@@ -19,9 +19,9 @@
                 <form>
                     <h1>Finalizar compra</h1>
                     <ul class="nav nav-pills nav-justified">
-                        <li class="active"><a><i class="fa fa-map-marker"></i><br>Direccion</a>
-                        </li>
                         <li class="disabled"><a><i class="fa fa-truck"></i><br>Metodo de Envio</a>
+                        </li>
+                        <li class="active"><a><i class="fa fa-map-marker"></i><br>Direccion</a>
                         </li>
                         <li class="disabled"><a><i class="fa fa-money"></i><br>Metodo de Pago</a>
                         </li>
@@ -107,10 +107,10 @@
 
                     <div class="box-footer">
                         <div class="pull-left">
-                            <a [routerLink]="['/basket']" class="btn btn-default"><i class="fa fa-chevron-left"></i>Volver al carrito</a>
+                            <a [routerLink]="['/delivery']" class="btn btn-default"><i class="fa fa-chevron-left"></i>Metodo de envio</a>
                         </div>
                         <div class="pull-right">
-                            <button [routerLink]="['/delivery']" class="btn btn-primary">Metodo de envio<i class="fa fa-chevron-right"></i>
+                            <button [routerLink]="['/payment']" class="btn btn-primary">Metodo de Pago<i class="fa fa-chevron-right"></i>
                             </button>
                         </div>
                     </div>
