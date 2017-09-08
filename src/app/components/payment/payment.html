@@ -16,7 +16,7 @@
       <div class="col-md-9" id="checkout">
 
           <div class="box">
-              <form>
+
                   <h1>Finalizar compra</h1>
                   <ul class="nav nav-pills nav-justified">
                       <li class="disabled"><a><i class="fa fa-map-marker"></i><br>Direccion</a>
@@ -29,50 +29,61 @@
                       </li>
                   </ul>
 
+                  <form (ngSubmit)="sendForm()" #paymentForm="ngForm" class="form-horizontal">
+
                   <div class="content">
-                      <div class="row">
-                          <div class="col-sm-6">
-                              <div class="box payment-method">
 
-                                  <h4>Paypal</h4>
-
-                                  <p>We like it all.</p>
-
-                                  <div class="box-footer text-center">
-
-                                      <input type="radio" name="payment" value="payment1">
+                              <div class="form-group">
+                                  <label for="email" class="col-sm-2 control-label">E-Mail</label>
+                                  <div class="col-sm-10">
+                                    <input id="email" data-checkout="email" name="email" [(ngModel)]="model.email" required class="form-control" type="email" placeholder="unadireccion@dominio.com" #name="ngModel"/>
                                   </div>
                               </div>
-                          </div>
-                          <div class="col-sm-6">
-                              <div class="box payment-method">
 
-                                  <h4>Payment gateway</h4>
+                              <div class="form-group">
+                                  <label for="cardNumber" class="col-sm-2 control-label">Nro Tarjeta</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="cardNumber" required class="form-control" data-checkout="cardNumber" name="cardNumber" [(ngModel)]="model.cardNumber" placeholder="XXXX XXXX XXXX XXXX" />
+                                  </div>
 
-                                  <p>VISA and Mastercard only.</p>
-
-                                  <div class="box-footer text-center">
-
-                                      <input type="radio" name="payment" value="payment2">
+                                  <label for="securityCode" class="col-sm-2 control-label">Cod Seguridad</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="securityCode" required class="form-control" data-checkout="securityCode" name="securityCode" [(ngModel)]="model.securityCode" placeholder="XXX" />
                                   </div>
                               </div>
-                          </div>
 
-                          <div class="col-sm-6">
-                              <div class="box payment-method">
-
-                                  <h4>Cash on delivery</h4>
-
-                                  <p>You pay when you get it.</p>
-
-                                  <div class="box-footer text-center">
-
-                                      <input type="radio" name="payment" value="payment3">
+                              <div class="form-group">
+                                  <label for="cardExpirationMonth" class="col-sm-2 control-label">Caducidad</label>
+                                  <div class="col-sm-5">
+                                    <input type="text" id="cardExpirationMonth" required class="form-control" data-checkout="cardExpirationMonth" name="cardExpirationMonth" [(ngModel)]="model.cardExpirationMonth" placeholder="01" />
+                                  </div>
+                                  <div class="col-sm-5">
+                                    <input type="text" id="cardExpirationYear" required class="form-control" data-checkout="cardExpirationYear" name="cardExpirationYear" [(ngModel)]="model.cardExpirationYear" placeholder="1900" />
                                   </div>
                               </div>
-                          </div>
-                      </div>
-                      <!-- /.row -->
+
+                              <div class="form-group">
+                                  <label for="cardholderName" class="col-sm-2 control-label">Titular</label>
+                                  <div class="col-sm-10">
+                                    <input type="text" id="cardholderName" required class="form-control" data-checkout="cardholderName" name="cardholderName" [(ngModel)]="model.cardholderName" placeholder="Titular de la tarjeta" />
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <label for="docType" class="col-sm-2 control-label">Tipo Documento</label>
+                                  <div class="col-sm-4">
+                                    <select id="docType" data-checkout="docType" name="docType" required [(ngModel)]="model.docType" class="form-control">
+                                      <option *ngFor="let c of documentTypes" [ngValue]="c">{{c.name}}</option>
+                                    </select>
+                                  </div>
+
+                                  <label for="docNumber" class="col-sm-2 control-label">Nro Documento</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="docNumber" required class="form-control" data-checkout="docNumber" name="docNumber" [(ngModel)]="model.docNumber" placeholder="XXXXXXXX" />
+                                  </div>
+                              </div>
+
+
 
                   </div>
                   <!-- /.content -->
@@ -82,11 +93,15 @@
                           <a [routerLink]="['/delivery']" class="btn btn-default"><i class="fa fa-chevron-left"></i>Volver al Metodo de Envio</a>
                       </div>
                       <div class="pull-right">
-                          <button [routerLink]="['/orderReview']" class="btn btn-primary">Revisar Orden<i class="fa fa-chevron-right"></i>
+                          <button type="submit" class="btn btn-primary" [disabled]="!paymentForm.form.valid">
+                              Revisar Orden
+                              <i class="fa fa-chevron-right"></i>
                           </button>
                       </div>
                   </div>
-              </form>
+
+                  </form>
+
           </div>
           <!-- /.box -->
 
