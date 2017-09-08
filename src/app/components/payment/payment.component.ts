@@ -13,6 +13,7 @@ export class PaymentComponent implements OnInit {
 	private _documentTypes : any;
 	private _model : Checkout = new Checkout();
 	private _token : any = [];
+	private _errorsWithCard : boolean = false;
 
 	constructor(private el: ElementRef) {
 	}
@@ -21,6 +22,7 @@ export class PaymentComponent implements OnInit {
 		Mercadopago.setPublishableKey("TEST-846d251c-6188-4a08-babc-927124773c8c");
 
 		this._documentTypes = Mercadopago.getIdentificationTypes();
+		this._errorsWithCard = false;
 	}
 
 	public sendForm() {
@@ -28,7 +30,7 @@ export class PaymentComponent implements OnInit {
 
 			Mercadopago.createToken(this._model, (status, response) => {
 				if (status != 200 && status != 201) {
-					alert("verify filled data (" + status + ")");
+					this._errorsWithCard = true;
 				} else {
 					console.log("OK!");
 					this._token = response;
@@ -45,5 +47,9 @@ export class PaymentComponent implements OnInit {
 
 	get model() {
 		return this._model;
+	}
+
+	get errorsWithCard() {
+		return this._errorsWithCard;
 	}
 }

@@ -32,56 +32,94 @@
                   <form (ngSubmit)="sendForm()" #paymentForm="ngForm" class="form-horizontal">
 
                   <div class="content">
+                              <div class="form-group">
+                                  <div [hidden]="!errorsWithCard" class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <strong>Error!</strong> Verifique los datos ingresados e intentelo nuevamente.
+                                  </div>
+                              </div>
 
                               <div class="form-group">
                                   <label for="email" class="col-sm-2 control-label">E-Mail</label>
                                   <div class="col-sm-10">
-                                    <input id="email" data-checkout="email" name="email" [(ngModel)]="model.email" required class="form-control" type="email" placeholder="unadireccion@dominio.com" #name="ngModel"/>
+                                    <input id="email" data-checkout="email" name="email" [(ngModel)]="model.email" required class="form-control"
+                                           type="email" placeholder="unadireccion@dominio.com" #email="ngModel"/>
+                                    <div [hidden]="email.valid || email.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese su E-Mail
+                                    </div>
                                   </div>
                               </div>
 
                               <div class="form-group">
                                   <label for="cardNumber" class="col-sm-2 control-label">Nro Tarjeta</label>
                                   <div class="col-sm-4">
-                                    <input type="text" id="cardNumber" required class="form-control" data-checkout="cardNumber" name="cardNumber" [(ngModel)]="model.cardNumber" placeholder="XXXX XXXX XXXX XXXX" />
+                                    <input type="text" id="cardNumber" required class="form-control" data-checkout="cardNumber"
+                                           name="cardNumber" [(ngModel)]="model.cardNumber" placeholder="XXXX XXXX XXXX XXXX" #cardNumber="ngModel"/>
+                                    <div [hidden]="cardNumber.valid || cardNumber.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese su Numero de Tarjeta
+                                    </div>
                                   </div>
 
                                   <label for="securityCode" class="col-sm-2 control-label">Cod Seguridad</label>
                                   <div class="col-sm-4">
-                                    <input type="text" id="securityCode" required class="form-control" data-checkout="securityCode" name="securityCode" [(ngModel)]="model.securityCode" placeholder="XXX" />
+                                    <input type="number" id="securityCode" required maxlength="3" class="form-control" data-checkout="securityCode"
+                                           name="securityCode" [(ngModel)]="model.securityCode" placeholder="XXX" #securityCode="ngModel"/>
+                                    <div [hidden]="securityCode.valid || securityCode.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese su Codigo de Verificacion
+                                    </div>
                                   </div>
                               </div>
 
                               <div class="form-group">
                                   <label for="cardExpirationMonth" class="col-sm-2 control-label">Caducidad</label>
                                   <div class="col-sm-5">
-                                    <input type="text" id="cardExpirationMonth" required class="form-control" data-checkout="cardExpirationMonth" name="cardExpirationMonth" [(ngModel)]="model.cardExpirationMonth" placeholder="01" />
+                                    <input type="text" id="cardExpirationMonth" required class="form-control" data-checkout="cardExpirationMonth"
+                                           name="cardExpirationMonth" [(ngModel)]="model.cardExpirationMonth" placeholder="01" #cardExpirationMonth="ngModel"/>
+                                    <div [hidden]="cardExpirationMonth.valid || cardExpirationMonth.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese el Mes de Caducidad de su Tarjeta
+                                    </div>
                                   </div>
                                   <div class="col-sm-5">
-                                    <input type="text" id="cardExpirationYear" required class="form-control" data-checkout="cardExpirationYear" name="cardExpirationYear" [(ngModel)]="model.cardExpirationYear" placeholder="1900" />
+                                    <input type="text" id="cardExpirationYear" required class="form-control" data-checkout="cardExpirationYear"
+                                           name="cardExpirationYear" [(ngModel)]="model.cardExpirationYear" placeholder="1900" #cardExpirationYear="ngModel"/>
+                                    <div [hidden]="cardExpirationYear.valid || cardExpirationYear.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese el Año de Caducidad de su Tarjeta
+                                    </div>
                                   </div>
                               </div>
 
                               <div class="form-group">
                                   <label for="cardholderName" class="col-sm-2 control-label">Titular</label>
                                   <div class="col-sm-10">
-                                    <input type="text" id="cardholderName" required class="form-control" data-checkout="cardholderName" name="cardholderName" [(ngModel)]="model.cardholderName" placeholder="Titular de la tarjeta" />
+                                    <input type="text" id="cardholderName" required class="form-control" data-checkout="cardholderName"
+                                           name="cardholderName" [(ngModel)]="model.cardholderName" placeholder="Titular de la tarjeta" #cardholderName="ngModel"/>
+                                    <div [hidden]="cardholderName.valid || cardholderName.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese el Nombre del Titular
+                                    </div>
                                   </div>
                               </div>
 
                               <div class="form-group">
                                   <label for="docType" class="col-sm-2 control-label">Tipo Documento</label>
                                   <div class="col-sm-4">
-                                    <select id="docType" data-checkout="docType" name="docType" required [(ngModel)]="model.docType" class="form-control">
+                                    <select id="docType" data-checkout="docType" name="docType" required [(ngModel)]="model.docType" class="form-control" #docType="ngModel">
                                       <option *ngFor="let c of documentTypes" [ngValue]="c">{{c.name}}</option>
                                     </select>
+                                    <div [hidden]="docType.valid || docType.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese el Tipo de Documento del Titular
+                                    </div>
                                   </div>
 
                                   <label for="docNumber" class="col-sm-2 control-label">Nro Documento</label>
                                   <div class="col-sm-4">
-                                    <input type="text" id="docNumber" required class="form-control" data-checkout="docNumber" name="docNumber" [(ngModel)]="model.docNumber" placeholder="XXXXXXXX" />
+                                    <input type="text" id="docNumber" required class="form-control" data-checkout="docNumber"
+                                           name="docNumber" [(ngModel)]="model.docNumber" placeholder="XXXXXXXX" #docNumber="ngModel"/>
+                                    <div [hidden]="docNumber.valid || docNumber.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese el Numero de Documento del Titular
+                                    </div>
                                   </div>
                               </div>
+
 
 
 
