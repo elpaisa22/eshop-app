@@ -9,19 +9,19 @@
             <tbody>
                 <tr>
                     <td>Subtotal</td>
-                    <th>$ {{_cartService.totalPrice}}</th>
+                    <th>$ {{_cartService.totalPrice | number:'3.2-2'}}</th>
                 </tr>
                 <tr>
                     <td>Envio</td>
-                    <th>$10.00</th>
+                    <th>$ 10.00</th>
                 </tr>
                 <tr>
                     <td>Impuestos</td>
-                    <th>$0.00</th>
+                    <th>$ 0.00</th>
                 </tr>
                 <tr class="total">
                     <td>Total</td>
-                    <th>$ {{_cartService.totalPrice}}</th>
+                    <th>$ {{_cartService.totalPrice | number:'3.2-2'}}</th>
                 </tr>
             </tbody>
         </table>

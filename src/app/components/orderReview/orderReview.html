@@ -19,9 +19,9 @@
               <form>
                   <h1>Finalizar compra</h1>
                   <ul class="nav nav-pills nav-justified">
-                      <li><a [routerLink]="['/address']"><i class="fa fa-map-marker"></i><br>Direccion</a>
-                      </li>
                       <li><a [routerLink]="['/delivery']"><i class="fa fa-truck"></i><br>Metodo de Envio</a>
+                      </li>
+                      <li><a [routerLink]="['/address']"><i class="fa fa-map-marker"></i><br>Direccion</a>
                       </li>
                       <li><a [routerLink]="['/payment']"><i class="fa fa-money"></i><br>Metodo de Pago</a>
                       </li>
@@ -37,8 +37,7 @@
                                       <th colspan="2">Producto</th>
                                       <th>Cantidad</th>
                                       <th>Precio</th>
-                                      <th>Descuento</th>
-                                      <th>Total</th>
+                                      <th colspan="2">Total</th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -55,15 +54,14 @@
                                           {{item.count}}
                                       </td>
                                       <td>$ {{item.price}}</td>
-                                      <td>$0.00</td>
-                                      <td>$ {{item.price * item.count}}</td>
+                                      <td>$ {{item.price * item.count | number:'3.2-2'}}</td>
                                   </tr>
 
                               </tbody>
                               <tfoot>
                                   <tr>
-                                      <th colspan="5">Total</th>
-                                      <th colspan="2">$ {{_cartService.totalPrice}}</th>
+                                      <th colspan="4">Total</th>
+                                      <th colspan="2">$ {{_cartService.totalPrice | number:'3.2-2'}}</th>
                                   </tr>
                               </tfoot>
                           </table>
