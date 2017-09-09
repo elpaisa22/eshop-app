@@ -7,6 +7,12 @@ export class Payment {
   cardholderName : string;
   docType : string = 'DNI';
   docNumber : string;
+  paymentMethodId : string;
+  paymentMethodName : string;
+  issuerId : string;
+  issuerName : string;
+  installments : number;
+  additionalInfoNeeded : string[];
 }
 
 export class Delivery {

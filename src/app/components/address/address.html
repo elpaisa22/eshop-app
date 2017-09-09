@@ -144,12 +144,12 @@
                         <div class="pull-left">
                             <a [routerLink]="['/delivery']" class="btn btn-default">
                               <i class="fa fa-chevron-left"></i>
-                              Metodo de envio
+                              Volver
                             </a>
                         </div>
                         <div class="pull-right">
                             <button type="submit" class="btn btn-primary" [disabled]="!addressForm.form.valid">
-                              Metodo de Pago
+                              Siguiente
                               <i class="fa fa-chevron-right"></i>
                             </button>
                         </div>
@@ -160,19 +160,29 @@
 
                   <div class="panel panel-warning">
                     <div class="panel-body">
-                        Usted ha seleccionado la opcion de <strong>Retiro en la sucursal</strong>. No debe ingresar la direccion.
+                        Usted ha seleccionado la opcion de <strong>Retiro en la sucursal</strong>. Para retirar sus productos, por favor concurrir a: <br/>
+                        <br/>
+                        <div class="box" style="padding: 20px">
+                          <div class="row">
+                              <div class="col-md-offset-4 col-sm-4">
+                                   <h4>España 3024</h4>
+                                   <h4>Olavarría (CP 7400)</h4>
+                                   <h5>Buenos Aires</h5>
+                                </div>
+                          </div>
+                        </div>
                     </div>
                   </div>
                   <div class="box-footer">
                       <div class="pull-left">
                           <a [routerLink]="['/delivery']" class="btn btn-default">
                             <i class="fa fa-chevron-left"></i>
-                            Metodo de envio
+                            Volver
                           </a>
                       </div>
                       <div class="pull-right">
                           <a [routerLink]="['/payment']" class="btn btn-primary">
-                            Metodo de Pago
+                            Siguiente
                             <i class="fa fa-chevron-right"></i>
                           </a>
                       </div>

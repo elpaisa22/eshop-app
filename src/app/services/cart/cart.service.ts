@@ -15,6 +15,8 @@ export class CartService {
     private _delivery : Delivery;
     private _payment : Payment;
 
+    private _token : any;
+
     constructor() {
       //Verifica si ya existen items anteriores
       this.loadItems();
@@ -34,6 +36,14 @@ export class CartService {
 
     set payment(payment : Payment) {
       this._payment = payment;
+    }
+
+    get token() {
+      return this._token;
+    }
+
+    set token(token) {
+      this._token = token;
     }
 
     //Levanta lo items del localStorage

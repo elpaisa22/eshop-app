@@ -32,18 +32,10 @@
                   <form (ngSubmit)="sendForm()" #paymentForm="ngForm" class="form-horizontal">
 
                   <div class="content">
-                              <div class="row">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <div [hidden]="!errorsWithCard" class="alert alert-danger" role="alert">
-                                      <strong>Error!</strong> Verifique los datos ingresados e intentelo nuevamente.
-                                    </div>
-                                </div>
-                              </div>
-
                               <div class="form-group">
                                   <label for="email" class="col-sm-2 control-label">Email</label>
                                   <div class="col-sm-10">
-                                    <input id="email" data-checkout="email" name="email" [(ngModel)]="model.email" required class="form-control"
+                                    <input id="email" name="email" [(ngModel)]="model.email" required class="form-control"
                                            type="email" placeholder="unadireccion@dominio.com" #email="ngModel"/>
                                     <div [hidden]="email.valid || email.pristine" class="validation-msg alert alert-danger">
                                       Ingrese su Email
@@ -54,7 +46,8 @@
                               <div class="form-group">
                                   <label for="cardNumber" class="col-sm-2 control-label">Nro Tarjeta</label>
                                   <div class="col-sm-4">
-                                    <input type="text" id="cardNumber" required class="form-control" data-checkout="cardNumber"
+                                    <input type="text" id="cardNumber" required class="form-control"
+                                           (change)="onCardNumberChange($event)"
                                            name="cardNumber" [(ngModel)]="model.cardNumber" placeholder="XXXX XXXX XXXX XXXX" #cardNumber="ngModel"/>
                                     <div [hidden]="cardNumber.valid || cardNumber.pristine" class="validation-msg alert alert-danger">
                                       Ingrese su Numero de Tarjeta
@@ -63,7 +56,7 @@
 
                                   <label for="securityCode" class="col-sm-2 control-label">Cod Seguridad</label>
                                   <div class="col-sm-4">
-                                    <input type="number" id="securityCode" required class="form-control" data-checkout="securityCode"
+                                    <input type="number" id="securityCode" required class="form-control"
                                            name="securityCode" [(ngModel)]="model.securityCode" placeholder="XXX" #securityCode="ngModel"/>
                                     <div [hidden]="securityCode.valid || securityCode.pristine" class="validation-msg alert alert-danger">
                                       Ingrese su Codigo de Verificacion
@@ -73,16 +66,18 @@
 
                               <div class="form-group">
                                   <label for="cardExpirationMonth" class="col-sm-2 control-label">Caducidad</label>
-                                  <div class="col-sm-5">
-                                    <input type="text" id="cardExpirationMonth" required class="form-control" data-checkout="cardExpirationMonth"
+                                  <div class="col-sm-2">
+                                    <input type="text" id="cardExpirationMonth" required class="form-control"
                                            name="cardExpirationMonth" [(ngModel)]="model.cardExpirationMonth" placeholder="01" #cardExpirationMonth="ngModel"/>
+                                  </div>
+                                  <div class="col-sm-2">
+                                    <input type="text" id="cardExpirationYear" required class="form-control"
+                                           name="cardExpirationYear" [(ngModel)]="model.cardExpirationYear" placeholder="1900" #cardExpirationYear="ngModel"/>
+                                  </div>
+                                  <div class="col-md-offset-2 col-sm-10">
                                     <div [hidden]="cardExpirationMonth.valid || cardExpirationMonth.pristine" class="validation-msg alert alert-danger">
                                       Ingrese el Mes de Caducidad de su Tarjeta
                                     </div>
-                                  </div>
-                                  <div class="col-sm-5">
-                                    <input type="text" id="cardExpirationYear" required class="form-control" data-checkout="cardExpirationYear"
-                                           name="cardExpirationYear" [(ngModel)]="model.cardExpirationYear" placeholder="1900" #cardExpirationYear="ngModel"/>
                                     <div [hidden]="cardExpirationYear.valid || cardExpirationYear.pristine" class="validation-msg alert alert-danger">
                                       Ingrese el Año de Caducidad de su Tarjeta
                                     </div>
@@ -92,7 +87,7 @@
                               <div class="form-group">
                                   <label for="cardholderName" class="col-sm-2 control-label">Titular</label>
                                   <div class="col-sm-10">
-                                    <input type="text" id="cardholderName" required class="form-control" data-checkout="cardholderName"
+                                    <input type="text" id="cardholderName" required class="form-control"
                                            name="cardholderName" [(ngModel)]="model.cardholderName" placeholder="Titular de la tarjeta" #cardholderName="ngModel"/>
                                     <div [hidden]="cardholderName.valid || cardholderName.pristine" class="validation-msg alert alert-danger">
                                       Ingrese el Nombre del Titular
@@ -103,7 +98,7 @@
                               <div class="form-group">
                                   <label for="docType" class="col-sm-2 control-label">Tipo Documento</label>
                                   <div class="col-sm-4">
-                                    <select id="docType" data-checkout="docType" name="docType" required [(ngModel)]="model.docType" class="form-control" #docType="ngModel">
+                                    <select id="docType" name="docType" required [(ngModel)]="model.docType" class="form-control" #docType="ngModel">
                                       <option *ngFor="let c of documentTypes" [ngValue]="c.id">{{c.name}}</option>
                                     </select>
                                     <div [hidden]="docType.valid || docType.pristine" class="validation-msg alert alert-danger">
@@ -113,7 +108,7 @@
 
                                   <label for="docNumber" class="col-sm-2 control-label">Nro Documento</label>
                                   <div class="col-sm-4">
-                                    <input type="text" id="docNumber" required class="form-control" data-checkout="docNumber"
+                                    <input type="text" id="docNumber" required class="form-control"
                                            name="docNumber" [(ngModel)]="model.docNumber" placeholder="XXXXXXXX" #docNumber="ngModel"/>
                                     <div [hidden]="docNumber.valid || docNumber.pristine" class="validation-msg alert alert-danger">
                                       Ingrese el Numero de Documento del Titular
@@ -121,7 +116,47 @@
                                   </div>
                               </div>
 
+                              <div class="form-group" [hidden]="!cardNumberFilled">
+                                <label for="paymentMethodId" class="col-sm-2 control-label">Metodo de Pago</label>
+                                <div class="col-sm-4">
+                                  <input type="text" id="paymentMethodId" name="paymentMethodId"
+                                          disabled [(ngModel)]="model.paymentMethodName" class="form-control">
+                                </div>
 
+                                <label for="issuerId" class="col-sm-2 control-label">Emisor</label>
+                                <div class="col-sm-4">
+                                  <select id="issuerId" name="issuerId" required *ngIf="issuerIdRequired"
+                                          [(ngModel)]="model.issuerId" class="form-control" #fldIssuerId="ngModel">
+                                    <option *ngFor="let i of issuers" [ngValue]="i.id">{{i.name}}</option>
+                                  </select>
+                                  <div *ngIf="issuerIdRequired && fldIssuerId" [hidden]="fldIssuerId.valid || fldIssuerId.pristine" class="validation-msg alert alert-danger">
+                                    Ingrese el Tipo de Documento del Titular
+                                  </div>
+                                  <input type="text" id="issuerId" name="issuerId" *ngIf="!issuerIdRequired"
+                                          disabled [(ngModel)]="model.issuerName" class="form-control">
+                                </div>
+                              </div>
+
+                              <div class="form-group" [hidden]="!cardNumberFilled">
+                                <label for="installments" class="col-sm-2 control-label">Cuotas</label>
+                                <div class="col-sm-5">
+                                  <select id="installments" name="installments" required
+                                          [(ngModel)]="model.installments" class="form-control" #fldInstallments="ngModel">
+                                    <option *ngFor="let i of installments" [ngValue]="i.installments">{{i.recommended_message}}</option>
+                                  </select>
+                                  <div [hidden]="fldInstallments.valid || fldInstallments.pristine" class="validation-msg alert alert-danger">
+                                    Ingrese un Plan de Cuotas
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <div [hidden]="!errorsWithCard" class="alert alert-danger" role="alert">
+                                      <strong>Error!</strong> Verifique los datos ingresados e intentelo nuevamente.
+                                    </div>
+                                </div>
+                              </div>
 
 
                   </div>
@@ -129,11 +164,14 @@
 
                   <div class="box-footer">
                       <div class="pull-left">
-                          <a [routerLink]="['/address']" class="btn btn-default"><i class="fa fa-chevron-left"></i>Direccion</a>
+                          <a [routerLink]="['/address']" class="btn btn-default">
+                            <i class="fa fa-chevron-left"></i>
+                            Volver
+                          </a>
                       </div>
                       <div class="pull-right">
                           <button type="submit" class="btn btn-primary" [disabled]="!paymentForm.form.valid">
-                              Revisar Orden
+                              Siguiente
                               <i class="fa fa-chevron-right"></i>
                           </button>
                       </div>
