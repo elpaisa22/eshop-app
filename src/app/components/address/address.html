@@ -1,4 +1,4 @@
-<div id="content">
+<div id="content" *ngIf="model != null">
     <div class="container">
 
         <div class="col-md-12">
@@ -16,31 +16,40 @@
         <div class="col-md-9" id="checkout">
 
             <div class="box">
-                <form>
-                    <h1>Finalizar compra</h1>
-                    <ul class="nav nav-pills nav-justified">
-                        <li class="disabled"><a><i class="fa fa-truck"></i><br>Metodo de Envio</a>
-                        </li>
-                        <li class="active"><a><i class="fa fa-map-marker"></i><br>Direccion</a>
-                        </li>
-                        <li class="disabled"><a><i class="fa fa-money"></i><br>Metodo de Pago</a>
-                        </li>
-                        <li class="disabled"><a><i class="fa fa-eye"></i><br>Revisar Orden</a>
-                        </li>
-                    </ul>
+                <h1>Finalizar compra</h1>
+                <ul class="nav nav-pills nav-justified">
+                    <li class="disabled"><a><i class="fa fa-truck"></i><br>Metodo de Envio</a>
+                    </li>
+                    <li class="active"><a><i class="fa fa-map-marker"></i><br>Direccion</a>
+                    </li>
+                    <li class="disabled"><a><i class="fa fa-money"></i><br>Metodo de Pago</a>
+                    </li>
+                    <li class="disabled"><a><i class="fa fa-eye"></i><br>Revisar Orden</a>
+                    </li>
+                </ul>
 
-                    <div class="content">
+                <form (ngSubmit)="sendForm()" #addressForm="ngForm" *ngIf="model.method != 'NONE'">
+
+                    <div class="content" *ngIf="model != null">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="firstname">Nombre</label>
-                                    <input type="text" class="form-control" id="firstname">
+                                    <input type="text" class="form-control" id="firstname" name="firstname"
+                                           required [(ngModel)]="model.address.firstname" #firstname="ngModel">
+                                    <div [hidden]="firstname.valid || firstname.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese su Nombre
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="lastname">Apellido</label>
-                                    <input type="text" class="form-control" id="lastname">
+                                    <input type="text" class="form-control" id="lastname" name="lastname"
+                                           required [(ngModel)]="model.address.lastname" #lastname="ngModel">
+                                    <div [hidden]="lastname.valid || lastname.pristine" class="validation-msg alert alert-danger">
+                                       Ingrese su Apellido
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +65,11 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="street">Calle</label>
-                                    <input type="text" class="form-control" id="street">
+                                    <input type="text" class="form-control" id="street" name="street"
+                                           required [(ngModel)]="model.address.street" #street="ngModel">
+                                    <div [hidden]="street.valid || street.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese la Calle
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -66,38 +79,60 @@
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group">
                                     <label for="city">Ciudad</label>
-                                    <input type="text" class="form-control" id="city">
+                                    <input type="text" class="form-control" id="city" name="city"
+                                           required [(ngModel)]="model.address.city" #city="ngModel">
+                                    <div [hidden]="city.valid || city.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese la Ciudad
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group">
                                     <label for="zip">Codigo Postal</label>
-                                    <input type="text" class="form-control" id="zip">
+                                    <input type="text" class="form-control" id="zip" name="zip"
+                                           required [(ngModel)]="model.address.zip" #zip="ngModel">
+                                    <div [hidden]="zip.valid || zip.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese la Ciudad
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group">
                                     <label for="state">Provincia</label>
-                                    <select class="form-control" id="state"></select>
+                                    <select class="form-control" id="state" name="state"
+                                            required [(ngModel)]="model.address.state" class="form-control" #state="ngModel">
+                                      <option *ngFor="let s of states" [ngValue]="s.id">{{s.name}}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group">
                                     <label for="country">Pais</label>
-                                    <select class="form-control" id="country"></select>
+                                    <select class="form-control" id="country" name="country"
+                                            required [(ngModel)]="model.address.country" class="form-control" #country="ngModel">
+                                      <option *ngFor="let s of countries" [ngValue]="s.id">{{s.name}}</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="phone">Telefono</label>
-                                    <input type="text" class="form-control" id="phone">
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                           required [(ngModel)]="model.address.phone" #phone="ngModel">
+                                    <div [hidden]="phone.valid || phone.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese un Telefono
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="text" class="form-control" id="email">
+                                    <input type="text" class="form-control" id="email" name="email"
+                                           required [(ngModel)]="model.address.email" #email="ngModel">
+                                    <div [hidden]="email.valid || email.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese un Email
+                                    </div>
                                 </div>
                             </div>
 
@@ -107,14 +142,44 @@
 
                     <div class="box-footer">
                         <div class="pull-left">
-                            <a [routerLink]="['/delivery']" class="btn btn-default"><i class="fa fa-chevron-left"></i>Metodo de envio</a>
+                            <a [routerLink]="['/delivery']" class="btn btn-default">
+                              <i class="fa fa-chevron-left"></i>
+                              Metodo de envio
+                            </a>
                         </div>
                         <div class="pull-right">
-                            <button [routerLink]="['/payment']" class="btn btn-primary">Metodo de Pago<i class="fa fa-chevron-right"></i>
+                            <button type="submit" class="btn btn-primary" [disabled]="!addressForm.form.valid">
+                              Metodo de Pago
+                              <i class="fa fa-chevron-right"></i>
                             </button>
                         </div>
                     </div>
                 </form>
+
+                <div class="content" *ngIf="model.method == 'NONE'">
+
+                  <div class="panel panel-warning">
+                    <div class="panel-body">
+                        Usted ha seleccionado la opcion de <strong>Retiro en la sucursal</strong>. No debe ingresar la direccion.
+                    </div>
+                  </div>
+                  <div class="box-footer">
+                      <div class="pull-left">
+                          <a [routerLink]="['/delivery']" class="btn btn-default">
+                            <i class="fa fa-chevron-left"></i>
+                            Metodo de envio
+                          </a>
+                      </div>
+                      <div class="pull-right">
+                          <a [routerLink]="['/payment']" class="btn btn-primary">
+                            Metodo de Pago
+                            <i class="fa fa-chevron-right"></i>
+                          </a>
+                      </div>
+                  </div>
+
+                </div>
+
             </div>
             <!-- /.box -->
 

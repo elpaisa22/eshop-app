@@ -1,4 +1,4 @@
-<div id="content">
+<div id="content" *ngIf="model != null">
   <div class="container">
 
       <div class="col-md-12">
@@ -104,7 +104,7 @@
                                   <label for="docType" class="col-sm-2 control-label">Tipo Documento</label>
                                   <div class="col-sm-4">
                                     <select id="docType" data-checkout="docType" name="docType" required [(ngModel)]="model.docType" class="form-control" #docType="ngModel">
-                                      <option *ngFor="let c of documentTypes" [ngValue]="c">{{c.name}}</option>
+                                      <option *ngFor="let c of documentTypes" [ngValue]="c.id">{{c.name}}</option>
                                     </select>
                                     <div [hidden]="docType.valid || docType.pristine" class="validation-msg alert alert-danger">
                                       Ingrese el Tipo de Documento del Titular

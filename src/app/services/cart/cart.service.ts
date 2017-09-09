@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 
 import {Product} from '../../models/product/product.model';
 import {CartItem} from '../../models/cartitem/cartitem.model';
+import {Delivery, Payment} from '../../models/checkout/checkout.model';
 
 import {Observable} from "rxjs/Rx";
 
@@ -10,9 +11,29 @@ export class CartService {
 
     private _cart : CartItem[] = new Array<CartItem>();
 
+    //Datos del checkout
+    private _delivery : Delivery;
+    private _payment : Payment;
+
     constructor() {
       //Verifica si ya existen items anteriores
       this.loadItems();
+    }
+
+    get delivery() : Delivery {
+      return this._delivery;
+    }
+
+    set delivery(delivery : Delivery) {
+      this._delivery = delivery;
+    }
+
+    get payment() : Payment {
+      return this._payment;
+    }
+
+    set payment(payment : Payment) {
+      this._payment = payment;
     }
 
     //Levanta lo items del localStorage
@@ -89,4 +110,5 @@ export class CartService {
     private asObservable(subject: CartItem[]) {
       return Observable.of(subject);
     }
+
 }

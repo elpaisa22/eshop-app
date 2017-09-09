@@ -11,4 +11,22 @@ export class Payment {
 
 export class Delivery {
   method : string;
+  address : Address;
+
+  constructor() {
+    this.address = new Address();
+	}
+}
+
+export class Address {
+  firstname : string;
+  lastname : string;
+  company : string;
+  street : string;
+  zip : string;
+  city: string;
+  state : string;
+  country : string;
+  phone : string;
+  email : string;
 }

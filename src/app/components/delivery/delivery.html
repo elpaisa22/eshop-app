@@ -53,7 +53,7 @@
 
                                     <div class="box-footer text-center">
 
-                                        <input type="radio" name="delivery_none" value="none" [(ngModel)]="model.method">
+                                        <input type="radio" name="delivery_none" value="NONE" [(ngModel)]="model.method">
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                               </i>Volver al Carrito</a>
                         </div>
                         <div class="pull-right">
-                            <button [routerLink]="['/address']" class="btn btn-primary" [disabled]="model.method == null">
+                            <button type="submit" class="btn btn-primary" [disabled]="model.method == null">
                               Direccion
                               <i class="fa fa-chevron-right"></i>
                             </button>
