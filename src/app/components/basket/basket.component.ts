@@ -12,11 +12,13 @@ export class BasketComponent {
 		constructor(public _cartService: CartService) {
 		}
 
-		deleteItem(item : CartItem){
+		//Elimina un item del carrito
+		public deleteItem(item : CartItem){
 			this._cartService.deleteItem(item);
 		}
 
-		itemsCountChanged(){
+		//Metodo que se ejecuta cuando se modifica la cantidad
+		public itemsCountChanged(){
 			this._cartService.clearPaymentData();
 			this._cartService.saveItems();
 		}

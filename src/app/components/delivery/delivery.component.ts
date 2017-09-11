@@ -14,8 +14,11 @@ export class DeliveryComponent implements OnInit {
 	constructor(public _cartService: CartService, private router : Router) {
 	}
 
+	//Se ejecuta al inicio
 	public ngOnInit() {
+		//Intenta cargar el model desde el cartService
 		this._model = this._cartService.delivery;
+		//Si es null, crea uno nuevo
 		if (this._model == null) {
 				this._model = new Delivery();
 		}
@@ -25,16 +28,19 @@ export class DeliveryComponent implements OnInit {
 		return this._model;
 	}
 
+	//Cuando se modifica el metodo de envio
 	public onDeliveryMethodChange(event: any) {
 		if (this._model.method == 'NONE') {
 			this._model.address = null;
 			this._model.price = 0;
 		} else {
+			//TODO : Obtener el precio a partir de la API de Andreani
 			this._model.price = 200;
 		}
 		this._cartService.delivery = this.model;
 	}
 
+	//Envia el formulario
 	public sendForm() {
 		this.router.navigate(['/address']);
 	}

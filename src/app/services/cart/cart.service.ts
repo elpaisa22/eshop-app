@@ -139,7 +139,7 @@ export class CartService {
       return total;
     }
 
-    //Retorna el costo financiero
+    //Retorna el costo financiero (Interes)
     get interest() : number {
       let total = this._cart.reduce((sum, cartProd)=>{
           return sum += cartProd.price * cartProd.count, sum;

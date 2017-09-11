@@ -25,6 +25,7 @@ export class PaymentComponent implements OnInit {
 	constructor(private el: ElementRef, public _cartService: CartService, private router : Router) {
 	}
 
+	//Se ejecuta al inicio
 	public ngOnInit() {
 		//Si aun no eligio el metodo de envio, redirige al metodo de envio
 		if (this._cartService.delivery == null) {
@@ -36,15 +37,20 @@ export class PaymentComponent implements OnInit {
 			//Toma el pago y el metodo del cartService
 			this._model = this._cartService.payment;
 			this._method = this._cartService.method;
+
+			//Si el modelo no está inicializado, se crea
 			if (this._model == null) {
 				this._model = new Payment();
 				this._method = new PaymentMethod();
 			} else {
+				//Indica que la tarjeta está OK
 				this._cardNumberFilled = true;
+				//Verifica si la tarjeta solicita el emisor
 				if (this.methodRequireIssuerId(this._method.additionalInfoNeeded)) {
 					  this._issuerIdRequired = true;
 						this.loadIssuers(this._method.paymentMethodId);
 				}
+				//Carga las cuotas
 				var bin = this._model.cardNumber.replace(/[ .-]/g, '').slice(0, 6);
 				var amount = this._cartService.totalPrice;
 				this.loadInstallments(bin, amount);
@@ -62,35 +68,48 @@ export class PaymentComponent implements OnInit {
 		}
 	}
 
+	//Envia el formulario
 	public sendForm() {
+			//Guarda el Pago y el Metodo de Pago
 		  this._cartService.payment = this._model;
 			this._cartService.method = this._method;
+
+			//Invoca la API de MercadoPago para crear el Token
 			Mercadopago.createToken(this._model, (status, response) => {
 				if (status != 200 && status != 201) {
 					this._errorsWithCard = true;
 				} else {
+					//Si no ocurrieron errores, guarda el token en el cartService
 					this._cartService.token = response;
 					this.router.navigate(['/orderReview']);
 				}
 			});
-
 	}
 
+	//Cuando cambia la Tarjeta de Credito
 	public onCardNumberChange(event: any) {
+		//Si el numero ingresado es valido
 		if (this._model.cardNumber && this._model.cardNumber.replace(/[ .-]/g, '').length == 16) {
+					//Obtiene el bin y vuelve a cargar los pagos
 			    var bin = this._model.cardNumber.replace(/[ .-]/g, '').slice(0, 6);
           this.loadPaymentMethod(bin);
       } else {
+				//Indica que la tarjeta no es correcta
 				this.cardNumberNotCorrect();
 			}
   }
 
+	//Cuando cambia la cantidad de cuotas
 	public onInstallmentChange(event: any) {
+		//Obtiene el plan de cuotas seleccionado
 		let installment = this._installments.filter(x => x.installments == this._method.installments);
+		//Carga el monto total
 		this._method.totalAmount = installment[0].total_amount;
+		//Guarda el metodo de pago en el cartService
 		this._cartService.method = this._method;
 	}
 
+	//Carga las opciones de Pago de acuerdo al bin de la tarjeta
 	private loadPaymentMethod(bin : string) {
 		Mercadopago.getPaymentMethod({
 				"bin": bin
@@ -98,6 +117,8 @@ export class PaymentComponent implements OnInit {
 			if (status != 200 && status != 201) {
 				this.cardNumberNotCorrect();
 			} else {
+				//Si no ocurrieron errores, asigna el modo de pago
+				//Ej: VISA, MASTERCARD, etc
 				var method = response[0];
 				this._method.paymentMethodId = method.id;
 				this._method.paymentMethodName = method.name;
@@ -106,6 +127,7 @@ export class PaymentComponent implements OnInit {
 				this._method.issuerName = null;
 				this._method.installments = 1;
 
+				//Verifica si debe mostrar datos del emisor de la tarjeta
 				if (this.methodRequireIssuerId(this._method.additionalInfoNeeded)) {
 					  this._issuerIdRequired = true;
 						this.loadIssuers(this._method.paymentMethodId);
@@ -113,14 +135,18 @@ export class PaymentComponent implements OnInit {
 					  this._issuerIdRequired = false;
 						this._issuers = null;
 				}
+
+				//Obtiene las cuotas para el metodo de pago
 				var amount = this._cartService.totalPrice;
         this.loadInstallments(bin, amount);
 
+				//Indica que el numero de la tarjeta de credito está cargada
 				this._cardNumberFilled = true;
 			}
 		});
 	}
 
+	//Carga los emisores de la tarjeta (Bancos)
   private loadIssuers(paymentMethodId : string) {
 			Mercadopago.getIssuers(paymentMethodId, (status, response) => {
 				if (status != 200 && status != 201) {
@@ -131,6 +157,7 @@ export class PaymentComponent implements OnInit {
 			});
 	}
 
+	//Carga las cuotas disponibles para el metodo de pago de la tarjeta
   private loadInstallments(bin : string, amount : number) {
 		  Mercadopago.getInstallments({"bin": bin,"amount": amount}, (status, response) => {
 				if (status != 200 && status != 201) {
@@ -146,10 +173,12 @@ export class PaymentComponent implements OnInit {
 			});
 	}
 
+	//Verifica si es obligatorio ingresar datos del emisor
   private methodRequireIssuerId(additionalInfoNedded : String[]) : boolean {
 			return additionalInfoNedded.indexOf('issuer_id') > 0;
 	}
 
+	//Indica que el numero de tarjeta ingresado no es correcto
 	private cardNumberNotCorrect(){
 		this._method.paymentMethodId = null;
 		this._method.paymentMethodName = null;

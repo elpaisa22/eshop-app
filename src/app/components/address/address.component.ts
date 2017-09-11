@@ -45,14 +45,15 @@ export class AddressComponent implements OnInit {
 	constructor(public _cartService: CartService, private router : Router) {
 	}
 
+	//Se ejecuta al inicio
 	public ngOnInit() {
+		//Toma el modelo del cartService
 		this._model = this._cartService.delivery;
 
 		//Si aun no eligio el metodo de envio, redirige al metodo de envio
 		if (this._model == null) {
 				this.router.navigate(['/delivery']);
-		}
-		if (this._model != null && this._model.address == null) {
+		} else if (this._model != null && this._model.address == null) {
 				this._model.address = new Address();
 		}
 	}
@@ -69,8 +70,11 @@ export class AddressComponent implements OnInit {
 		return this._countries;
 	}
 
+	//Envia el formulario
 	public sendForm() {
+		//Guarda el modelo en el cartService
 		this._cartService.delivery = this._model;
+		//Redirige a la vista de Pago
 		this.router.navigate(['/payment']);
 	}
 }
