@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 import {Product} from '../../models/product/product.model';
 import {CartItem} from '../../models/cartitem/cartitem.model';
-import {Delivery, Payment} from '../../models/checkout/checkout.model';
+import {Delivery, Payment, PaymentMethod} from '../../models/checkout/checkout.model';
 
 import {Observable} from "rxjs/Rx";
 
@@ -14,6 +14,7 @@ export class CartService {
     //Datos del checkout
     private _delivery : Delivery;
     private _payment : Payment;
+    private _method : PaymentMethod;
 
     private _token : any;
 
@@ -38,12 +39,26 @@ export class CartService {
       this._payment = payment;
     }
 
+    get method() : PaymentMethod {
+      return this._method;
+    }
+
+    set method(paymentMethod : PaymentMethod) {
+      this._method = paymentMethod;
+    }
+
     get token() {
       return this._token;
     }
 
     set token(token) {
       this._token = token;
+    }
+
+    //ELimina la informacion del Pago
+    public clearPaymentData() {
+      this._payment = null;
+      this._method = null;
     }
 
     //Levanta lo items del localStorage
@@ -94,7 +109,6 @@ export class CartService {
     //Limpia el carrito eliminando todos los items
     cleanCart(){
         this._cart.splice(0);
-
         this.saveItems();
     }
 
@@ -108,13 +122,55 @@ export class CartService {
         return this._cart.length;
     }
 
+    //Retorna el precio de envio
+    get deliveryPrice() : number {
+      let  deliveryPrice = 0;
+      if (this._delivery != null && this.delivery.price != null) {
+        deliveryPrice = this.delivery.price;
+      }
+      return deliveryPrice;
+    }
+
+    //Obtiene el precio subtotal de los items
+    get subtotal() : number {
+      let total = this._cart.reduce((sum, cartProd)=>{
+          return sum += cartProd.price * cartProd.count, sum;
+      },0);
+      return total;
+    }
+
+    //Retorna el costo financiero
+    get interest() : number {
+      let total = this._cart.reduce((sum, cartProd)=>{
+          return sum += cartProd.price * cartProd.count, sum;
+      },0);
+
+      let  financialCost = 0;
+      if (this._method != null && this._method.totalAmount != null) {
+        financialCost = this._method.totalAmount;
+      }
+      if (financialCost > 0) {
+          return financialCost - total;
+      } else {
+        return 0;
+      }
+
+    }
+
     //Obtiene el precio total de los items
     get totalPrice() : number {
-        let totalPrice = this._cart.reduce((sum, cartProd)=>{
-            return sum += cartProd.price * cartProd.count, sum;
-        },0);
-
-        return totalPrice;
+        let  financialCost = 0;
+        if (this._method != null && this._method.totalAmount != null) {
+          financialCost = this._method.totalAmount;
+        }
+        if (financialCost > 0) {
+            return financialCost + this.deliveryPrice;
+        } else {
+          let totalPrice = this._cart.reduce((sum, cartProd)=>{
+              return sum += cartProd.price * cartProd.count, sum;
+          },0);
+          return totalPrice + this.deliveryPrice;
+        }
     }
 
     private asObservable(subject: CartItem[]) {

@@ -25,12 +25,17 @@ export class DeliveryComponent implements OnInit {
 		return this._model;
 	}
 
-	public sendForm() {
+	public onDeliveryMethodChange(event: any) {
 		if (this._model.method == 'NONE') {
 			this._model.address = null;
+			this._model.price = 0;
+		} else {
+			this._model.price = 200;
 		}
-
 		this._cartService.delivery = this.model;
+	}
+
+	public sendForm() {
 		this.router.navigate(['/address']);
 	}
 }

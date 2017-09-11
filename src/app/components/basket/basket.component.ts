@@ -15,4 +15,9 @@ export class BasketComponent {
 		deleteItem(item : CartItem){
 			this._cartService.deleteItem(item);
 		}
+
+		itemsCountChanged(){
+			this._cartService.clearPaymentData();
+			this._cartService.saveItems();
+		}
 }

@@ -7,17 +7,22 @@ export class Payment {
   cardholderName : string;
   docType : string = 'DNI';
   docNumber : string;
+}
+
+export class PaymentMethod {
   paymentMethodId : string;
   paymentMethodName : string;
   issuerId : string;
   issuerName : string;
   installments : number;
   additionalInfoNeeded : string[];
+  totalAmount : number;
 }
 
 export class Delivery {
   method : string;
   address : Address;
+  price : number;
 
   constructor() {
     this.address = new Address();

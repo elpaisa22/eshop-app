@@ -120,20 +120,20 @@
                                 <label for="paymentMethodId" class="col-sm-2 control-label">Metodo de Pago</label>
                                 <div class="col-sm-4">
                                   <input type="text" id="paymentMethodId" name="paymentMethodId"
-                                          disabled [(ngModel)]="model.paymentMethodName" class="form-control">
+                                          disabled [(ngModel)]="method.paymentMethodName" class="form-control">
                                 </div>
 
                                 <label for="issuerId" class="col-sm-2 control-label">Emisor</label>
                                 <div class="col-sm-4">
                                   <select id="issuerId" name="issuerId" required *ngIf="issuerIdRequired"
-                                          [(ngModel)]="model.issuerId" class="form-control" #fldIssuerId="ngModel">
+                                          [(ngModel)]="method.issuerId" class="form-control" #fldIssuerId="ngModel">
                                     <option *ngFor="let i of issuers" [ngValue]="i.id">{{i.name}}</option>
                                   </select>
                                   <div *ngIf="issuerIdRequired && fldIssuerId" [hidden]="fldIssuerId.valid || fldIssuerId.pristine" class="validation-msg alert alert-danger">
                                     Ingrese el Tipo de Documento del Titular
                                   </div>
                                   <input type="text" id="issuerId" name="issuerId" *ngIf="!issuerIdRequired"
-                                          disabled [(ngModel)]="model.issuerName" class="form-control">
+                                          disabled [(ngModel)]="method.issuerName" class="form-control">
                                 </div>
                               </div>
 
@@ -141,7 +141,8 @@
                                 <label for="installments" class="col-sm-2 control-label">Cuotas</label>
                                 <div class="col-sm-5">
                                   <select id="installments" name="installments" required
-                                          [(ngModel)]="model.installments" class="form-control" #fldInstallments="ngModel">
+                                          (change)="onInstallmentChange($event)"
+                                          [(ngModel)]="method.installments" class="form-control" #fldInstallments="ngModel">
                                     <option *ngFor="let i of installments" [ngValue]="i.installments">{{i.recommended_message}}</option>
                                   </select>
                                   <div [hidden]="fldInstallments.valid || fldInstallments.pristine" class="validation-msg alert alert-danger">

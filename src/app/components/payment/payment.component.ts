@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {Router } from '@angular/router';
 
-import {Payment} from '../../models/checkout/checkout.model';
+import {Payment, PaymentMethod} from '../../models/checkout/checkout.model';
 import {CartService} from '../../services/cart/cart.service';
 
 declare var Mercadopago:any;
@@ -16,6 +16,7 @@ export class PaymentComponent implements OnInit {
 	private _installments : any;
 
 	private _model : Payment;
+	private _method : PaymentMethod;
 
 	private _cardNumberFilled : boolean = false;
 	private _errorsWithCard : boolean = false;
@@ -28,32 +29,42 @@ export class PaymentComponent implements OnInit {
 		//Si aun no eligio el metodo de envio, redirige al metodo de envio
 		if (this._cartService.delivery == null) {
 				this.router.navigate(['/delivery']);
+		//Si aun no eligio la direccion
+		} else if (this._cartService.delivery.address == null) {
+				this.router.navigate(['/address']);
 		} else {
+			//Toma el pago y el metodo del cartService
 			this._model = this._cartService.payment;
+			this._method = this._cartService.method;
 			if (this._model == null) {
 				this._model = new Payment();
+				this._method = new PaymentMethod();
 			} else {
 				this._cardNumberFilled = true;
-				if (this.methodRequireIssuerId(this._model.additionalInfoNeeded)) {
+				if (this.methodRequireIssuerId(this._method.additionalInfoNeeded)) {
 					  this._issuerIdRequired = true;
-						this.loadIssuers(this._model.paymentMethodId);
+						this.loadIssuers(this._method.paymentMethodId);
 				}
 				var bin = this._model.cardNumber.replace(/[ .-]/g, '').slice(0, 6);
 				var amount = this._cartService.totalPrice;
 				this.loadInstallments(bin, amount);
 			}
 
+			//Inicializa la API de MercadoPago
 			Mercadopago.setPublishableKey("TEST-846d251c-6188-4a08-babc-927124773c8c");
-
+			//Obtiene los tipos de Documento
 			Mercadopago.getIdentificationTypes((data, result) => {
 				this._documentTypes = result
 			});
+
+			//Marca que no existen errores con el numero de la tarjeta de credito
 			this._errorsWithCard = false;
 		}
 	}
 
 	public sendForm() {
 		  this._cartService.payment = this._model;
+			this._cartService.method = this._method;
 			Mercadopago.createToken(this._model, (status, response) => {
 				if (status != 200 && status != 201) {
 					this._errorsWithCard = true;
@@ -74,6 +85,12 @@ export class PaymentComponent implements OnInit {
 			}
   }
 
+	public onInstallmentChange(event: any) {
+		let installment = this._installments.filter(x => x.installments == this._method.installments);
+		this._method.totalAmount = installment[0].total_amount;
+		this._cartService.method = this._method;
+	}
+
 	private loadPaymentMethod(bin : string) {
 		Mercadopago.getPaymentMethod({
 				"bin": bin
@@ -82,16 +99,16 @@ export class PaymentComponent implements OnInit {
 				this.cardNumberNotCorrect();
 			} else {
 				var method = response[0];
-				this._model.paymentMethodId = method.id;
-				this._model.paymentMethodName = method.name;
-				this._model.additionalInfoNeeded = method.additional_info_needed;
-				this._model.issuerId = null;
-				this._model.issuerName = null;
-				this._model.installments = 1;
+				this._method.paymentMethodId = method.id;
+				this._method.paymentMethodName = method.name;
+				this._method.additionalInfoNeeded = method.additional_info_needed;
+				this._method.issuerId = null;
+				this._method.issuerName = null;
+				this._method.installments = 1;
 
-				if (this.methodRequireIssuerId(this._model.additionalInfoNeeded)) {
+				if (this.methodRequireIssuerId(this._method.additionalInfoNeeded)) {
 					  this._issuerIdRequired = true;
-						this.loadIssuers(this._model.paymentMethodId);
+						this.loadIssuers(this._method.paymentMethodId);
 				} else {
 					  this._issuerIdRequired = false;
 						this._issuers = null;
@@ -120,10 +137,10 @@ export class PaymentComponent implements OnInit {
 					this._installments = null;
 				} else {
 					var installment = response[0];
-					if (this._model.issuerId == null) {
-						this._model.issuerId = installment.issuer.id;
-						this._model.issuerName = installment.issuer.name;
-					}					
+					if (this._method.issuerId == null) {
+						this._method.issuerId = installment.issuer.id;
+						this._method.issuerName = installment.issuer.name;
+					}
 					this._installments = installment.payer_costs;
 				}
 			});
@@ -134,11 +151,11 @@ export class PaymentComponent implements OnInit {
 	}
 
 	private cardNumberNotCorrect(){
-		this._model.paymentMethodId = null;
-		this._model.paymentMethodName = null;
+		this._method.paymentMethodId = null;
+		this._method.paymentMethodName = null;
 		this._cardNumberFilled = false;
-		this._model.issuerId = null;
-		this._model.issuerName = null;
+		this._method.issuerId = null;
+		this._method.issuerName = null;
 		this._issuers = null;
 		this._installments = null;
 	}
@@ -155,8 +172,12 @@ export class PaymentComponent implements OnInit {
 		return this._installments;
 	}
 
-	get model() {
+	get model() : Payment {
 		return this._model;
+	}
+
+	get method() : PaymentMethod {
+		return this._method;
 	}
 
 	get cardNumberFilled() : boolean {

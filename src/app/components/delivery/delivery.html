@@ -40,7 +40,7 @@
                                     <p>Se utilizará Correo Andreani para el envio de los productos.</p>
 
                                     <div class="box-footer text-center">
-                                        <input type="radio" name="delivery_andreani" value="andreani" [(ngModel)]="model.method">
+                                        <input type="radio" name="delivery_method" value="andreani" [(ngModel)]="model.method" (change)="onDeliveryMethodChange($event)">
                                     </div>
                                 </div>
                             </div>
@@ -52,8 +52,7 @@
                                     <p>Pasaré a retirar los productos por el local. Recuerde concurrir con una identificación</p>
 
                                     <div class="box-footer text-center">
-
-                                        <input type="radio" name="delivery_none" value="NONE" [(ngModel)]="model.method">
+                                        <input type="radio" name="delivery_method" value="NONE" [(ngModel)]="model.method" (change)="onDeliveryMethodChange($event)">
                                     </div>
                                 </div>
                             </div>
