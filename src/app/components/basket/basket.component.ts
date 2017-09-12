@@ -12,6 +12,10 @@ export class BasketComponent {
 		constructor(public _cartService: CartService) {
 		}
 
+		get cartService() {
+      return this._cartService;
+    }
+
 		//Elimina un item del carrito
 		public deleteItem(item : CartItem){
 			this._cartService.deleteItem(item);

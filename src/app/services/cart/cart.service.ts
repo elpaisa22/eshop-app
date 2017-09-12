@@ -9,6 +9,7 @@ import {Observable} from "rxjs/Rx";
 @Injectable()
 export class CartService {
 
+    //Datos de los articulos
     private _cart : CartItem[] = new Array<CartItem>();
 
     //Datos del checkout
@@ -16,6 +17,7 @@ export class CartService {
     private _payment : Payment;
     private _method : PaymentMethod;
 
+    //Token de MercadoPago
     private _token : any;
 
     constructor() {
@@ -53,6 +55,10 @@ export class CartService {
 
     set token(token) {
       this._token = token;
+    }
+
+    get cart() {
+      return this._cart;
     }
 
     //ELimina la informacion del Pago

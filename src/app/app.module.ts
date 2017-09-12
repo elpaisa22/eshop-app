@@ -45,6 +45,7 @@ import {FilterService} from './services/filter/filter.service';
 /* Repositories */
 import {ProductRepository} from './repositories/product/product.repository';
 import {CategoryRepository} from './repositories/category/category.repository';
+import {CheckoutRepository} from './repositories/checkout/checkout.repository';
 
 export const appRoutes : Routes = [
 	{path: '', component: HomeComponent},
@@ -105,7 +106,8 @@ export const appRoutes : Routes = [
 		CartService,
 		FilterService,
 		ProductRepository,
-		CategoryRepository
+		CategoryRepository,
+		CheckoutRepository
 	],
   bootstrap: [AppComponent]
 })

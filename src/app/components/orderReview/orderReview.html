@@ -16,7 +16,7 @@
       <div class="col-md-9" id="checkout">
 
           <div class="box">
-              <form>
+
                   <h1>Finalizar compra</h1>
                   <ul class="nav nav-pills nav-justified">
                       <li><a [routerLink]="['/delivery']"><i class="fa fa-truck"></i><br>Metodo de Envio</a>
@@ -41,7 +41,7 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                  <tr *ngFor="let item of _cartService.items | async">
+                                  <tr *ngFor="let item of cartService.items | async">
                                       <td>
                                           <a [routerLink]="['/detail', item.id]">
                                               <img src="{{item.image}}" alt="{{item.name}}">
@@ -61,7 +61,7 @@
                               <tfoot>
                                   <tr>
                                       <th colspan="4">Sub-Total</th>
-                                      <th colspan="2">$ {{_cartService.subtotal | number:'3.2-2'}}</th>
+                                      <th colspan="2">$ {{cartService.subtotal | number:'3.2-2'}}</th>
                                   </tr>
                               </tfoot>
                           </table>
@@ -79,13 +79,13 @@
                           </a>
                       </div>
                       <div class="pull-right">
-                          <button [routerLink]="['/finish']" class="btn btn-primary">
+                          <button (click)="sendData()" class="btn btn-primary">
                             Confirmar Compra
                             <i class="fa fa-chevron-right"></i>
                           </button>
                       </div>
                   </div>
-              </form>
+
           </div>
           <!-- /.box -->
 
