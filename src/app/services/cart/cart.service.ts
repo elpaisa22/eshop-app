@@ -90,6 +90,7 @@ export class CartService {
         if (index < 0) {
           var item : CartItem = new CartItem();
           item.id = prod.id;
+          item.sku = prod.sku;
           item.name = prod.name;
           item.price = prod.price;
           item.count = 1;

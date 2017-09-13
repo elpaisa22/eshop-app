@@ -12,6 +12,7 @@ export class Product {
     tags: Tag[];
     images : Image[];
     brand : string;
+    sku : string;
     //averageRate : number;
     //comments : Comment[];
 }
