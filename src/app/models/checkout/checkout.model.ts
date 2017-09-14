@@ -34,6 +34,8 @@ export class Address {
   lastname : string;
   company : string;
   street : string;
+  number : string;
+  apartment : string;
   zip : string;
   city: string;
   state : string;

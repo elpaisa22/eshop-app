@@ -58,17 +58,31 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="company">Empresa</label>
-                                    <input type="text" class="form-control" id="company">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="street">Calle</label>
+                                    <label for="street">Nombre de la Calle</label>
                                     <input type="text" class="form-control" id="street" name="street"
                                            required [(ngModel)]="model.address.street" #street="ngModel">
                                     <div [hidden]="street.valid || street.pristine" class="validation-msg alert alert-danger">
-                                      Ingrese la Calle
+                                      Ingrese el Nombre de la Calle
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="number">Número</label>
+                                    <input type="text" class="form-control" id="number" name="number"
+                                           required [(ngModel)]="model.address.number" #number="ngModel">
+                                    <div [hidden]="number.valid || number.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese el Número
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="apartment">Piso / Dpto</label>
+                                    <input type="text" class="form-control" id="apartment" name="apartment"
+                                           required [(ngModel)]="model.address.apartment" #apartment="ngModel">
+                                    <div [hidden]="apartment.valid || apartment.pristine" class="validation-msg alert alert-danger">
+                                      Ingrese el Piso / Depto
                                     </div>
                                 </div>
                             </div>
