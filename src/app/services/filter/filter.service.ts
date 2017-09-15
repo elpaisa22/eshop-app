@@ -38,8 +38,8 @@ export class FilterService {
 
     this.initialized = false;
 
-    //this.loadProducts().subscribe(
-      //elem => console.log("Elements loaded: " + elem.length));
+    this.loadProducts().subscribe(
+      elem => console.log("Elements loaded: " + elem.length));
   }
 
   private loadProducts(forceReload : boolean = false) : Observable<Product[]> {
@@ -252,4 +252,9 @@ export class FilterService {
     this._actualPage = this.calculateActualPage();
   }
 
+  public searchByText(value : string) : Product[] {
+    var result : Product[] = [];
+    result = this._products.filter(x => x.name.toLowerCase().indexOf(value.toLowerCase()) > -1);
+    return result;
+  }
 }

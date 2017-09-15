@@ -1,0 +1,11 @@
+.autocomplete-suggestions {
+	z-index: 1000;
+	position: absolute;
+	margin-top: 34px;
+}
+
+.autocomplete-suggestions ul a.active {
+	background-color: #f1f1f1;
+	color: #333;
+	border-color: #ddd;
+}

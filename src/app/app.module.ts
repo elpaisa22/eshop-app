@@ -28,6 +28,7 @@ import {SideBarComponent} from './components/_shared/sidebar/sidebar.component';
 import {PagerComponent} from './components/_shared/pager/pager.component';
 import {PaginatorComponent} from './components/_shared/paginator/paginator.component';
 import {SummaryComponent} from './components/_shared/summary/summary.component';
+import {AutocompleteComponent} from './components/_shared/autocomplete/autocomplete.component';
 
 /* Pipes */
 import {KeysPipe} from './pipes/keys/keys.pipe';
@@ -88,6 +89,7 @@ export const appRoutes : Routes = [
     PagerComponent,
     PaginatorComponent,
 		SummaryComponent,
+		AutocompleteComponent,
 		/* Pipes */
 		KeysPipe,
 		/* Directives */
