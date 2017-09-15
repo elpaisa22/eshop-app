@@ -20,18 +20,17 @@ import {ProductRepository} from '../../../repositories/product/product.repositor
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </span>
               </div>
-            </div>
-            <div class="col-xs-11 col-sm-12 autocomplete-suggestions" *ngIf="filteredList.length > 0">
-                <ul class="list-group">
-                    <a  *ngFor="let item of filteredList;let idx = index"
-                        class="list-group-item active"
-                        [class.active]="idx == selectedIdx"
-                        (click)="select(item)"
+              <ul class="autocomplete-options dropdown-menu col-sm-12" *ngIf="filteredList.length > 0" style="display: block">
+                  <li *ngFor="let item of filteredList;let idx = index"
+                       [class.active]="idx == selectedIdx"
+                       class="active">
+                    <a  (click)="select(item)"
                         href="javascript:void(0)">
                         <img src="{{item.images[0].image}}" class="img-rounded" alt="Cinque Terre" width="20" height="20">
                         {{item.name}}
                     </a>
-                </ul>
+                  </li>
+              </ul>
             </div>
     	`
 })

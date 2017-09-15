@@ -1455,6 +1455,10 @@ fieldset[disabled] .btn-primary.active {
 .dropdown-menu > li > a {
   padding: 5px 20px;
 }
+.dropdown-menu > li.active > a,
+.dropdown-menu > li.active > a:hover {
+  background-color: #ff6f02;
+}
 /* forms.less */
 label {
   font-weight: normal;
