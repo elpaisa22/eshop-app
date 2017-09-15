@@ -1,7 +1,7 @@
 import {Component, ElementRef} from '@angular/core';
 import {Router } from '@angular/router';
 
-import {FilterService} from '../../../services/filter/filter.service';
+import {ProductRepository} from '../../../repositories/product/product.repository';
 
 @Component({
     selector: 'autocomplete',
@@ -21,7 +21,7 @@ import {FilterService} from '../../../services/filter/filter.service';
                 </span>
               </div>
             </div>
-            <div class="col-sm-12 autocomplete-suggestions" *ngIf="filteredList.length > 0">
+            <div class="col-xs-11 col-sm-12 autocomplete-suggestions" *ngIf="filteredList.length > 0">
                 <ul class="list-group">
                     <a  *ngFor="let item of filteredList;let idx = index"
                         class="list-group-item active"
@@ -44,7 +44,7 @@ export class AutocompleteComponent {
     selectedIdx: number;
 
     constructor(myElement: ElementRef,
-                private _filterService : FilterService,
+                private _productRepository : ProductRepository,
                 private _router : Router) {
         this.elementRef = myElement;
         this.selectedIdx = -1;
@@ -52,7 +52,10 @@ export class AutocompleteComponent {
 
     filter(event: any) {
         if (this.query !== "") {
-            this.filteredList = this._filterService.searchByText(this.query).slice(0,6);
+            this._productRepository.searchByText(this.query)
+                                   .subscribe(data => {
+                                     this.filteredList = data.slice(0,6)
+                                   });
             if (event.code == "ArrowDown" && this.selectedIdx < this.filteredList.length-1) {
                 this.selectedIdx++;
             } else if (event.code == "ArrowUp" && this.selectedIdx > 0) {
@@ -84,7 +87,7 @@ export class AutocompleteComponent {
          if (this.selectedIdx !== -1) {
             this.select(this.filteredList[this.selectedIdx]);
          }
-      } else if (event.keyCode == 27)
+      } else if (event.keyCode == 27 || event.keyCode == 9)
       {
           this.clear();
       }
@@ -100,7 +103,7 @@ export class AutocompleteComponent {
             clickedComponent = clickedComponent.parentNode;
         } while (clickedComponent);
         if (!inside) {
-            this.filteredList = [];
+            this.clear();
         }
         this.selectedIdx = -1;
     }

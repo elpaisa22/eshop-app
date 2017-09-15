@@ -59,4 +59,17 @@ export class ProductRepository {
       }
     }
 
+    public searchByText(value : string) : Observable<Product[]> {
+      var result : Product[] = [];
+      return this.getProducts()
+                 .map(response => {
+                    let medidata = response as Product[];
+                    return medidata;
+                  })
+                 .concatMap(array => Observable.from(array))
+                 .filter((prod, index) => {
+                      return prod.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
+                  })
+                 .toArray();
+    }
 }
