@@ -78,7 +78,7 @@ export class AutocompleteComponent {
       this.selectedIdx = -1;
     }
 
-    private onKeyDown(event: any)
+    public onKeyDown(event: any)
     {
       if (event.keyCode == 13)
       {
