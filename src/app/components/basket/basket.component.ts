@@ -22,7 +22,10 @@ export class BasketComponent {
 		}
 
 		//Metodo que se ejecuta cuando se modifica la cantidad
-		public itemsCountChanged(){
+		public itemsCountChanged(item : CartItem){
+			if (item.count < 1) {
+				item.count = 1;
+			}
 			this._cartService.clearPaymentData();
 			this._cartService.saveItems();
 		}

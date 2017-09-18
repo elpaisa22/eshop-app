@@ -40,7 +40,7 @@
                                       <a [routerLink]="['/detail', item.id]">{{item.name}}</a>
                                     </td>
                                     <td>
-                                        <input type="number" [(ngModel)]="item.count" (ngModelChange)="itemsCountChanged()" class="form-control" [ngModelOptions]="{standalone: true}">
+                                        <input type="number" min="1" [(ngModel)]="item.count" (change)="itemsCountChanged(item)" class="form-control" [ngModelOptions]="{standalone: true}">
                                     </td>
                                     <td>$ {{item.price | number:'1.2-2'}}</td>
                                     <td>$ {{item.price * item.count | number:'3.2-2'}}</td>
