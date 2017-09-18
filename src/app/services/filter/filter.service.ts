@@ -37,9 +37,6 @@ export class FilterService {
 		this.totalProducts = 0;
 
     this.initialized = false;
-
-    //this.loadProducts().subscribe(
-      //elem => console.log("Elements loaded: " + elem.length));
   }
 
   private loadProducts(forceReload : boolean = false) : Observable<Product[]> {
@@ -90,7 +87,8 @@ export class FilterService {
     this.initialized = true;
     this.totalProducts = this._products.length;
     this._actualPage = this.calculateActualPage();
-    this._tags = this.loadTagsByBrand(this._products);
+    this.loadTagsByBrand(this._products);
+    //this.loadTags(this._products);
   }
 
   private calculateActualPage() : Product[] {
@@ -150,41 +148,36 @@ export class FilterService {
     }
   }
 
-  private loadTags(data : Product[]) : Map<number, TagGroup> {
-    var result: Map<number, TagGroup> = new Map<number, TagGroup>();
+  private loadTags(data : Product[]) {
     for (let prod of data) {
       for (let tag of prod.tags) {
-          if (!result.has(tag.tag_group)) {
-            this.createTagGroup(result, tag);
+          if (!this._tags.has(tag.tag_group)) {
+            this.createTagGroup(this._tags, tag);
           } else {
-            /*
-            var tagGroup = result.get(tag.tag_group);
+            var tagGroup = this._tags.get(tag.tag_group);
             var tagVal = tagGroup.tags.find(x => x.id == tag.id);
             if (tagVal != null) {
               tagVal.count = tagVal.count + 1;
             } else {
-              var tagVal = new TagValue();
+              tagVal = new TagValue();
               tagVal.count = 1;
               tagVal.id = tag.id;
               tagVal.value = tag.tag;
               tagGroup.tags.push(tagVal);
             }
-            */
           }
       }
     }
-
-    return result;
   }
 
-  private loadTagsByBrand(data : Product[]) : Map<number, TagGroup> {
-    var result: Map<number, TagGroup> = new Map<number, TagGroup>();
+  private loadTagsByBrand(data : Product[]) {
+    this._tags = new Map<number, TagGroup>();
 
     var tg : TagGroup = new TagGroup();
-    tg.id = 1;
+    tg.id = 0;
     tg.name = "Marca";
     tg.tags = [];
-    result.set(tg.id, tg);
+    this._tags.set(tg.id, tg);
 
     for (let prod of data) {
         if (prod.brand) {
@@ -193,7 +186,7 @@ export class FilterService {
           tag.tag_group_name = tg.name;
           tag.tag = prod.brand;
 
-          var tagGroup = result.get(tag.tag_group);
+          var tagGroup = this._tags.get(tag.tag_group);
           var tagVal = tagGroup.tags.find(x => x.value == tag.tag);
           if (tagVal != null) {
             tagVal.count = tagVal.count + 1;
@@ -206,8 +199,6 @@ export class FilterService {
         }
 
       }
-
-    return result;
   }
 
 
