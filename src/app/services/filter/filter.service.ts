@@ -119,7 +119,10 @@ export class FilterService {
       if (entry == 0) {
         this._products = this._products.filter(x => values.includes(x.brand));
       } else {
-        //Implementar filtro por tags genericos
+        this._products = this._products.filter(x => {
+          var tag = x.tags.find(tag => tag.tag_group == entry);
+          return tag && values.includes(tag.tag);
+        });
       }
     }
     this._products = this.sortProducts(this._products, this.sortBy);
@@ -143,7 +146,7 @@ export class FilterService {
     this._filters = new Map<number, String[]>();
 
     this.loadTagsByBrand(this._products);
-    //this.loadTags(this._products);
+    this.loadTags(this._products);
   }
 
   private calculateActualPage() : Product[] {
