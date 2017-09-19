@@ -28,3 +28,11 @@
     background: #4CAF50;
     cursor: pointer;
 }
+
+.input-range {
+  width: 80px;
+  display: inline;
+  height: 20px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}

@@ -19,6 +19,12 @@ export class FilterService {
   totalProducts : number;
   sortBy : string;
 
+  _priceMin : number;
+  _priceMax : number;
+
+  _filterRangeMin : number;
+  _filterRangeMax : number;
+
   _filters : Map<number, String[]> = new Map<number, String[]>();
   _allProducts : Product[] = [];
 	_products : Product[] = [];
@@ -113,6 +119,8 @@ export class FilterService {
 
   private applySavedFilters() {
     this._products = this._allProducts;
+
+    //Aplica filtro por tags (incluido las marcas que tienen grupo 0)
     var entries = Array.from(this._filters.keys());
     for (let entry of entries) {
       var values : String[] = this._filters.get(entry);
@@ -125,8 +133,15 @@ export class FilterService {
         });
       }
     }
+
+    //Aplica filtro por precios
+    this._products = this._products.filter(x => Number(x.price) >= this._filterRangeMin && Number(x.price) <= this._filterRangeMax);
+
+    //Ordena los elementos
     this._products = this.sortProducts(this._products, this.sortBy);
-    this._actualPage = this.calculateActualPage();
+
+    //Actualiza la pagina
+    this.calculateActualPage();
   }
 
   public applyFilterByTags(tag: TagGroup, value : String, checked : Boolean) {
@@ -139,17 +154,38 @@ export class FilterService {
     this.applySavedFilters();
   }
 
+  public updatePriceRange(min, max : number) {
+    this._filterRangeMin = min;
+    this._filterRangeMax = max;
+    this.applySavedFilters();
+  }
+
+  public clearPriceRange() {
+    this._filterRangeMin = this._priceMin;
+    this._filterRangeMax = this._priceMax;
+    this.applySavedFilters();
+  }
+
   private commonInitialize() {
     this.initialized = true;
     this.totalProducts = this._products.length;
-    this._actualPage = this.calculateActualPage();
+    this.calculateActualPage();
+    this.calculatePriceRange();
     this._filters = new Map<number, String[]>();
 
     this.loadTagsByBrand(this._products);
     this.loadTags(this._products);
   }
 
-  private calculateActualPage() : Product[] {
+  private calculatePriceRange() {
+      this._priceMin = this._products.reduce((a, b) => (Number(a.price) < Number(b.price)) ? a : b).price;
+      this._priceMax = this._products.reduce((a, b) => (Number(a.price) > Number(b.price)) ? a : b).price;
+
+      this._filterRangeMin = this._priceMin;
+      this._filterRangeMax = this._priceMax;
+  }
+
+  private calculateActualPage() {
     var result : Product[] = [];
     var size = this.pageSize;
     if (this.pageSize == null) {
@@ -177,7 +213,7 @@ export class FilterService {
       this.totalPages++;
     }
 
-    return result;
+    this._actualPage = result;
   }
 
   private filterBySubcategory(data : Product[], subcategory : Number) : Product[] {
@@ -284,20 +320,28 @@ export class FilterService {
     return this._tags;
   }
 
+  get priceMin() : number {
+      return this._priceMin;
+  }
+
+  get priceMax() : number {
+      return this._priceMax;
+  }
+
   public changeSortOrder(orderBy : string) {
     this._products = this.sortProducts(this._products, orderBy);
     this.sortBy = orderBy;
-    this._actualPage = this.calculateActualPage();
+    this.calculateActualPage();
   }
 
   public changeActualPage(page : number) {
     this.page = page;
-    this._actualPage = this.calculateActualPage();
+    this.calculateActualPage();
   }
 
   public changePageSize(pageSize : number) {
     this.pageSize = pageSize;
-    this._actualPage = this.calculateActualPage();
+    this.calculateActualPage();
   }
 
 }

@@ -1,7 +1,8 @@
 import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
-	template : `
+	selector: 'paginator',
+	template: `
       <div class="pages">
 
           <ul class="pagination">
@@ -28,8 +29,7 @@ import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '
           </ul>
 
       </div>
-  `,
-  selector : 'paginator'
+  `
 })
 export class PaginatorComponent implements OnChanges {
 
