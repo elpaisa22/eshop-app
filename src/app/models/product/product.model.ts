@@ -6,7 +6,7 @@ export class Product {
     name : string;
     details : string;
     foot_desc : string;
-    price : Number;
+    price : number;
     stock: number;
     sub_category : SubCategory;
     tags: Tag[];
