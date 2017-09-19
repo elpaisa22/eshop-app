@@ -2,6 +2,8 @@ import {Component, Input} from '@angular/core';
 
 import {TagGroup, TagValue} from '../../../models/tag/taggroup.model';
 
+import {FilterService} from '../../../services/filter/filter.service';
+
 @Component({
 	templateUrl : './sidebar.html',
   selector : 'side-bar'
@@ -10,28 +12,23 @@ export class SideBarComponent {
 
 	@Input() tags : Map<number, TagGroup>;
 
-	_filters : Map<number, String[]> = new Map<number, String[]>();
+	constructor(public _filterService : FilterService) {
+	}
 
-	public selectionTagChange(tag, value, input: HTMLInputElement) {
-		var values : String[];
-		if (this._filters.has(tag.id)) {
-			values = this._filters.get(tag.id);
-		} else {
-			values = new Array<String>();
+	public selectionTagChange(tag : TagGroup, value, input: HTMLInputElement) {
+		this._filterService.applyFilterByTags(tag, value, input.checked);
+	}
+
+	public clearFilter(tag : TagGroup, event) {
+		//Quita el seleccionado de los elementos
+		var panel = event.srcElement.closest('.panel');
+		var inputs = panel.getElementsByTagName("input");
+		for(var i = 0; i < inputs.length; i++) {
+		    if(inputs[i].type == "checkbox") {
+		        inputs[i].checked = false;
+		    }
 		}
 
-		if (input.checked) {
-				values.push(value);
-		} else {
-			let index = values.findIndex(d => d === value); //find index in your array
-			values.splice(index, 1);//remove element from array
-		}
-
-		if (values.length == 0) {
-				this._filters.delete(tag.id);
-		} else {
-				this._filters.set(tag.id, values);
-		}
-
+		this._filterService.clearFilterForTag(tag);
 	}
 }

@@ -4,7 +4,7 @@
   <div class="panel-heading">
       <h3 class="panel-title">
         {{tags.get(group).name}}
-        <a class="btn btn-xs btn-danger pull-right" href="#">
+        <a class="btn btn-xs btn-danger pull-right" (click)="clearFilter(tags.get(group), $event)">
           <i class="fa fa-times-circle"></i> Limpiar
         </a>
       </h3>

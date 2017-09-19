@@ -19,6 +19,8 @@ export class FilterService {
   totalProducts : number;
   sortBy : string;
 
+  _filters : Map<number, String[]> = new Map<number, String[]>();
+  _allProducts : Product[] = [];
 	_products : Product[] = [];
   _actualPage : Product[] = [];
 
@@ -44,6 +46,7 @@ export class FilterService {
     return this._productRepository.getProducts(forceReload)
                                   .map(data => {
                                     this._products = this.sortProducts(data, this.sortBy);
+                                    this._allProducts = this._products;
                                     this.commonInitialize();
                                     return this._actualPage;
                                   });
@@ -56,6 +59,7 @@ export class FilterService {
                                   .subscribe(data => {
                                     this._products = this.filterBySubcategory(data, subcategory);
                                     this._products = this.sortProducts(this._products, this.sortBy);
+                                    this._allProducts = this._products;
                                     this.commonInitialize();
                                     return this._actualPage;
                                   });
@@ -67,6 +71,7 @@ export class FilterService {
                                   .subscribe(data => {
                                     this._products = this.filterByCategory(data, subcategory);
                                     this._products = this.sortProducts(this._products, this.sortBy);
+                                    this._allProducts = this._products;
                                     this.commonInitialize();
                                     return this._actualPage;
                                   });
@@ -78,15 +83,65 @@ export class FilterService {
                                   .subscribe(data => {
                                     this._products = this.filterBySection(data, section);
                                     this._products = this.sortProducts(this._products, this.sortBy);
+                                    this._allProducts = this._products;
                                     this.commonInitialize();
                                     return this._actualPage;
                                   });
+  }
+
+  private addFilterValue(tag: TagGroup, value : String, checked : Boolean) {
+    var values : String[];
+		if (this._filters.has(tag.id)) {
+			values = this._filters.get(tag.id);
+		} else {
+			values = new Array<String>();
+		}
+
+		if (checked) {
+				values.push(value);
+		} else {
+			let index = values.findIndex(d => d === value); //find index in your array
+			values.splice(index, 1);//remove element from array
+		}
+
+		if (values.length == 0) {
+				this._filters.delete(tag.id);
+		} else {
+				this._filters.set(tag.id, values);
+		}
+  }
+
+  private applySavedFilters() {
+    this._products = this._allProducts;
+    var entries = Array.from(this._filters.keys());
+    for (let entry of entries) {
+      var values : String[] = this._filters.get(entry);
+      if (entry == 0) {
+        this._products = this._products.filter(x => values.includes(x.brand));
+      } else {
+        //Implementar filtro por tags genericos
+      }
+    }
+    this._products = this.sortProducts(this._products, this.sortBy);
+    this._actualPage = this.calculateActualPage();
+  }
+
+  public applyFilterByTags(tag: TagGroup, value : String, checked : Boolean) {
+    this.addFilterValue(tag, value, checked);
+    this.applySavedFilters();
+  }
+
+  public clearFilterForTag(tag: TagGroup) {
+    this._filters.delete(tag.id);
+    this.applySavedFilters();
   }
 
   private commonInitialize() {
     this.initialized = true;
     this.totalProducts = this._products.length;
     this._actualPage = this.calculateActualPage();
+    this._filters = new Map<number, String[]>();
+
     this.loadTagsByBrand(this._products);
     //this.loadTags(this._products);
   }
@@ -144,7 +199,7 @@ export class FilterService {
     if (orderBy == "name") {
         return data.sort((a, b) => (a.name < b.name) ? -1 : (a.name > b.name ? 1 : 0));
     } else {
-      return data.sort((a, b) => (a.price < b.price) ? -1 : (a.price > b.price ? 1 : 0));
+      return data.sort((a, b) => (Number(a.price) < Number(b.price)) ? -1 : (Number(a.price) > Number(b.price) ? 1 : 0));
     }
   }
 
@@ -201,8 +256,7 @@ export class FilterService {
       }
   }
 
-
-  createTagGroup(map : Map<number, TagGroup>, tag : Tag){
+  private createTagGroup(map : Map<number, TagGroup>, tag : Tag){
     var tagGroup = new TagGroup();
     tagGroup.id = tag.tag_group;
     tagGroup.name = tag.tag_group_name;
