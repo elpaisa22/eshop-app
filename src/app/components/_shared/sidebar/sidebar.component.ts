@@ -11,7 +11,6 @@ import {FilterService} from '../../../services/filter/filter.service';
 export class SideBarComponent {
 
 	@Input() tags : Map<number, TagGroup>;
-	@ViewChild('priceslider') priceslider;
 
 	constructor(public _filterService : FilterService) {
 	}
@@ -33,24 +32,16 @@ export class SideBarComponent {
 		this._filterService.clearFilterForTag(tag);
 	}
 
-	public clearPriceRange() {
-		this._filterService.clearPriceRange();
-		this.priceslider.resetValues();
-	}
-
 	public onPriceRangeChange(event : any) {
-		this._filterService.updatePriceRange(event.range_min, event.range_max);
+    this._filterService.updatePriceRange(event.range_min, event.range_max);
+  }
+
+	public onClearRangeValues() {
+		this._filterService.clearPriceRange();
 	}
 
 	get filterService() : FilterService {
-		return this._filterService;
-	}
+    return this._filterService;
+  }
 
-	get priceMin() : number {
-		return this._filterService.priceMin;
-	}
-
-	get priceMax() : number {
-		return this._filterService.priceMax;
-	}
 }

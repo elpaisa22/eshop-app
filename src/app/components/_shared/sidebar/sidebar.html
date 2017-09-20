@@ -1,19 +1,8 @@
-<div class="panel panel-default sidebar-menu">
-    <div class="panel-heading">
-        <h3 class="panel-title">Precio <a class="btn btn-xs btn-danger pull-right" (click)="clearPriceRange()"><i class="fa fa-times-circle"></i> Limpiar</a></h3>
-    </div>
-
-    <div class="panel-body">
-
-        <slider #priceslider
-                 [minLimit]="priceMin"
-                 [maxLimit]="priceMax"
-                 (rangeChange)="onPriceRangeChange($event);"></slider>
-
-    </div>
-</div>
-
-
+<price-filter [minLimit]="filterService.priceMin"
+              [maxLimit]="filterService.priceMax"
+              (rangeChange)="onPriceRangeChange($event)"
+              (clearRangeValues)="onClearRangeValues()">
+</price-filter>
 
 <div class="panel panel-default sidebar-menu" *ngFor="let group of tags | keys">
 
