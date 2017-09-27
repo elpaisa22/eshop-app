@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild, OnInit} from '@angular/core';
 
 import {TagGroup, TagValue} from '../../../models/tag/taggroup.model';
 
@@ -8,15 +8,24 @@ import {FilterService} from '../../../services/filter/filter.service';
 	templateUrl : './sidebar.html',
   selector : 'side-bar'
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit {
 
 	@Input() tags : Map<number, TagGroup>;
 
-	constructor(public _filterService : FilterService) {
+	public  priceMin : number;
+	public  priceMax : number;
+
+	constructor(public filterService : FilterService) {
+	}
+
+	ngOnInit(){
+		//Asigna la data desde el servicio
+		this.filterService.priceMin.subscribe(data => this.priceMin = data);
+		this.filterService.priceMax.subscribe(data => this.priceMax = data);
 	}
 
 	public selectionTagChange(tag : TagGroup, value, input: HTMLInputElement) {
-		this._filterService.applyFilterByTags(tag, value, input.checked);
+		this.filterService.applyFilterByTags(tag, value, input.checked);
 	}
 
 	public clearFilter(tag : TagGroup, event) {
@@ -29,19 +38,15 @@ export class SideBarComponent {
 		    }
 		}
 
-		this._filterService.clearFilterForTag(tag);
+		this.filterService.clearFilterForTag(tag);
 	}
 
 	public onPriceRangeChange(event : any) {
-    this._filterService.updatePriceRange(event.range_min, event.range_max);
+    this.filterService.updatePriceRange(event.range_min, event.range_max);
   }
 
 	public onClearRangeValues() {
-		this._filterService.clearPriceRange();
+		this.filterService.clearPriceRange();
 	}
-
-	get filterService() : FilterService {
-    return this._filterService;
-  }
 
 }

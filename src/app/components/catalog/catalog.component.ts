@@ -9,83 +9,92 @@ import {FilterService} from '../../services/filter/filter.service';
 import {CategoryRepository} from '../../repositories/category/category.repository';
 import {Section, Category, SubCategory} from '../../models/category/section.model';
 
+import {TagGroup, TagValue} from '../../models/tag/taggroup.model';
+
 @Component({
 	templateUrl : './catalog.html'
 })
 export class CatalogComponent implements OnInit {
 
-	private _sectionID : Number;
-	private _categoryID : Number;
-	private _subcategoryID : Number;
+	private sectionID : Number;
+	private categoryID : Number;
+	private subcategoryID : Number;
 
-	private _section : Section;
-	private _category : Category;
-	private _subcategory : SubCategory;
+	public section : Section;
+	public category : Category;
+	public subcategory : SubCategory;
 
-	constructor(private _activatedRoute: ActivatedRoute,
-		          public _filterService : FilterService,
-	            private _cartService : CartService,
-						  private _categoryRepository: CategoryRepository) {
+  public  page : number;
+  public  pageSize : number;
+  public  totalPages : number;
+	public  productsCount : number;
+	public  totalProducts : number;
+  public  sortBy : string;
+
+	public  actualPage : Product[] = [];
+	public  tags : Map<number, TagGroup>;
+
+	constructor(private activatedRoute: ActivatedRoute,
+		          public filterService : FilterService,
+	            private cartService : CartService,
+						  private categoryRepository: CategoryRepository) {
 	}
 
 	ngOnInit(){
-		this._activatedRoute.params.subscribe((params: Params) => {
-			this._sectionID = params['section'];
-			this._categoryID = params['category'];
-			this._subcategoryID = params['subcategory'];
+		this.activatedRoute.params.subscribe((params: Params) => {
+			this.sectionID = params['section'];
+			this.categoryID = params['category'];
+			this.subcategoryID = params['subcategory'];
 
 			this.loadCategories();
 
-			if (this._subcategoryID != null) {
-					this._filterService.loadProductsBySubcategory(this._subcategoryID);
-			} else if (this._categoryID != null) {
-					this._filterService.loadProductsByCategory(this._categoryID);
-				} else if (this._sectionID != null) {
-						this._filterService.loadProductsBySection(this._sectionID);
-				}
+			if (this.subcategoryID != null) {
+					this.filterService.loadProductsBySubcategory(this.subcategoryID);
+			} else if (this.categoryID != null) {
+					this.filterService.loadProductsByCategory(this.categoryID);
+			} else if (this.sectionID != null) {
+					this.filterService.loadProductsBySection(this.sectionID);
+			}
 			//window.scrollTo(0, 0);
 	 	});
 
+		//Asigna la data desde el servicio
+		this.filterService.page.subscribe(data => this.page = data);
+		this.filterService.pageSize.subscribe(data => this.pageSize = data);
+		this.filterService.totalPages.subscribe(data => this.totalPages = data);
+		this.filterService.productsCount.subscribe(data => this.productsCount = data);
+		this.filterService.totalProducts.subscribe(data => this.totalProducts = data);
+		this.filterService.sortBy.subscribe(data => this.sortBy = data);
+		this.filterService.actualPage.subscribe(data => this.actualPage = data);
+		this.filterService.tags.subscribe(data => this.tags = data);
 	}
 
 	addToCart(prod : Product) {
-		this._cartService.addProduct(prod);
+		this.cartService.addProduct(prod);
 	}
 
 	onPageChange($event){
-		this._filterService.changeActualPage($event.value);
+		this.filterService.changeActualPage($event.value);
 	}
 
   onPageSizeChange($event){
-		this._filterService.changePageSize($event.value);
+		this.filterService.changePageSize($event.value);
 	}
 
   onSortByChange($event){
-		this._filterService.changeSortOrder($event.value);
+		this.filterService.changeSortOrder($event.value);
 	}
 
 	loadCategories() {
-		this._categoryRepository.getCategories().subscribe(
+		this.categoryRepository.getCategories().subscribe(
 			data => {
-				this._section = data.find(x => x.id == this._sectionID);
-				this._category = this._section.categories.find(x => x.id == this._categoryID);
-				if (this._category) {
-						this._subcategory = this._category.subcategories.find(x => x.id == this._subcategoryID);
+				this.section = data.find(x => x.id == this.sectionID);
+				this.category = this.section.categories.find(x => x.id == this.categoryID);
+				if (this.category) {
+						this.subcategory = this.category.subcategories.find(x => x.id == this.subcategoryID);
 				}
 			}
 		);
-	}
-
-	get section() : Section {
-		return this._section;
-	}
-
-	get category() : Category {
-		return this._category;
-	}
-
-	get subcategory() : SubCategory {
-		return this._subcategory;
 	}
 
 }

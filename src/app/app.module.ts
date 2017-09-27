@@ -4,9 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
-import { StoreModule } from "@ngrx/store";
-import { EffectsModule } from "@ngrx/effects";
-
 import { AppComponent } from './app.component';
 
 /* Components */
@@ -51,10 +48,6 @@ import {FilterService} from './services/filter/filter.service';
 import {ProductRepository} from './repositories/product/product.repository';
 import {CategoryRepository} from './repositories/category/category.repository';
 import {CheckoutRepository} from './repositories/checkout/checkout.repository';
-
-/* Redux */
-import {catalogReducer} from './common/catalog/catalog.reducer';
-import {CatalogEffects} from './common/catalog/catalog.effects';
 
 export const appRoutes : Routes = [
 	{path: '', component: HomeComponent},
@@ -112,8 +105,6 @@ export const appRoutes : Routes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes, { useHash: true }),
-		StoreModule.forRoot({catalog : catalogReducer}),
-  	EffectsModule.forRoot([CatalogEffects])
   ],
   providers: [
 		CartService,

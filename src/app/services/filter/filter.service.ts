@@ -6,21 +6,40 @@ import {ProductRepository} from '../../repositories/product/product.repository';
 import {Tag} from '../../models/tag/tag.model';
 import {TagGroup, TagValue} from '../../models/tag/taggroup.model';
 
-import {Observable} from "rxjs/Rx";
+import { Observable, BehaviorSubject } from 'rxjs/Rx';
 
 @Injectable()
 export class FilterService {
 
-  page : number;
-	pageSize : number;
-	totalPages : number;
+  private pageSource = new BehaviorSubject<number>(1);
+  public  page : Observable<number> = this.pageSource.asObservable();
 
-  productsCount : number;
-  totalProducts : number;
-  sortBy : string;
+  private pageSizeSource = new BehaviorSubject<number>(12);
+  public  pageSize : Observable<number> = this.pageSizeSource.asObservable();
 
-  _priceMin : number;
-  _priceMax : number;
+  private totalPagesSource = new BehaviorSubject<number>(1);
+  public  totalPages : Observable<number> = this.totalPagesSource.asObservable();
+
+  private productsCountSource = new BehaviorSubject<number>(0);
+  public  productsCount : Observable<number> = this.productsCountSource.asObservable();
+
+  private totalProductsSource = new BehaviorSubject<number>(0);
+  public  totalProducts : Observable<number> = this.totalProductsSource.asObservable();
+
+  private sortBySource = new BehaviorSubject<string>("name");
+  public  sortBy : Observable<string> = this.sortBySource.asObservable();
+
+  private actualPageSource = new BehaviorSubject<Product[]>([]);
+  public  actualPage : Observable<Product[]> = this.actualPageSource.asObservable();
+
+  private tagsSource = new BehaviorSubject<Map<number, TagGroup>>(new Map<number, TagGroup>());
+  public  tags : Observable<Map<number, TagGroup>> = this.tagsSource.asObservable();
+
+  private priceMinSource = new BehaviorSubject<number>(0);
+  public  priceMin : Observable<number> = this.priceMinSource.asObservable();
+
+  private priceMaxSource = new BehaviorSubject<number>(0);
+  public  priceMax : Observable<number> = this.priceMaxSource.asObservable();
 
   _filterRangeMin : number;
   _filterRangeMax : number;
@@ -28,22 +47,10 @@ export class FilterService {
   _filters : Map<number, String[]> = new Map<number, String[]>();
   _allProducts : Product[] = [];
 	_products : Product[] = [];
-  _actualPage : Product[] = [];
-
-  _tags: Map<number, TagGroup> = new Map<number, TagGroup>();
 
   initialized : boolean;
 
   constructor(private _productRepository : ProductRepository) {
-    this.page = 1;
-		this.pageSize = 12;
-		this.totalPages = 1;
-
-    this.sortBy = "name";
-
-    this.productsCount = 0;
-		this.totalProducts = 0;
-
     this.initialized = false;
   }
 
@@ -51,10 +58,10 @@ export class FilterService {
     this._products.length = 0;
     return this._productRepository.getProducts(forceReload)
                                   .map(data => {
-                                    this._products = this.sortProducts(data, this.sortBy);
+                                    this._products = this.sortProducts(data, this.sortBySource.getValue());
                                     this._allProducts = this._products;
                                     this.commonInitialize();
-                                    return this._actualPage;
+                                    return this.actualPageSource.getValue();
                                   });
   }
 
@@ -64,10 +71,10 @@ export class FilterService {
     this._productRepository.getProducts()
                                   .subscribe(data => {
                                     this._products = this.filterBySubcategory(data, subcategory);
-                                    this._products = this.sortProducts(this._products, this.sortBy);
+                                    this._products = this.sortProducts(this._products, this.sortBySource.getValue());
                                     this._allProducts = this._products;
                                     this.commonInitialize();
-                                    return this._actualPage;
+                                    return this.actualPageSource.getValue();
                                   });
   }
 
@@ -76,10 +83,10 @@ export class FilterService {
     this._productRepository.getProducts()
                                   .subscribe(data => {
                                     this._products = this.filterByCategory(data, subcategory);
-                                    this._products = this.sortProducts(this._products, this.sortBy);
+                                    this._products = this.sortProducts(this._products, this.sortBySource.getValue());
                                     this._allProducts = this._products;
                                     this.commonInitialize();
-                                    return this._actualPage;
+                                    return this.actualPageSource.getValue();
                                   });
   }
 
@@ -88,10 +95,10 @@ export class FilterService {
     this._productRepository.getProducts()
                                   .subscribe(data => {
                                     this._products = this.filterBySection(data, section);
-                                    this._products = this.sortProducts(this._products, this.sortBy);
+                                    this._products = this.sortProducts(this._products, this.sortBySource.getValue());
                                     this._allProducts = this._products;
                                     this.commonInitialize();
-                                    return this._actualPage;
+                                    return this.actualPageSource.getValue();
                                   });
   }
 
@@ -138,7 +145,7 @@ export class FilterService {
     this._products = this._products.filter(x => Number(x.price) >= this._filterRangeMin && Number(x.price) <= this._filterRangeMax);
 
     //Ordena los elementos
-    this._products = this.sortProducts(this._products, this.sortBy);
+    this._products = this.sortProducts(this._products, this.sortBySource.getValue());
 
     //Actualiza la pagina
     this.calculateActualPage();
@@ -161,14 +168,14 @@ export class FilterService {
   }
 
   public clearPriceRange() {
-    this._filterRangeMin = this._priceMin;
-    this._filterRangeMax = this._priceMax;
+    this._filterRangeMin = this.priceMinSource.getValue();
+    this._filterRangeMax = this.priceMaxSource.getValue();
     this.applySavedFilters();
   }
 
   private commonInitialize() {
     this.initialized = true;
-    this.totalProducts = this._products.length;
+    this.totalProductsSource.next(this._products.length);
     this.calculateActualPage();
     this.calculatePriceRange();
     this._filters = new Map<number, String[]>();
@@ -178,20 +185,20 @@ export class FilterService {
   }
 
   private calculatePriceRange() {
-      this._priceMin = this._products.reduce((a, b) => (Number(a.price) < Number(b.price)) ? a : b).price;
-      this._priceMax = this._products.reduce((a, b) => (Number(a.price) > Number(b.price)) ? a : b).price;
+      this.priceMinSource.next(this._products.reduce((a, b) => (Number(a.price) < Number(b.price)) ? a : b).price);
+      this.priceMaxSource.next(this._products.reduce((a, b) => (Number(a.price) > Number(b.price)) ? a : b).price);
 
-      this._filterRangeMin = this._priceMin;
-      this._filterRangeMax = this._priceMax;
+      this._filterRangeMin = this.priceMinSource.getValue();
+      this._filterRangeMax = this.priceMaxSource.getValue();
   }
 
   private calculateActualPage() {
     var result : Product[] = [];
-    var size = this.pageSize;
+    var size = this.pageSizeSource.getValue();
     if (this.pageSize == null) {
       size = this._products.length;
     }
-    var from : number = size * (this.page - 1);
+    var from : number = size * (this.pageSource.getValue() - 1);
     var to : number = from + size - 1;
     if (to > this._products.length) {
       to = this._products.length - 1;
@@ -202,18 +209,18 @@ export class FilterService {
       }
     }
 
-    this.productsCount = result.length;
+    this.productsCountSource.next(result.length);
 
     if (this.pageSize == null) {
-        this.totalPages = 1;
+        this.totalPagesSource.next(1);
     } else {
-        this.totalPages = Math.floor(this.totalProducts/size) + 1;
+        this.totalPagesSource.next(Math.floor(this.totalProductsSource.getValue()/size) + 1);
     }
-    if (this.totalProducts > size && this.totalProducts % size > 0) {
-      this.totalPages++;
+    if (this.totalProductsSource.getValue() > size && this.totalProductsSource.getValue() % size > 0) {
+      this.totalPagesSource.next(this.totalPagesSource.getValue() + 1);
     }
 
-    this._actualPage = result;
+    this.actualPageSource.next(result);
   }
 
   private filterBySubcategory(data : Product[], subcategory : Number) : Product[] {
@@ -245,10 +252,10 @@ export class FilterService {
   private loadTags(data : Product[]) {
     for (let prod of data) {
       for (let tag of prod.tags) {
-          if (!this._tags.has(tag.tag_group)) {
-            this.createTagGroup(this._tags, tag);
+          if (!this.tagsSource.getValue().has(tag.tag_group)) {
+            this.createTagGroup(this.tagsSource.getValue(), tag);
           } else {
-            var tagGroup = this._tags.get(tag.tag_group);
+            var tagGroup = this.tagsSource.getValue().get(tag.tag_group);
             var tagVal = tagGroup.tags.find(x => x.id == tag.id);
             if (tagVal != null) {
               tagVal.count = tagVal.count + 1;
@@ -265,13 +272,13 @@ export class FilterService {
   }
 
   private loadTagsByBrand(data : Product[]) {
-    this._tags = new Map<number, TagGroup>();
+    this.tagsSource.next(new Map<number, TagGroup>());
 
     var tg : TagGroup = new TagGroup();
     tg.id = 0;
     tg.name = "Marca";
     tg.tags = [];
-    this._tags.set(tg.id, tg);
+    this.tagsSource.getValue().set(tg.id, tg);
 
     for (let prod of data) {
         if (prod.brand) {
@@ -280,7 +287,7 @@ export class FilterService {
           tag.tag_group_name = tg.name;
           tag.tag = prod.brand;
 
-          var tagGroup = this._tags.get(tag.tag_group);
+          var tagGroup = this.tagsSource.getValue().get(tag.tag_group);
           var tagVal = tagGroup.tags.find(x => x.value == tag.tag);
           if (tagVal != null) {
             tagVal.count = tagVal.count + 1;
@@ -312,35 +319,19 @@ export class FilterService {
       return this.initialized;
   }
 
-  get actualPage() : Observable<Product[]> {
-    return Observable.of(this._actualPage);
-  }
-
-  get tagsGroup(): Map<number, TagGroup> {
-    return this._tags;
-  }
-
-  get priceMin() : number {
-      return this._priceMin;
-  }
-
-  get priceMax() : number {
-      return this._priceMax;
-  }
-
   public changeSortOrder(orderBy : string) {
     this._products = this.sortProducts(this._products, orderBy);
-    this.sortBy = orderBy;
+    this.sortBySource.next(orderBy);
     this.calculateActualPage();
   }
 
   public changeActualPage(page : number) {
-    this.page = page;
+    this.pageSource.next(page);
     this.calculateActualPage();
   }
 
   public changePageSize(pageSize : number) {
-    this.pageSize = pageSize;
+    this.pageSizeSource.next(pageSize);
     this.calculateActualPage();
   }
 

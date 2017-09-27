@@ -30,7 +30,7 @@
                       [subcategory]="subcategory?.id"
                       *ngIf="!category || !subcategory"></side-nav>
 
-            <side-bar [tags]="_filterService.tagsGroup"></side-bar>
+            <side-bar [tags]="tags"></side-bar>
 
             <div class="banner">
                 <a href="#">
@@ -48,17 +48,17 @@
             </div>
           -->
 
-            <pager [pageSize]="_filterService.pageSize"
-                   [sortBy]="_filterService.sortBy"
-                   [countElements]="_filterService.productsCount"
-                   [totalElements]="_filterService.totalProducts"
+            <pager [pageSize]="pageSize"
+                   [sortBy]="sortBy"
+                   [countElements]="productsCount"
+                   [totalElements]="totalProducts"
                    (pageSizeChange)="onPageSizeChange($event)"
                    (sortByChange)="onSortByChange($event)">
             </pager>
 
             <div class="row products">
 
-                <div *ngFor="let prod of _filterService.actualPage | async" class="col-md-4 col-sm-6">
+                <div *ngFor="let prod of actualPage" class="col-md-4 col-sm-6">
                   <div class="product">
                       <div class="flip-container">
                           <div class="flipper">
@@ -111,10 +111,9 @@
             </div>
             <!-- /.products -->
 
-            <paginator [page]="_filterService.page"
-                       [totalPages]="_filterService.totalPages"
+            <paginator [page]="page"
+                       [totalPages]="totalPages"
                        (pageChange)="onPageChange($event);"></paginator>
-
 
         </div>
         <!-- /.col-md-9 -->

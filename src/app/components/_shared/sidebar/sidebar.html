@@ -1,5 +1,5 @@
-<price-filter [minLimit]="filterService.priceMin"
-              [maxLimit]="filterService.priceMax"
+<price-filter [minLimit]="priceMin"
+              [maxLimit]="priceMax"
               (rangeChange)="onPriceRangeChange($event)"
               (clearRangeValues)="onClearRangeValues()">
 </price-filter>
