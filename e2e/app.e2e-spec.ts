@@ -1,14 +1,14 @@
-import { EshopAppPage } from './app.po';
+import { AppPage } from './app.po';
 
 describe('eshop-app App', () => {
-  let page: EshopAppPage;
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new EshopAppPage();
+    page = new AppPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('Welcome to app!');
   });
 });
