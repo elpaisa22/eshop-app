@@ -30,7 +30,13 @@
                       [subcategory]="subcategory?.id"
                       *ngIf="!category || !subcategory"></side-nav>
 
-            <side-bar [tags]="tags"></side-bar>
+            <side-bar [tags]="tags"
+                      [priceMin]="priceMin"
+                      [priceMax]="priceMax"
+                      (tagFilterChange)="onTagFilterChange($event)"
+                      (clearTagFilter)="onClearTagFilter($event)"
+                      (priceRangeChange)="onPriceRangeChange($event)"
+                      (clearPriceRange)="onClearPriceRange($event)"></side-bar>
 
             <div class="banner">
                 <a href="#">
@@ -113,7 +119,7 @@
 
             <paginator [page]="page"
                        [totalPages]="totalPages"
-                       (pageChange)="onPageChange($event);"></paginator>
+                       (pageChange)="onPageChange($event)"></paginator>
 
         </div>
         <!-- /.col-md-9 -->

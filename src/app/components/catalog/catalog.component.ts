@@ -31,7 +31,10 @@ export class CatalogComponent implements OnInit {
   public  sortBy : string;
 
 	public  actualPage : Product[] = [];
+
 	public  tags : Map<number, TagGroup>;
+	public  priceMin : number;
+	public  priceMax : number;
 
 	constructor(private activatedRoute: ActivatedRoute,
 		          public filterService : FilterService,
@@ -57,26 +60,44 @@ export class CatalogComponent implements OnInit {
 		this.filterService.totalProducts.subscribe(data => this.totalProducts = data);
 		this.filterService.sortBy.subscribe(data => this.sortBy = data);
 		this.filterService.actualPage.subscribe(data => this.actualPage = data);
-		this.filterService.tags.subscribe(data => this.tags = data);
 		this.filterService.section.subscribe(data => this.section = data);
 		this.filterService.category.subscribe(data => this.category = data);
 		this.filterService.subcategory.subscribe(data => this.subcategory = data);
+		this.filterService.tags.subscribe(data => this.tags = data);
+		this.filterService.priceMin.subscribe(data => this.priceMin = data);
+		this.filterService.priceMax.subscribe(data => this.priceMax = data);
 	}
 
-	addToCart(prod : Product) {
+	public addToCart(prod : Product) {
 		this.cartService.addProduct(prod);
 	}
 
-	onPageChange($event){
-		this.filterService.changeActualPage($event.value);
+	public onPageChange(event){
+		this.filterService.changeActualPage(event.value);
 	}
 
-  onPageSizeChange($event){
-		this.filterService.changePageSize($event.value);
+  public onPageSizeChange(event){
+		this.filterService.changePageSize(event.value);
 	}
 
-  onSortByChange($event){
-		this.filterService.changeSortOrder($event.value);
+  public onSortByChange(event){
+		this.filterService.changeSortOrder(event.value);
+	}
+
+	public onTagFilterChange(event){
+		this.filterService.changeFilterByTags(event.tag, event.value, event.checked);
+	}
+
+	public onClearTagFilter(event){
+		this.filterService.clearFilterForTag(event.tag);
+	}
+
+	public onPriceRangeChange(event){
+		this.filterService.changePriceRange(event.priceMin, event.priceMax);
+	}
+
+	public onClearPriceRange(){
+		this.filterService.clearPriceRange();
 	}
 
 }
