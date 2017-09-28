@@ -20,7 +20,7 @@
       <div class="form-group" *ngFor="let value of tags.get(group).tags">
           <div class="checkbox">
               <label>
-                  <input type="checkbox" (change)="selectionTagChange(tags.get(group), value.value, $event.srcElement)"/>{{value.value}} ({{value.count}})
+                  <input type="checkbox" (change)="selectionTagChange(tags.get(group), value.value, $event)"/>{{value.value}} ({{value.count}})
               </label>
           </div>
       </div>

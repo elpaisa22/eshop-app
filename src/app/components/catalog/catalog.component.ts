@@ -6,7 +6,6 @@ import {Product} from '../../models/product/product.model';
 import {CartService} from '../../services/cart/cart.service';
 import {FilterService} from '../../services/filter/filter.service';
 
-import {CategoryRepository} from '../../repositories/category/category.repository';
 import {Section, Category, SubCategory} from '../../models/category/section.model';
 
 import {TagGroup, TagValue} from '../../models/tag/taggroup.model';
@@ -16,9 +15,9 @@ import {TagGroup, TagValue} from '../../models/tag/taggroup.model';
 })
 export class CatalogComponent implements OnInit {
 
-	private sectionID : Number;
-	private categoryID : Number;
-	private subcategoryID : Number;
+	private sectionID : number;
+	private categoryID : number;
+	private subcategoryID : number;
 
 	public section : Section;
 	public category : Category;
@@ -36,8 +35,7 @@ export class CatalogComponent implements OnInit {
 
 	constructor(private activatedRoute: ActivatedRoute,
 		          public filterService : FilterService,
-	            private cartService : CartService,
-						  private categoryRepository: CategoryRepository) {
+	            private cartService : CartService) {
 	}
 
 	ngOnInit(){
@@ -46,15 +44,8 @@ export class CatalogComponent implements OnInit {
 			this.categoryID = params['category'];
 			this.subcategoryID = params['subcategory'];
 
-			this.loadCategories();
+			this.filterService.initFromSections(this.sectionID, this.categoryID, this.subcategoryID);
 
-			if (this.subcategoryID != null) {
-					this.filterService.loadProductsBySubcategory(this.subcategoryID);
-			} else if (this.categoryID != null) {
-					this.filterService.loadProductsByCategory(this.categoryID);
-			} else if (this.sectionID != null) {
-					this.filterService.loadProductsBySection(this.sectionID);
-			}
 			//window.scrollTo(0, 0);
 	 	});
 
@@ -67,6 +58,9 @@ export class CatalogComponent implements OnInit {
 		this.filterService.sortBy.subscribe(data => this.sortBy = data);
 		this.filterService.actualPage.subscribe(data => this.actualPage = data);
 		this.filterService.tags.subscribe(data => this.tags = data);
+		this.filterService.section.subscribe(data => this.section = data);
+		this.filterService.category.subscribe(data => this.category = data);
+		this.filterService.subcategory.subscribe(data => this.subcategory = data);
 	}
 
 	addToCart(prod : Product) {
@@ -83,18 +77,6 @@ export class CatalogComponent implements OnInit {
 
   onSortByChange($event){
 		this.filterService.changeSortOrder($event.value);
-	}
-
-	loadCategories() {
-		this.categoryRepository.getCategories().subscribe(
-			data => {
-				this.section = data.find(x => x.id == this.sectionID);
-				this.category = this.section.categories.find(x => x.id == this.categoryID);
-				if (this.category) {
-						this.subcategory = this.category.subcategories.find(x => x.id == this.subcategoryID);
-				}
-			}
-		);
 	}
 
 }

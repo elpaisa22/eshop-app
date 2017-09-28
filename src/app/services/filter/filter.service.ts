@@ -2,9 +2,11 @@ import {Injectable} from '@angular/core';
 
 import {Product} from '../../models/product/product.model';
 import {ProductRepository} from '../../repositories/product/product.repository';
+import {CategoryRepository} from '../../repositories/category/category.repository';
 
 import {Tag} from '../../models/tag/tag.model';
 import {TagGroup, TagValue} from '../../models/tag/taggroup.model';
+import {Section, Category, SubCategory} from '../../models/category/section.model';
 
 import { Observable, BehaviorSubject } from 'rxjs/Rx';
 
@@ -41,6 +43,15 @@ export class FilterService {
   private priceMaxSource = new BehaviorSubject<number>(0);
   public  priceMax : Observable<number> = this.priceMaxSource.asObservable();
 
+  private sectionSource = new BehaviorSubject<Section>(null);
+  public  section : Observable<Section> = this.sectionSource.asObservable();
+
+  private categorySource = new BehaviorSubject<Category>(null);
+  public  category : Observable<Category> = this.categorySource.asObservable();
+
+  private subcategorySource = new BehaviorSubject<SubCategory>(null);
+  public  subcategory : Observable<SubCategory> = this.subcategorySource.asObservable();
+
   _filterRangeMin : number;
   _filterRangeMax : number;
 
@@ -50,56 +61,21 @@ export class FilterService {
 
   initialized : boolean;
 
-  constructor(private _productRepository : ProductRepository) {
+  constructor(private productRepository : ProductRepository,
+              private categoryRepository: CategoryRepository) {
     this.initialized = false;
   }
 
-  private loadProducts(forceReload : boolean = false) : Observable<Product[]> {
+  private loadProducts(forceReload : boolean = false) {
     this._products.length = 0;
-    return this._productRepository.getProducts(forceReload)
-                                  .map(data => {
-                                    this._products = this.sortProducts(data, this.sortBySource.getValue());
-                                    this._allProducts = this._products;
-                                    this.commonInitialize();
-                                    return this.actualPageSource.getValue();
-                                  });
-  }
-
-
-  public loadProductsBySubcategory(subcategory : Number) {
-    this._products.length = 0;
-    this._productRepository.getProducts()
-                                  .subscribe(data => {
-                                    this._products = this.filterBySubcategory(data, subcategory);
-                                    this._products = this.sortProducts(this._products, this.sortBySource.getValue());
-                                    this._allProducts = this._products;
-                                    this.commonInitialize();
-                                    return this.actualPageSource.getValue();
-                                  });
-  }
-
-  public loadProductsByCategory(subcategory : Number) {
-    this._products.length = 0;
-    this._productRepository.getProducts()
-                                  .subscribe(data => {
-                                    this._products = this.filterByCategory(data, subcategory);
-                                    this._products = this.sortProducts(this._products, this.sortBySource.getValue());
-                                    this._allProducts = this._products;
-                                    this.commonInitialize();
-                                    return this.actualPageSource.getValue();
-                                  });
-  }
-
-  public loadProductsBySection(section : Number) {
-    this._products.length = 0;
-    this._productRepository.getProducts()
-                                  .subscribe(data => {
-                                    this._products = this.filterBySection(data, section);
-                                    this._products = this.sortProducts(this._products, this.sortBySource.getValue());
-                                    this._allProducts = this._products;
-                                    this.commonInitialize();
-                                    return this.actualPageSource.getValue();
-                                  });
+    this.productRepository.getProducts()
+                          .subscribe(data => {
+                             this._products = this.applySectionFilters(data);
+                             this._products = this.sortProducts(this._products, this.sortBySource.getValue());
+                             this._allProducts = this._products;
+                             this.initialize();
+                             return this.actualPageSource.getValue();
+                          });
   }
 
   private addFilterValue(tag: TagGroup, value : String, checked : Boolean) {
@@ -151,29 +127,7 @@ export class FilterService {
     this.calculateActualPage();
   }
 
-  public applyFilterByTags(tag: TagGroup, value : String, checked : Boolean) {
-    this.addFilterValue(tag, value, checked);
-    this.applySavedFilters();
-  }
-
-  public clearFilterForTag(tag: TagGroup) {
-    this._filters.delete(tag.id);
-    this.applySavedFilters();
-  }
-
-  public updatePriceRange(min, max : number) {
-    this._filterRangeMin = min;
-    this._filterRangeMax = max;
-    this.applySavedFilters();
-  }
-
-  public clearPriceRange() {
-    this._filterRangeMin = this.priceMinSource.getValue();
-    this._filterRangeMax = this.priceMaxSource.getValue();
-    this.applySavedFilters();
-  }
-
-  private commonInitialize() {
+  private initialize() {
     this.initialized = true;
     this.totalProductsSource.next(this._products.length);
     this.calculateActualPage();
@@ -221,6 +175,19 @@ export class FilterService {
     }
 
     this.actualPageSource.next(result);
+  }
+
+  private applySectionFilters(data : Product[]) : Product[] {
+      var result : Product[] = [];
+      if (this.subcategorySource.getValue()) {
+        result = this.filterBySubcategory(data, this.subcategorySource.getValue().id);
+      } else if (this.categorySource.getValue()) {
+        result = this.filterByCategory(data, this.categorySource.getValue().id);
+      } else if (this.sectionSource.getValue()) {
+        result = this.filterBySection(data, this.sectionSource.getValue().id);
+      }
+
+      return result;
   }
 
   private filterBySubcategory(data : Product[], subcategory : Number) : Product[] {
@@ -317,6 +284,55 @@ export class FilterService {
 
   get isInitialized() : boolean {
       return this.initialized;
+  }
+
+  public initFromSections(sectionId : number, categoryId : number, subcategoryId : number) {
+    if (!subcategoryId) {
+      this.subcategorySource.next(null);
+    }
+    if (!categoryId) {
+      this.categorySource.next(null);
+    }
+    if (!sectionId) {
+      this.sectionSource.next(null);
+    }
+
+    this.categoryRepository.getCategories().subscribe(
+			data => {
+        if (sectionId) {
+          this.sectionSource.next(data.find(x => x.id == sectionId));
+          if (categoryId) {
+            this.categorySource.next(this.sectionSource.getValue().categories.find(x => x.id == categoryId));
+            if (this.categorySource.getValue() && subcategoryId) {
+                this.subcategorySource.next(this.categorySource.getValue().subcategories.find(x => x.id == subcategoryId));
+            }
+          }
+        }
+        this.loadProducts();
+			}
+		);
+  }
+
+  public changeFilterByTags(tag: TagGroup, value : String, checked : Boolean) {
+    this.addFilterValue(tag, value, checked);
+    this.applySavedFilters();
+  }
+
+  public clearFilterForTag(tag: TagGroup) {
+    this._filters.delete(tag.id);
+    this.applySavedFilters();
+  }
+
+  public changePriceRange(min, max : number) {
+    this._filterRangeMin = min;
+    this._filterRangeMax = max;
+    this.applySavedFilters();
+  }
+
+  public clearPriceRange() {
+    this._filterRangeMin = this.priceMinSource.getValue();
+    this._filterRangeMax = this.priceMaxSource.getValue();
+    this.applySavedFilters();
   }
 
   public changeSortOrder(orderBy : string) {

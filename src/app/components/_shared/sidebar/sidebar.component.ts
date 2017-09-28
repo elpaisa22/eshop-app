@@ -24,8 +24,8 @@ export class SideBarComponent implements OnInit {
 		this.filterService.priceMax.subscribe(data => this.priceMax = data);
 	}
 
-	public selectionTagChange(tag : TagGroup, value, input: HTMLInputElement) {
-		this.filterService.applyFilterByTags(tag, value, input.checked);
+	public selectionTagChange(tag : TagGroup, value, event) {
+		this.filterService.changeFilterByTags(tag, value, event.currentTarget.checked);
 	}
 
 	public clearFilter(tag : TagGroup, event) {
@@ -42,7 +42,7 @@ export class SideBarComponent implements OnInit {
 	}
 
 	public onPriceRangeChange(event : any) {
-    this.filterService.updatePriceRange(event.range_min, event.range_max);
+    this.filterService.changePriceRange(event.range_min, event.range_max);
   }
 
 	public onClearRangeValues() {
