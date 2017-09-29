@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router } from '@angular/router';
 
+import {CartItem} from '../../models/cartitem/cartitem.model';
 import {CartService} from '../../services/cart/cart.service';
 import {CheckoutRepository} from '../../repositories/checkout/checkout.repository';
 
@@ -9,37 +10,40 @@ import {CheckoutRepository} from '../../repositories/checkout/checkout.repositor
 })
 export class OrderReviewComponent implements OnInit {
 
-    constructor(public _cartService: CartService,
+		public subtotal : number;
+		public  items : CartItem[];
+
+    constructor(private cartService: CartService,
 			          private _checkoutRepository : CheckoutRepository,
 			          private router : Router) {
-    }
-
-		get cartService() {
-      return this._cartService;
     }
 
 		//Se ejecuta al inicio
 		public ngOnInit() {
 			//Si aun no eligio el metodo de envio,redirige al metodo de envio
-			if (this._cartService.delivery == null) {
+			if (this.cartService.getDelivery() == null) {
 					this.router.navigate(['/delivery']);
 			//Si aun no eligio la direccion
-			} else if (this._cartService.delivery.address == null) {
+			} else if (this.cartService.getDelivery().address == null) {
 						this.router.navigate(['/address']);
 			//Si aun no eligio el metodo de pago, redirige al pago
-			} else if (this._cartService.method == null
-				         || this._cartService.payment == null) {
+		} else if (this.cartService.getMethod() == null
+				         || this.cartService.getPayment() == null) {
 					this.router.navigate(['/payment']);
 			}
+
+			//Asigna la data desde el servicio
+			this.cartService.subtotalPrice.subscribe(data => this.subtotal = data);
+			this.cartService.items.subscribe(data => this.items = data);
 		}
 
 		//Envia los datos al backend
 		public sendData() {
 			let result = this._checkoutRepository
-			                 .sendCheckoutData(this._cartService.delivery,
-			                                   this._cartService.method,
-												                 this._cartService.token,
-																				 this._cartService.cart);
+			                 .sendCheckoutData(this.cartService.getDelivery(),
+			                                   this.cartService.getMethod(),
+												                 this.cartService.getToken(),
+																				 this.items);
 			 // verifica el resultado
        result.subscribe(
                () => {

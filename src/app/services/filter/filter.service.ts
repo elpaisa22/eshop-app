@@ -31,7 +31,7 @@ export class FilterService {
   private sortBySource = new BehaviorSubject<string>("name");
   public  sortBy : Observable<string> = this.sortBySource.asObservable();
 
-  private actualPageSource = new BehaviorSubject<Product[]>([]);
+  private actualPageSource = new BehaviorSubject<Product[]>(new Array<Product>());
   public  actualPage : Observable<Product[]> = this.actualPageSource.asObservable();
 
   private tagsSource = new BehaviorSubject<Map<number, TagGroup>>(new Map<number, TagGroup>());

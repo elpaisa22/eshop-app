@@ -11,16 +11,20 @@ import {CartService} from '../../../services/cart/cart.service';
 })
 export class NavBarComponent implements OnInit {
 
-	_sections : Section[];
+	public sections : Section[];
+	public itemsCount : number;
 
-  constructor(public _cartService : CartService, private _categoryRepository : CategoryRepository,) {
+  constructor(private cartService : CartService, private categoryRepository : CategoryRepository,) {
   }
 
 	ngOnInit() {
-		this._categoryRepository.getCategories()
-													  .subscribe(
-															data => this._sections = data,
+		this.categoryRepository.getCategories()
+													 .subscribe(
+															data => this.sections = data,
 															error => console.log(error)
-													  );
+													 );
+
+		//Asigna la data desde el servicio
+		this.cartService.itemsCount.subscribe(data => this.itemsCount = data);
 	}
 }

@@ -1,5 +1,4 @@
-import {Component} from '@angular/core';
-import {Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 
 import {CartService} from '../../../services/cart/cart.service';
 
@@ -7,9 +6,21 @@ import {CartService} from '../../../services/cart/cart.service';
 	templateUrl : './summary.html',
   selector : 'summary'
 })
-export class SummaryComponent {
+export class SummaryComponent implements OnInit {
 
-	constructor(private _router: Router,
-              public _cartService : CartService) {
+	public subtotal : number;
+	public totalPrice : number;
+	public deliveryPrice : number;
+	public interest : number;
+
+	constructor(private cartService : CartService) {
   }
+
+	ngOnInit() {
+		//Asigna la data desde el servicio
+		this.cartService.subtotalPrice.subscribe(data => this.subtotal = data);
+		this.cartService.totalPrice.subscribe(data => this.totalPrice = data);
+		this.cartService.deliveryPrice.subscribe(data => this.deliveryPrice = data);
+		this.cartService.interest.subscribe(data => this.interest = data);
+	}
 }

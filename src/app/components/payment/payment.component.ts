@@ -22,21 +22,21 @@ export class PaymentComponent implements OnInit {
 	private _errorsWithCard : boolean = false;
 	private _issuerIdRequired : boolean = false;
 
-	constructor(private el: ElementRef, public _cartService: CartService, private router : Router) {
+	constructor(private el: ElementRef, private cartService: CartService, private router : Router) {
 	}
 
 	//Se ejecuta al inicio
 	public ngOnInit() {
 		//Si aun no eligio el metodo de envio, redirige al metodo de envio
-		if (this._cartService.delivery == null) {
+		if (this.cartService.getDelivery() == null) {
 				this.router.navigate(['/delivery']);
 		//Si aun no eligio la direccion
-		} else if (this._cartService.delivery.address == null) {
+	} else if (this.cartService.getDelivery().address == null) {
 				this.router.navigate(['/address']);
 		} else {
 			//Toma el pago y el metodo del cartService
-			this._model = this._cartService.payment;
-			this._method = this._cartService.method;
+			this._model = this.cartService.getPayment();
+			this._method = this.cartService.getMethod();
 
 			//Si el modelo no está inicializado, se crea
 			if (this._model == null) {
@@ -52,8 +52,7 @@ export class PaymentComponent implements OnInit {
 				}
 				//Carga las cuotas
 				var bin = this._model.cardNumber.replace(/[ .-]/g, '').slice(0, 6);
-				var amount = this._cartService.totalPrice;
-				this.loadInstallments(bin, amount);
+				this.loadInstallments(bin, this.cartService.calcTotalPrice());
 			}
 
 			//Inicializa la API de MercadoPago
@@ -71,8 +70,8 @@ export class PaymentComponent implements OnInit {
 	//Envia el formulario
 	public sendForm() {
 			//Guarda el Pago y el Metodo de Pago
-		  this._cartService.payment = this._model;
-			this._cartService.method = this._method;
+		  this.cartService.setPayment(this._model);
+			this.cartService.setMethod(this._method);
 
 			//Invoca la API de MercadoPago para crear el Token
 			Mercadopago.createToken(this._model, (status, response) => {
@@ -80,7 +79,7 @@ export class PaymentComponent implements OnInit {
 					this._errorsWithCard = true;
 				} else {
 					//Si no ocurrieron errores, guarda el token en el cartService
-					this._cartService.token = response;
+					this.cartService.setToken(response);
 					this.router.navigate(['/orderReview']);
 				}
 			});
@@ -106,7 +105,7 @@ export class PaymentComponent implements OnInit {
 		//Carga el monto total
 		this._method.totalAmount = installment[0].total_amount;
 		//Guarda el metodo de pago en el cartService
-		this._cartService.method = this._method;
+		this.cartService.setMethod(this._method);
 	}
 
 	//Carga las opciones de Pago de acuerdo al bin de la tarjeta
@@ -137,8 +136,7 @@ export class PaymentComponent implements OnInit {
 				}
 
 				//Obtiene las cuotas para el metodo de pago
-				var amount = this._cartService.totalPrice;
-        this.loadInstallments(bin, amount);
+				this.loadInstallments(bin, this.cartService.calcTotalPrice());
 
 				//Indica que el numero de la tarjeta de credito está cargada
 				this._cardNumberFilled = true;

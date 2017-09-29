@@ -20,7 +20,7 @@ _________________________________________________________ -->
             <div class="navbar-collapse collapse right" id="basket-overview">
                 <a [routerLink]="['/basket']" class="btn btn-primary navbar-btn">
                   <i class="fa fa-shopping-cart"></i>
-                  <span class="hidden-xs">{{_cartService.itemsCount}} items en el carrito</span>
+                  <span class="hidden-xs">{{itemsCount}} items en el carrito</span>
                 </a>
             </div>
             <!--/.nav-collapse -->
@@ -62,7 +62,7 @@ _________________________________________________________ -->
                 <ul class="nav navbar-nav navbar-left">
                     <li [routerLinkActive]="['active']"><a [routerLink]="['/home']">Inicio</a>
                     </li>
-                    <li *ngFor="let section of _sections" class="dropdown yamm-fw">
+                    <li *ngFor="let section of sections" class="dropdown yamm-fw">
                         <a href="#" [routerLinkActive]="['active']" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">{{section.name}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>

@@ -48,7 +48,7 @@ export class AddressComponent implements OnInit {
 	//Se ejecuta al inicio
 	public ngOnInit() {
 		//Toma el modelo del cartService
-		this._model = this._cartService.delivery;
+		this._model = this._cartService.getDelivery();
 
 		//Si aun no eligio el metodo de envio, redirige al metodo de envio
 		if (this._model == null) {
@@ -73,7 +73,7 @@ export class AddressComponent implements OnInit {
 	//Envia el formulario
 	public sendForm() {
 		//Guarda el modelo en el cartService
-		this._cartService.delivery = this._model;
+		this._cartService.setDelivery(this._model);
 		//Redirige a la vista de Pago
 		this.router.navigate(['/payment']);
 	}

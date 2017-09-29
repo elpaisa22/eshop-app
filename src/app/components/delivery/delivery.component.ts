@@ -17,7 +17,7 @@ export class DeliveryComponent implements OnInit {
 	//Se ejecuta al inicio
 	public ngOnInit() {
 		//Intenta cargar el model desde el cartService
-		this._model = this._cartService.delivery;
+		this._model = this._cartService.getDelivery();
 		//Si es null, crea uno nuevo
 		if (this._model == null) {
 				this._model = new Delivery();
@@ -37,7 +37,7 @@ export class DeliveryComponent implements OnInit {
 			//TODO : Obtener el precio a partir de la API de Andreani
 			this._model.price = 200;
 		}
-		this._cartService.delivery = this.model;
+		this._cartService.setDelivery(this.model);
 	}
 
 	//Envia el formulario
