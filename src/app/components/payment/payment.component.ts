@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {Router } from '@angular/router';
 
-import {Payment, PaymentMethod} from '../../models/checkout/checkout.model';
+import {Payment, PaymentMethod, Card} from '../../models/checkout/checkout.model';
 import {CartService} from '../../services/cart/cart.service';
 
 declare var Mercadopago:any;
@@ -62,6 +62,12 @@ export class PaymentComponent implements OnInit {
 
 	//Envia el formulario
 	public sendForm() {
+			//Si el pago es en EFECTIVO, se limpia el Metodo de Pago y la Tarjeta
+			if (this._model.cashPayment) {
+				this._model.method = new PaymentMethod();
+				this._model.card = new Card();
+			}
+
 			//Guarda el Pago y el Metodo de Pago
 		  this.cartService.setPayment(this._model);
 
@@ -102,6 +108,13 @@ export class PaymentComponent implements OnInit {
 		let installment = this._installments.filter(x => x.installments == this._model.method.installments);
 		//Carga el monto total
 		this._model.method.totalAmount = installment[0].total_amount;
+		//Guarda el pago en el cartService
+		this.cartService.setPayment(this._model);
+	}
+
+	//Cuando cambia el modo de pago entre EFECTIVO o CON TARJETA
+	public onCashPaymentChange(value : boolean) {
+		this._model.cashPayment = value;
 		//Guarda el pago en el cartService
 		this.cartService.setPayment(this._model);
 	}

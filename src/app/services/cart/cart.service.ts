@@ -77,7 +77,10 @@ export class CartService {
       },0);
 
       let  financialCost = 0;
-      if (this._payment.method != null && this._payment.method.totalAmount != null) {
+      //Si el methodo de pago posee cuotas
+      if (this._payment.method != null
+          && !this._payment.cashPayment
+          && this._payment.method.totalAmount != null) {
         financialCost = this._payment.method.totalAmount;
       }
       if (financialCost > 0) {

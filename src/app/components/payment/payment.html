@@ -35,11 +35,13 @@
                         <div class="form-group">
                           <div class="col-sm-offset-4 col-sm-8">
                               <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-default" [ngClass]="{'active' : !model.cashPayment}" (click)="model.cashPayment = false">
+                                <label class="btn btn-default" [ngClass]="{'active' : !model.cashPayment}"
+                                       (click)="onCashPaymentChange(false)">
                                   <input type="radio" name="cash_payment" />
                                     Con tarjeta
                                 </label>
-                                <label class="btn btn-default" [ngClass]="{'active' : model.cashPayment}" (click)="model.cashPayment = true">
+                                <label class="btn btn-default" [ngClass]="{'active' : model.cashPayment}"
+                                       (click)="onCashPaymentChange(true)">
                                   <input type="radio" name="cash_payment" />
                                     En efectivo
                                 </label>
