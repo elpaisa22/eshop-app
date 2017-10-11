@@ -10,22 +10,34 @@ import {CartService} from '../../services/cart/cart.service';
 export class DeliveryComponent implements OnInit {
 
 	private _model : Delivery;
+	private _cashPayment : boolean;
 
-	constructor(public _cartService: CartService, private router : Router) {
+	constructor(public cartService: CartService, private router : Router) {
 	}
 
 	//Se ejecuta al inicio
 	public ngOnInit() {
-		//Intenta cargar el model desde el cartService
-		this._model = this._cartService.getDelivery();
-		//Si es null, crea uno nuevo
-		if (this._model == null) {
-				this._model = new Delivery();
+		//Si aun no eligio el metodo de pago, redirige al metodo de pago
+		if (this.cartService.getPayment() == null) {
+				this.router.navigate(['/payment']);
+		} else {
+			this._cashPayment = this.cartService.getPayment().cashPayment;
+			//Intenta cargar el model desde el cartService
+			this._model = this.cartService.getDelivery();
+			//Si es null, crea uno nuevo
+			if (this._model == null) {
+					this._model = new Delivery();
+			}
 		}
+
 	}
 
 	get model() {
 		return this._model;
+	}
+
+	get cashPayment() {
+		return this._cashPayment;
 	}
 
 	//Cuando se modifica el metodo de envio
@@ -37,7 +49,7 @@ export class DeliveryComponent implements OnInit {
 			//TODO : Obtener el precio a partir de la API de Andreani
 			this._model.price = 200;
 		}
-		this._cartService.setDelivery(this.model);
+		this.cartService.setDelivery(this.model);
 	}
 
 	//Envia el formulario

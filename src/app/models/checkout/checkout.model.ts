@@ -1,5 +1,17 @@
 export class Payment {
+  cashPayment : boolean = false;
+  card : Card;
+  method : PaymentMethod;
+
+  constructor() {
+    this.card = new Card();
+    this.method = new PaymentMethod();
+	}
+}
+
+export class Card {
   email : string;
+  phone : string;
   cardNumber : string;
   securityCode : number;
   cardExpirationMonth : number;
@@ -20,9 +32,13 @@ export class PaymentMethod {
 }
 
 export class Delivery {
+  firstname : string;
+  lastname : string;
+  docType : string = 'DNI';
+  docNumber : string;
   method : string;
-  address : Address;
   price : number;
+  address : Address;
 
   constructor() {
     this.address = new Address();
@@ -30,9 +46,6 @@ export class Delivery {
 }
 
 export class Address {
-  firstname : string;
-  lastname : string;
-  company : string;
   street : string;
   number : string;
   apartment : string;
@@ -40,6 +53,4 @@ export class Address {
   city: string;
   state : string;
   country : string;
-  phone : string;
-  email : string;
 }

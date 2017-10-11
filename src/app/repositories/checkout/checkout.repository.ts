@@ -3,7 +3,7 @@ import {Http, Headers, Response} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 
 import {CartItem} from '../../models/cartitem/cartitem.model';
-import {Delivery, PaymentMethod} from '../../models/checkout/checkout.model';
+import {Delivery, Payment} from '../../models/checkout/checkout.model';
 
 @Injectable()
 export class CheckoutRepository {
@@ -13,13 +13,14 @@ export class CheckoutRepository {
   constructor(private _http: Http){
   }
 
-  public sendCheckoutData(delivery : Delivery, method : PaymentMethod, token : any, items : CartItem[]): Observable<Response>  {
+  public sendCheckoutData(delivery : Delivery, payment : Payment, token : any, items : CartItem[]): Observable<Response>  {
     let data = {
         "delivery": delivery,
-        "method": method,
+        "payment": payment,
         "token": token,
         "items": items
     };
+    debugger
     let body = JSON.stringify(data )
     let head = new Headers({
         'Content-Type': 'application/json'

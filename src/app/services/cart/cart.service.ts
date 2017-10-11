@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 import {Product} from '../../models/product/product.model';
 import {CartItem} from '../../models/cartitem/cartitem.model';
-import {Delivery, Payment, PaymentMethod} from '../../models/checkout/checkout.model';
+import {Delivery, Payment} from '../../models/checkout/checkout.model';
 
 import { Observable, BehaviorSubject } from 'rxjs/Rx';
 
@@ -36,7 +36,6 @@ export class CartService {
     //Datos del checkout
     private _delivery : Delivery;
     private _payment : Payment;
-    private _method : PaymentMethod;
 
     //Token de MercadoPago
     private _token : any;
@@ -78,8 +77,8 @@ export class CartService {
       },0);
 
       let  financialCost = 0;
-      if (this._method != null && this._method.totalAmount != null) {
-        financialCost = this._method.totalAmount;
+      if (this._payment.method != null && this._payment.method.totalAmount != null) {
+        financialCost = this._payment.method.totalAmount;
       }
       if (financialCost > 0) {
         this.interestSource.next(financialCost - total);
@@ -96,7 +95,7 @@ export class CartService {
     //ELimina la informacion del Pago
     public clearPaymentData() {
       this._payment = null;
-      this._method = null;
+      this._payment.method = null;
     }
 
     //Levanta lo items del localStorage
@@ -186,14 +185,6 @@ export class CartService {
 
     public setPayment(payment : Payment) {
       this._payment = payment;
-    }
-
-    public getMethod() : PaymentMethod {
-      return this._method;
-    }
-
-    public setMethod(paymentMethod : PaymentMethod) {
-      this._method = paymentMethod;
       this.updateInterest();
       this.updateTotalPrice();
     }

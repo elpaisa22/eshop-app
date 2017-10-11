@@ -25,9 +25,9 @@ export class OrderReviewComponent implements OnInit {
 					this.router.navigate(['/delivery']);
 			//Si aun no eligio la direccion
 			} else if (this.cartService.getDelivery().address == null) {
-						this.router.navigate(['/address']);
+					this.router.navigate(['/address']);
 			//Si aun no eligio el metodo de pago, redirige al pago
-		} else if (this.cartService.getMethod() == null
+			} else if (this.cartService.getPayment() == null
 				         || this.cartService.getPayment() == null) {
 					this.router.navigate(['/payment']);
 			}
@@ -41,7 +41,7 @@ export class OrderReviewComponent implements OnInit {
 		public sendData() {
 			let result = this._checkoutRepository
 			                 .sendCheckoutData(this.cartService.getDelivery(),
-			                                   this.cartService.getMethod(),
+			                                   this.cartService.getPayment(),
 												                 this.cartService.getToken(),
 																				 this.items);
 			 // verifica el resultado

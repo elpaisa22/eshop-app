@@ -10,6 +10,7 @@ import {CartService} from '../../services/cart/cart.service';
 export class AddressComponent implements OnInit {
 
 	private _model : Delivery = new Delivery();
+	private _documentTypes = [{id : 'DNI', name : 'DNI'}];
 
 	private _states = [
 		   {id: 0, name: "Ciudad Autónoma de Buenos Aires"},
@@ -42,24 +43,36 @@ export class AddressComponent implements OnInit {
 		   {id: 0, name: "Argentina"}
   ]
 
-	constructor(public _cartService: CartService, private router : Router) {
+	constructor(public cartService: CartService, private router : Router) {
 	}
 
 	//Se ejecuta al inicio
 	public ngOnInit() {
-		//Toma el modelo del cartService
-		this._model = this._cartService.getDelivery();
-
-		//Si aun no eligio el metodo de envio, redirige al metodo de envio
-		if (this._model == null) {
+		//Si aun no eligio el metodo de pago, redirige al metodo de pago
+		if (this.cartService.getPayment() == null) {
+				this.router.navigate(['/payment']);
+		//Si aun no eligio el metodo de envio
+		} else if (this.cartService.getDelivery() == null) {
 				this.router.navigate(['/delivery']);
-		} else if (this._model != null && this._model.address == null) {
-				this._model.address = new Address();
+		} else {
+			//Toma el modelo del cartService
+			this._model = this.cartService.getDelivery();
+
+			//Si aun no eligio el metodo de envio, redirige al metodo de envio
+			if (this._model == null) {
+					this.router.navigate(['/delivery']);
+			} else if (this._model != null && this._model.address == null) {
+					this._model.address = new Address();
+			}
 		}
 	}
 
 	get model() {
 		return this._model;
+	}
+
+	get documentTypes() {
+		return this._documentTypes;
 	}
 
 	get states() {
@@ -73,8 +86,8 @@ export class AddressComponent implements OnInit {
 	//Envia el formulario
 	public sendForm() {
 		//Guarda el modelo en el cartService
-		this._cartService.setDelivery(this._model);
+		this.cartService.setDelivery(this._model);
 		//Redirige a la vista de Pago
-		this.router.navigate(['/payment']);
+		this.router.navigate(['/orderReview']);
 	}
 }
