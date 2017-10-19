@@ -97,8 +97,22 @@ export class CartService {
 
     //ELimina la informacion del Pago
     public clearPaymentData() {
-      this._payment = null;
-      this._payment.method = null;
+      if (this._payment != null) {
+        this._payment = null;
+        this._payment.method = null;
+      }
+    }
+
+    //Actualiza la cantidad del item
+    public updateItem(item : CartItem) {
+      let index = this.itemsSource.getValue().findIndex((i) => i.id == item.id);
+      if (index > 0) {
+        let elem  = this.itemsSource.getValue()[index];
+        elem.count = item.count;
+      }
+      this.updateSubtotal();
+      this.updateTotalPrice();
+      this.updateItemsCount();
     }
 
     //Levanta lo items del localStorage

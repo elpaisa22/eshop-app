@@ -64,7 +64,7 @@
                 <div class="col-sm-6">
                     <div class="box">
                         <h1 class="text-center">{{product.name}}</h1>
-                        <p class="goToDescription"><a [routerLink]="['/detail', product.id]" fragment="details" class="scroll-to">Ver detalles del producto, materiales y medidas</a>
+                        <p class="goToDescription"><a href="javascript:void(0)" (click)="scroll(details)">Ver detalles del producto, materiales y medidas</a>
                         </p>
                         <p class="price">$ {{product.price}}</p>
 
@@ -88,7 +88,7 @@
             </div>
 
 
-            <div class="box" id="details">
+              <div class="box" #details>
                 <p>
                     <div [innerHTML]="product.details"></div>
 

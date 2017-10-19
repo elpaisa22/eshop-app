@@ -40,6 +40,7 @@ export class BasketComponent implements OnInit {
 				item.count = 1;
 			}
 			this.cartService.clearPaymentData();
+			this.cartService.updateItem(item);
 			this.cartService.saveItems();
 		}
 }

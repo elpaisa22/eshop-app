@@ -60,6 +60,10 @@ export class DetailComponent implements OnInit {
 		);
 	}
 
+	public scroll(elem) {
+		elem.scrollIntoView();
+	}
+
 	get product() {
 		return this._product;
 	}
