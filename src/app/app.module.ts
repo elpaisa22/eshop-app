@@ -39,6 +39,8 @@ import {GetInspiredDirective} from './directives/get-inspired/get-inspired.direc
 import {MainSliderDirective} from './directives/main-slider/main-slider.directive';
 import {ProductDetailDirective} from './directives/product-detail/product-detail.directive';
 import {ProductSliderDirective} from './directives/product-slider/product-slider.directive';
+import {ScrollToDirective} from './directives/scroll-to/scroll-to.directive';
+import {BackToTopDirective} from './directives/back-to-top/back-to-top.directive';
 
 /* Services */
 import {CartService} from './services/cart/cart.service';
@@ -98,7 +100,9 @@ export const appRoutes : Routes = [
 		GetInspiredDirective,
     MainSliderDirective,
 		ProductDetailDirective,
-		ProductSliderDirective
+		ProductSliderDirective,
+		ScrollToDirective,
+		BackToTopDirective
   ],
   imports: [
     BrowserModule,
