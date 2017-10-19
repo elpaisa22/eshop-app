@@ -139,11 +139,13 @@ export class FilterService {
   }
 
   private calculatePriceRange() {
-      this.priceMinSource.next(this._products.reduce((a, b) => (Number(a.price) < Number(b.price)) ? a : b).price);
-      this.priceMaxSource.next(this._products.reduce((a, b) => (Number(a.price) > Number(b.price)) ? a : b).price);
-
-      this._filterRangeMin = this.priceMinSource.getValue();
-      this._filterRangeMax = this.priceMaxSource.getValue();
+      if (this._products.length > 0) {
+        this.priceMinSource.next(this._products.reduce((a, b) => (Number(a.price) < Number(b.price)) ? a : b).price);
+        this.priceMaxSource.next(this._products.reduce((a, b) => (Number(a.price) > Number(b.price)) ? a : b).price);
+  
+        this._filterRangeMin = this.priceMinSource.getValue();
+        this._filterRangeMax = this.priceMaxSource.getValue();
+      }
   }
 
   private calculateActualPage() {
