@@ -991,6 +991,7 @@ h1 {
 }
 .yamm .yamm-content {
   padding: 20px 30px;
+  background: white;
 }
 @media (max-width: 767px) {
   .yamm .yamm-content {
