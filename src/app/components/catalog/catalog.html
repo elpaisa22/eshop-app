@@ -117,7 +117,14 @@
             </div>
             <!-- /.products -->
 
-            <paginator [page]="page"
+            <div *ngIf="!actualPage.length">
+                <div class="box" style="text-align: center">
+                    <strong>No se encontraron productos</strong>
+                </div>
+            </div>
+
+            <paginator *ngIf="actualPage.length"
+                       [page]="page"
                        [totalPages]="totalPages"
                        (pageChange)="onPageChange($event)"></paginator>
 
