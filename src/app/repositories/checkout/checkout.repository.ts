@@ -20,7 +20,6 @@ export class CheckoutRepository {
         "token": token,
         "items": items
     };
-    debugger
     let body = JSON.stringify(data )
     let head = new Headers({
         'Content-Type': 'application/json'
