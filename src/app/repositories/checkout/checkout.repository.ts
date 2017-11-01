@@ -25,7 +25,7 @@ export class CheckoutRepository {
         'Content-Type': 'application/json'
     });
 
-    return this._http.post(this.endpoint_url + "api/process_payment", body , {headers : head})
+    return this._http.post(this.endpoint_url + "api/process_payment/", body , {headers : head})
                      .catch(this.handleErrorObservable);
   }
 
