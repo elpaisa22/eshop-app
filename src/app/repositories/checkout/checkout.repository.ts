@@ -23,7 +23,7 @@ export class CheckoutRepository {
     const body = JSON.stringify(data);
     const head = new Headers({
         'Content-Type': 'application/json',
-        'X-XSRF-TOKEN': this.xsrfToken
+        'X-CSRFToken': this.xsrfToken
     });
 
     return this._http.post(this.endpoint_url + 'api/process_payment/', body , {headers : head})
