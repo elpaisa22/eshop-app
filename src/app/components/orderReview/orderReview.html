@@ -102,5 +102,27 @@
 
   </div>
   <!-- /.container -->
+
+  <div *ngIf="hasErrors" class="modal fade in" style="display: block">
+      <div class="modal-dialog">
+        <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title ">Error al realizar la compra</h4>
+          </div>
+          <div class="modal-body">
+            <p>Detalle del mensaje: </p>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                {{errors}}
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="closeErrors()">Entendido</button>
+          </div>
+        </div>
+      </div>
+  </div>
+
 </div>
 <!-- /#content -->
