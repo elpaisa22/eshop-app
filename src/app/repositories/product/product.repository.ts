@@ -1,22 +1,22 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 
 import {Product} from '../../models/product/product.model';
+import {AppConfig} from '../../app.config';
 
 @Injectable()
 export class ProductRepository {
 
-    endpoint_url : string = "http://shophaus.iarmenda.webfactional.com/";
-
     _productsCache : Product[] = [];
 
-    constructor(private _http: Http){
+    constructor(private _http: Http,
+                @Inject('APP_CONFIG') private config: AppConfig){
     }
 
     private convertProducto(prod : Product) : Product {
       for (var i = 0; i < prod.images.length; i++) {
-        var url : string = this.endpoint_url + prod.images[i].image;
+        var url : string = this.config.apiEndpoint + '/' + prod.images[i].image;
         prod.images[i].image = url;
       }
       return prod;
@@ -32,7 +32,7 @@ export class ProductRepository {
 
     public getProducts (forceReload : boolean = false) : Observable<Product[]> {
       if (this._productsCache == null || this._productsCache.length == 0 || forceReload) {
-        var response = this._http.request(this.endpoint_url + "/api/product")
+        var response = this._http.request(this.config.apiEndpoint + '/api/product')
                                  .map(x => this.convertResult(x.json()));
         return this.handleResponse(response);
       } else {
@@ -48,7 +48,7 @@ export class ProductRepository {
 
     public getProduct(id: number) : Observable<Product> {
       if (this._productsCache == null || this._productsCache.length == 0) {
-        return this._http.request(this.endpoint_url + "/api/product/" + id + "/")
+        return this._http.request(this.config.apiEndpoint + '/api/product/' + id + '/')
                          .map(x => this.convertProducto(x.json()));
       } else {
         for (var i = 0; i < this._productsCache.length; i++) {

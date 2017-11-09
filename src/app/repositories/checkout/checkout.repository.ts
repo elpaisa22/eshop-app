@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 
 import {CartItem} from '../../models/cartitem/cartitem.model';
 import {Delivery, Payment} from '../../models/checkout/checkout.model';
+import {AppConfig} from '../../app.config';
 
 @Injectable()
 export class CheckoutRepository {
 
-  endpoint_url = 'http://shophaus.iarmenda.webfactional.com/';
-
-  constructor(private _http: Http) {
+  constructor(private _http: Http,
+              @Inject('APP_CONFIG') private config: AppConfig) {
   }
 
   public sendCheckoutData(delivery: Delivery, payment: Payment, token: any, items: CartItem[]): Observable<Response>  {
@@ -26,7 +26,7 @@ export class CheckoutRepository {
         'X-CSRFToken': this.xsrfToken
     });
 
-    return this._http.post(this.endpoint_url + 'api/process_payment/', body , {headers : head})
+    return this._http.post(this.config.apiEndpoint + '/api/process_payment/', body , {headers : head})
                      .catch(this.handleErrorObservable);
   }
 

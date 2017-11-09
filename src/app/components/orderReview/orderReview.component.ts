@@ -54,7 +54,9 @@ export class OrderReviewComponent implements OnInit {
            	   var response = res.json();
            	   if (response.success) {
            	   	this.router.navigate(['/home']);
-           	   }
+							} else {
+								this.showErrors(response.errors);
+							}
            },
            err => {
                // Log errors if any
@@ -64,11 +66,13 @@ export class OrderReviewComponent implements OnInit {
 		);
 	}
 
+	//Muestra un popup con error
 	private showErrors(msg : String) {
 		this.hasErrors = true;
 		this.errors = msg;
 	}
 
+	//Cierra el popup de errores
 	public closeErrors() {
 		this.hasErrors = false;
 	}

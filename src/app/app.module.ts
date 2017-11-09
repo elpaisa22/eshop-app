@@ -51,6 +51,8 @@ import {ProductRepository} from './repositories/product/product.repository';
 import {CategoryRepository} from './repositories/category/category.repository';
 import {CheckoutRepository} from './repositories/checkout/checkout.repository';
 
+import { APP_CONFIG, REMOTE_CONFIG, LOCAL_CONFIG } from './app.config';
+
 export const appRoutes : Routes = [
 	{path: '', component: HomeComponent},
 	{path: 'home', component: HomeComponent},
@@ -115,7 +117,8 @@ export const appRoutes : Routes = [
 		FilterService,
 		ProductRepository,
 		CategoryRepository,
-		CheckoutRepository
+		CheckoutRepository,
+		{provide: 'APP_CONFIG', useValue: REMOTE_CONFIG}
 	],
   bootstrap: [AppComponent]
 })

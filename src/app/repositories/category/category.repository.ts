@@ -1,22 +1,22 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 
 import {Section} from '../../models/category/section.model';
+import {AppConfig} from '../../app.config';
 
 @Injectable()
 export class CategoryRepository {
 
-  endpoint_url : string = "http://shophaus.iarmenda.webfactional.com/";
-
   _categoryCache : Section[] = [];
 
-  constructor(private _http: Http){
+  constructor(private _http: Http,
+              @Inject('APP_CONFIG') private config: AppConfig){
   }
 
   public getCategories (forceReload : boolean = false) : Observable<Section[]> {
     if (this._categoryCache == null || this._categoryCache.length == 0 || forceReload) {
-      var response = this._http.request(this.endpoint_url + "/api/categories")
+      var response = this._http.request(this.config.apiEndpoint + "/api/categories/")
                                .map(x => x.json());
       return this.handleResponse(response);
     } else {
