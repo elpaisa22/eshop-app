@@ -53,7 +53,7 @@ export class OrderReviewComponent implements OnInit {
            (res) => {
            	   var response = res.json();
            	   if (response.success) {
-           	   	this.router.navigate(['/home']);
+           	   	this.router.navigate(['/comfirmation']);
 							} else {
 								this.showErrors(response.errors);
 							}

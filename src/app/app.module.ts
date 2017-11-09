@@ -15,6 +15,7 @@ import {AddressComponent} from './components/address/address.component';
 import {DeliveryComponent} from './components/delivery/delivery.component';
 import {PaymentComponent} from './components/payment/payment.component';
 import {OrderReviewComponent} from './components/orderReview/orderReview.component';
+import {ComfirmationComponent} from './components/comfirmation/comfirmation.component';
 import {CatalogComponent} from './components/catalog/catalog.component';
 import {DetailComponent} from './components/detail/detail.component';
 import {ErrorComponent} from './components/error/error.component';
@@ -63,6 +64,7 @@ export const appRoutes : Routes = [
 	{path: 'delivery', component: DeliveryComponent},
 	{path: 'payment', component: PaymentComponent},
 	{path: 'orderReview', component: OrderReviewComponent},
+	{path: 'comfirmation', component: ComfirmationComponent},
 	{path: 'catalog/section/:section', component: CatalogComponent},
 	{path: 'catalog/section/:section/category/:category', component: CatalogComponent},
 	{path: 'catalog/section/:section/category/:category/sub-category/:subcategory', component: CatalogComponent},
@@ -82,6 +84,7 @@ export const appRoutes : Routes = [
 		DeliveryComponent,
 		PaymentComponent,
 		OrderReviewComponent,
+		ComfirmationComponent,
     CatalogComponent,
     DetailComponent,
     ErrorComponent,
