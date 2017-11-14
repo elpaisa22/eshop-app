@@ -17,7 +17,7 @@ export class OrderReviewComponent implements OnInit {
 	public errors : String;
 
   constructor(private cartService: CartService,
-					    private _checkoutRepository : CheckoutRepository,
+					    private checkoutRepository : CheckoutRepository,
 					    private router : Router) {
   }
 
@@ -42,7 +42,7 @@ export class OrderReviewComponent implements OnInit {
 
 	//Envia los datos al backend
 	public sendData() {
-		let result = this._checkoutRepository
+		let result = this.checkoutRepository
 		                 .sendCheckoutData(this.cartService.getDelivery(),
 		                                   this.cartService.getPayment(),
 										   this.cartService.getToken(),

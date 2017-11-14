@@ -13,6 +13,22 @@ export class CheckoutRepository {
               @Inject('APP_CONFIG') private config: AppConfig) {
   }
 
+  //Invoca al servicio para calcular el precio del envio
+  public quoteShipping(delivery: Delivery, items: CartItem[]) : Observable<Response> {
+    const data = {
+        'delivery': delivery,
+        'items': items
+    };
+    const body = JSON.stringify(data);
+    const head = new Headers({
+        'Content-Type': 'application/json',
+        'X-CSRFToken': this.xsrfToken
+    });
+    return this._http.post(this.config.apiEndpoint + '/api/quote_shipping/', body , {headers : head})
+                     .catch(this.handleErrorObservable);
+  }
+
+  //Invoca al servicio de checkout
   public sendCheckoutData(delivery: Delivery, payment: Payment, token: any, items: CartItem[]): Observable<Response>  {
     const data = {
         'delivery': delivery,

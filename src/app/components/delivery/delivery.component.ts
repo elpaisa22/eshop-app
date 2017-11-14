@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {Delivery} from '../../models/checkout/checkout.model';
+import {CartItem} from '../../models/cartitem/cartitem.model';
 import {CartService} from '../../services/cart/cart.service';
+import {CheckoutRepository} from '../../repositories/checkout/checkout.repository';
 
 @Component({
 	templateUrl : './delivery.html'
@@ -11,8 +13,15 @@ export class DeliveryComponent implements OnInit {
 
 	private _model : Delivery;
 	private _cashPayment : boolean;
+	private _finished : boolean;
 
-	constructor(public cartService: CartService, private router : Router) {
+	public errors : string;
+	public items : CartItem[];
+	public loading : boolean;
+
+	constructor(public cartService: CartService,
+		          private checkoutRepository : CheckoutRepository,
+		          private router : Router) {
 	}
 
 	//Se ejecuta al inicio
@@ -27,33 +36,96 @@ export class DeliveryComponent implements OnInit {
 			//Si es null, crea uno nuevo
 			if (this._model == null) {
 					this._model = new Delivery();
+			} else if (this._model.quotedPrice) {
+					this._finished = true;
+			} else {
+					this._finished = false;
 			}
 		}
 
+		//Asigna la data desde el servicio
+		this.cartService.items.subscribe(data => this.items = data);
 	}
 
-	get model() {
+	get model() : Delivery {
 		return this._model;
 	}
 
-	get cashPayment() {
+	get cashPayment() : boolean {
 		return this._cashPayment;
+	}
+
+	get finished() : boolean {
+		return this._finished;
 	}
 
 	//Cuando se modifica el metodo de envio
 	public onDeliveryMethodChange(event: any) {
 		if (this._model.method == 'NONE') {
-			this._model.address = null;
 			this._model.price = 0;
+			this._finished = true;
+			this._model.quotedPrice = false;
+		} else { //Si eligio envio a domicilio
+			//Si ya calculo, no vuelve a calcular todo
+			if (this._model.quotedPrice) {
+				this._finished = true;
+			} else {
+				this._model.price = 0;
+				this._finished = false;
+			}
+		}
+		this.cartService.setDelivery(this.model);
+	}
+
+	//Cuando cambia el codigo postal
+	public onPostalCodeChange(){
+		this._finished = false;
+		this._model.quotedPrice = false;
+		this.errors = null;
+	}
+
+	//calcula el costo de Envio
+	public calculateShippingCost() {
+		//Si el envio es local, no tiene costo
+		if (this._model.address.zip == '7400') {
+			this._model.price = 0;
+			this._model.quotedPrice = true;
+			this._finished = true;
 		} else {
-			//TODO : Obtener el precio a partir de la API de Andreani
-			this._model.price = 200;
+			//Obtiene el precio a partir de la API
+			this.loading = true;
+			let result = this.checkoutRepository.quoteShipping(this.cartService.getDelivery(),
+			                                                   this.items)
+			// verifica el resultado
+			result.subscribe(
+			     (res) => {
+						 	 this.loading = false;
+			     	   var response = res.json();
+			     	   if (response.success) {
+								 this._model.price = response.value;
+ 								 this._finished = true;
+								 this._model.quotedPrice = true;
+							} else {
+								this.errors = response.errors;
+							}
+			     },
+			     err => {
+			         // Log errors if any
+			         //console.log(err);
+							 this.loading = false;
+			         this.errors = err;
+			     }
+			);
+
 		}
 		this.cartService.setDelivery(this.model);
 	}
 
 	//Envia el formulario
 	public sendForm() {
+		if (this._model.method == 'NONE') {
+			this._model.address = null;
+		}
 		this.router.navigate(['/address']);
 	}
 }

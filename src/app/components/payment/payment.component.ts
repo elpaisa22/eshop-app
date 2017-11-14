@@ -34,6 +34,19 @@ export class PaymentComponent implements OnInit {
 		if (this._model == null) {
 			this._model = new Payment();
 
+			//TODO ELIMINAR ANTES DE SALIR A PRODUCCION
+			/*
+			this._model.card.cardExpirationMonth = 11;
+			this._model.card.cardExpirationYear = 2022;
+			this._model.card.cardNumber = '4334419828976754';
+			this._model.card.cardholderName = 'SEBASTIAN ECCLESIA';
+			this._model.card.docNumber = '23302754';
+			this._model.card.docType = 'DNI';
+			this._model.card.email = 'sebastianecclesia@gmail.com';
+			this._model.card.phone = '221 5624355';
+			this._model.card.securityCode = 500;
+			*/
+
 		//Si el metodo de pago NO es efectivo
 		} else if (!this._model.cashPayment) {
 			//Indica que la tarjeta está OK

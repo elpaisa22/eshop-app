@@ -39,6 +39,7 @@ export class Delivery {
   method : string;
   price : number;
   address : Address;
+  quotedPrice : boolean = false;
 
   constructor() {
     this.address = new Address();
