@@ -36,7 +36,7 @@ export class DeliveryComponent implements OnInit {
 			//Si es null, crea uno nuevo
 			if (this._model == null) {
 					this._model = new Delivery();
-			} else if (this._model.quotedPrice) {
+			} else if (this._model.quotedPrice || this._model.method == 'NONE') {
 					this._finished = true;
 			} else {
 					this._finished = false;

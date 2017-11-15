@@ -31,6 +31,7 @@ import {PaginatorComponent} from './components/_shared/paginator/paginator.compo
 import {SummaryComponent} from './components/_shared/summary/summary.component';
 import {AutocompleteComponent} from './components/_shared/autocomplete/autocomplete.component';
 import {PriveFilterComponent} from './components/_shared/priceFilter/priceFilter.component';
+import {RelatedProductsComponent} from './components/_shared/relatedProducts/relatedProducts.component';
 
 /* Pipes */
 import {KeysPipe} from './pipes/keys/keys.pipe';
@@ -99,6 +100,7 @@ export const appRoutes : Routes = [
 		SummaryComponent,
 		AutocompleteComponent,
 		PriveFilterComponent,
+		RelatedProductsComponent,
 		/* Pipes */
 		KeysPipe,
 		/* Directives */
