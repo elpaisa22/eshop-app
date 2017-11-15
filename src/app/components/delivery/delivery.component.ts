@@ -91,6 +91,7 @@ export class DeliveryComponent implements OnInit {
 			this._model.price = 0;
 			this._model.quotedPrice = true;
 			this._finished = true;
+			this.cartService.setDelivery(this.model);
 		} else {
 			//Obtiene el precio a partir de la API
 			this.loading = true;
@@ -99,15 +100,17 @@ export class DeliveryComponent implements OnInit {
 			// verifica el resultado
 			result.subscribe(
 			     (res) => {
-						 	 this.loading = false;
-			     	   var response = res.json();
-			     	   if (response.success) {
-								 this._model.price = response.value;
+						 	 	this.loading = false;
+			     	   	var response = res.json();
+			     	   	if (response.success) {
+								 this._model.price = Number(response.value);
  								 this._finished = true;
 								 this._model.quotedPrice = true;
-							} else {
-								this.errors = response.errors;
-							}
+								} else {
+									this._model.price = 0;
+									this.errors = response.errors;
+								}
+								this.cartService.setDelivery(this.model);
 			     },
 			     err => {
 			         // Log errors if any
@@ -116,9 +119,7 @@ export class DeliveryComponent implements OnInit {
 			         this.errors = err;
 			     }
 			);
-
 		}
-		this.cartService.setDelivery(this.model);
 	}
 
 	//Envia el formulario
