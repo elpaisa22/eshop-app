@@ -31,6 +31,17 @@
                 <form (ngSubmit)="sendForm()" #addressForm="ngForm">
 
                     <div class="content" *ngIf="model != null">
+
+                        <div class="row" *ngIf="model.method != 'NONE'">
+                          <div class="col-sm-12">
+                            <div class="panel panel-info">
+                              <div class="panel-body">
+                                  <strong>Aqui debe ingresar los datos de la persona que recibirá el envío.</strong>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -131,10 +142,7 @@
                                 <div class="form-group">
                                     <label for="apartment">Piso / Dpto</label>
                                     <input type="text" class="form-control" id="apartment" name="apartment"
-                                           required [(ngModel)]="model.address.apartment" #apartment="ngModel">
-                                    <div [hidden]="apartment.valid || apartment.pristine" class="validation-msg alert alert-danger">
-                                      Ingrese el Piso / Depto
-                                    </div>
+                                           [(ngModel)]="model.address.apartment" #apartment="ngModel"/>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +191,7 @@
                         </div>
                         <!-- /.row -->
 
-                        <div class="panel panel-warning" *ngIf="model.method == 'NONE'">
+                        <div class="panel panel-info" *ngIf="model.method == 'NONE'">
                           <div class="panel-body">
                               Usted ha seleccionado la opcion de <strong>Retiro en la sucursal</strong>. Para retirar sus productos, por favor concurrir a: <br/>
                               <br/>

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {Delivery, Address} from '../../models/checkout/checkout.model';
+import {Delivery, Address, Payment} from '../../models/checkout/checkout.model';
 import {CartService} from '../../services/cart/cart.service';
 
 @Component({
@@ -61,8 +61,20 @@ export class AddressComponent implements OnInit {
 			//Si aun no eligio el metodo de envio, redirige al metodo de envio
 			if (this._model == null) {
 					this.router.navigate(['/delivery']);
-			} else if (this._model != null && this._model.address == null) {
-					this._model.address = new Address();
+			} else if (this._model.firstname == null) {
+        //Sino se carga por defecto con los datos de la tarjeta
+        var payment : Payment = this.cartService.getPayment();
+        var separator : number = payment.card.cardholderName.trim().lastIndexOf(' ');
+        if (separator) {
+          var name : string = payment.card.cardholderName.trim().substring(0, separator);
+          var lastname : string = payment.card.cardholderName.trim().substring(separator+1);
+          this._model.firstname = name;
+          this._model.lastname = lastname;
+        }
+        this._model.docNumber = payment.card.docNumber;
+        this._model.docType = payment.card.docType;
+        this._model.email = payment.card.email;
+        this._model.phone = payment.card.phone;
 			}
 		}
 	}

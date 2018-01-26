@@ -40,6 +40,8 @@ export class Delivery {
   price : number;
   address : Address;
   quotedPrice : boolean = false;
+  email : string;
+  phone : string;
 
   constructor() {
     this.address = new Address();
