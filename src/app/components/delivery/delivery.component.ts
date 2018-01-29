@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {Delivery} from '../../models/checkout/checkout.model';
+import {Delivery, Address} from '../../models/checkout/checkout.model';
 import {CartItem} from '../../models/cartitem/cartitem.model';
 import {CartService} from '../../services/cart/cart.service';
 import {CheckoutRepository} from '../../repositories/checkout/checkout.repository';
@@ -66,6 +66,10 @@ export class DeliveryComponent implements OnInit {
 			this._finished = true;
 			this._model.quotedPrice = false;
 		} else { //Si eligio envio a domicilio
+      //Si no posee una direccion, la crea
+      if (this._model.address == null) {
+        this._model.address = new Address();
+      }
 			//Si ya calculo, no vuelve a calcular todo
 			if (this._model.quotedPrice) {
 				this._finished = true;
