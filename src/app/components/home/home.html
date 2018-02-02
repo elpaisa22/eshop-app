@@ -3,17 +3,15 @@
     <div class="container">
         <div class="col-md-12">
             <div id="main-slider" main-slider>
+
                 <div class="item">
-                    <img src="/assets/images/main-slider1.jpg" alt="" class="img-responsive">
+                  <img src="/assets/images/main-slider1.jpg" alt="" class="img-responsive">
                 </div>
-                <div class="item">
-                    <img class="img-responsive" src="/assets/images/main-slider2.jpg" alt="">
-                </div>
-                <div class="item">
-                    <img class="img-responsive" src="/assets/images/main-slider3.jpg" alt="">
-                </div>
-                <div class="item">
-                    <img class="img-responsive" src="/assets/images/main-slider4.jpg" alt="">
+
+                <div *ngFor="let offer of currentOffers" class="item">
+                    <a href="">
+                      <img class="img-responsive" src="{{offer.image}}" alt="{{offer.name}}" style="width: 1108px">
+                    </a>
                 </div>
             </div>
             <!-- /#main-slider -->

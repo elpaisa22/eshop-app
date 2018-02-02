@@ -35,6 +35,7 @@ export interface Offer {
   initial_date: Date;
   end_date: Date;
   min_required: number;
+  details : string;
   offerproduct_set: ProductInOffer[];
 }
 

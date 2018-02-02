@@ -2,13 +2,14 @@ import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 
-import {Product, ProductInOffer} from '../../models/product/product.model';
+import {Product, Offer, ProductInOffer} from '../../models/product/product.model';
 import {AppConfig} from '../../app.config';
 
 @Injectable()
 export class ProductRepository {
 
     _productsCache : Product[] = [];
+    _offersCache : Offer[] = [];
 
     constructor(private _http: Http,
                 @Inject('APP_CONFIG') private config: AppConfig){
@@ -51,13 +52,13 @@ export class ProductRepository {
       if (this._productsCache == null || this._productsCache.length == 0 || forceReload) {
         var response = this._http.request(this.config.apiEndpoint + '/api/product')
                                  .map(x => this.convertResult(x.json()));
-        return this.handleResponse(response);
+        return this.handleProductResponse(response);
       } else {
         return Observable.of(this._productsCache);
       }
     }
 
-    private handleResponse(response : Observable<Product[]>) : Observable<Product[]> {
+    private handleProductResponse(response : Observable<Product[]>) : Observable<Product[]> {
       return response.do(data => {
         this._productsCache = data;
       });
@@ -88,5 +89,21 @@ export class ProductRepository {
                       return prod.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
                   })
                  .toArray();
+    }
+
+    public getCurrentOffers (forceReload : boolean = false) : Observable<Offer[]> {
+      if (this._offersCache == null || this._offersCache.length == 0 || forceReload) {
+        var response = this._http.request(this.config.apiEndpoint + "/api/current_offers/")
+                                 .map(x => x.json());
+        return this.handleOfferResponse(response);
+      } else {
+        return Observable.of(this._offersCache);
+      }
+    }
+
+    private handleOfferResponse(response : Observable<Offer[]>) : Observable<Offer[]> {
+      return response.do(data => {
+        this._offersCache = data;
+      });
     }
 }
