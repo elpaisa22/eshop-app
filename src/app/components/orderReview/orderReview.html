@@ -37,7 +37,7 @@
                                       <th colspan="2">Producto</th>
                                       <th>Cantidad</th>
                                       <th>Precio</th>
-                                      <th colspan="2">Total</th>
+                                      <th>Total</th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -47,7 +47,7 @@
                                               <img src="{{item.image}}" alt="{{item.name}}">
                                           </a>
                                       </td>
-                                      <td>
+                                      <td style="max-width: 300px">
                                         <a [routerLink]="['/detail', item.id]">{{item.name}}</a>
                                       </td>
                                       <td>
@@ -60,8 +60,8 @@
                               </tbody>
                               <tfoot>
                                   <tr>
-                                      <th colspan="4">Sub-Total</th>
-                                      <th colspan="2">$ {{subtotal | number:'3.2-2'}}</th>
+                                    <th colspan="4">Total</th>
+                                    <th colspan="1">$ {{totalPrice | number:'1.2-2'}}</th>
                                   </tr>
                               </tfoot>
                           </table>

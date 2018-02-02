@@ -2,7 +2,7 @@ import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 
-import {Product} from '../../models/product/product.model';
+import {Product, ProductInOffer} from '../../models/product/product.model';
 import {AppConfig} from '../../app.config';
 
 @Injectable()
@@ -19,7 +19,24 @@ export class ProductRepository {
         var url : string = this.config.apiEndpoint + '/' + prod.images[i].image;
         prod.images[i].image = url;
       }
+      prod.discount_price = prod.price;
+      if (prod.current_offer) {
+        prod.discount = this.calcDiscount(prod.current_offer.offerproduct_set, prod.id, prod.price);
+      } else {
+        prod.discount = 0;
+      }
+      prod.discount_price = prod.price - prod.discount;
       return prod;
+    }
+
+    private calcDiscount(offers : ProductInOffer[], idProduct: number, price : number) : number {
+      for (var i = 0; i < offers.length; i++) {
+        var prod = offers[i];
+        if (prod.product == idProduct) {
+          return prod.discount * price / 100;
+        }
+      }
+      return 0;
     }
 
     private convertResult(result : Product[]) : Product[] {

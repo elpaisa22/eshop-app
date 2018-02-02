@@ -7,14 +7,15 @@ export class Product {
     details : string;
     foot_desc : string;
     price : number;
+    discount : number;
+    discount_price : number;
     stock: number;
     sub_category : SubCategory;
     tags: Tag[];
     images : Image[];
     brand : string;
     sku : string;
-    //averageRate : number;
-    //comments : Comment[];
+    current_offer : Offer;
 }
 
 export interface Comment {
@@ -23,7 +24,21 @@ export interface Comment {
     rate? : number;
 }
 
-
 export interface Image {
     image : string;
+}
+
+export interface Offer {
+  id: number;
+  name: string;
+  image: string;
+  initial_date: Date;
+  end_date: Date;
+  min_required: number;
+  offerproduct_set: ProductInOffer[];
+}
+
+export interface ProductInOffer {
+  product: number;
+  discount: number;
 }

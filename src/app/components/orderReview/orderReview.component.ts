@@ -10,7 +10,7 @@ import {CheckoutRepository} from '../../repositories/checkout/checkout.repositor
 })
 export class OrderReviewComponent implements OnInit {
 
-	public subtotal : number;
+	public totalPrice : number;
 	public  items : CartItem[];
 
 	public hasErrors : boolean = false;
@@ -36,7 +36,7 @@ export class OrderReviewComponent implements OnInit {
 		}
 
 		//Asigna la data desde el servicio
-		this.cartService.subtotalPrice.subscribe(data => this.subtotal = data);
+		this.cartService.totalPrice.subscribe(data => this.totalPrice = data);
 		this.cartService.items.subscribe(data => this.items = data);
 	}
 

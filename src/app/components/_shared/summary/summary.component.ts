@@ -12,6 +12,7 @@ export class SummaryComponent implements OnInit {
 	public totalPrice : number;
 	public deliveryPrice : number;
 	public interest : number;
+  public totalDiscount : number;
 
 	constructor(private cartService : CartService) {
   }
@@ -22,5 +23,6 @@ export class SummaryComponent implements OnInit {
 		this.cartService.totalPrice.subscribe(data => this.totalPrice = data);
 		this.cartService.deliveryPrice.subscribe(data => this.deliveryPrice = data);
 		this.cartService.interest.subscribe(data => this.interest = data);
+    this.cartService.totalDiscount.subscribe(data => this.totalDiscount = data);
 	}
 }

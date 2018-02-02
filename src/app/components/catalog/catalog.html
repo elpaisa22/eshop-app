@@ -85,7 +85,17 @@
                       </a>
                       <div class="text">
                           <h3><a [routerLink]="['/detail', prod.id]">{{prod.name}}</a></h3>
-                          <p class="price">$ {{prod.price}}</p>
+                          <p class="price">
+                            <del *ngIf="prod.current_offer">
+                              $ {{prod.discount_price}}
+                            </del>
+                            $ {{prod.price}}
+                          </p>
+                          <p class="text-muted"
+                             style="text-align:center; font-size: 0.85em"
+                             *ngIf="prod.current_offer && prod.current_offer.min_required > 0">
+                            (*) a partir de la {{prod.current_offer.min_required}} unidad
+                          </p>
                           <p class="buttons">
                               <a [routerLink]="['/detail', prod.id]" class="btn btn-default">Ver Detalle</a>
                               <a class="btn btn-primary" (click)="addToCart(prod)"><i class="fa fa-shopping-cart"></i>Agregar al Carrito</a>
@@ -95,22 +105,25 @@
                   </div>
                   <!-- /.product -->
 
-                  <div class="ribbon sale">
+                  <div class="ribbon sale" *ngIf="prod.current_offer">
                       <div class="theribbon">OFERTA</div>
                       <div class="ribbon-background"></div>
                   </div>
                   <!-- /.ribbon -->
 
+                  <!--
                   <div class="ribbon new">
                       <div class="theribbon">NUEVO</div>
                       <div class="ribbon-background"></div>
                   </div>
+                  -->
                   <!-- /.ribbon -->
-
+                  <!--
                   <div class="ribbon gift">
                       <div class="theribbon">AHORA</div>
                       <div class="ribbon-background"></div>
                   </div>
+                  -->
                   <!-- /.ribbon -->
                 </div>
 

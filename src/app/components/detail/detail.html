@@ -48,16 +48,18 @@
                         <img *ngIf="product.images" src="{{product.images[0].image}}" alt="" class="img-responsive" style="width: 100%;">
                     </div>
 
-                    <div class="ribbon sale">
-                        <div class="theribbon">SALE</div>
+                    <div class="ribbon sale" *ngIf="product.current_offer">
+                        <div class="theribbon">OFERTA</div>
                         <div class="ribbon-background"></div>
                     </div>
                     <!-- /.ribbon -->
 
+                    <!--
                     <div class="ribbon new">
                         <div class="theribbon">NEW</div>
                         <div class="ribbon-background"></div>
                     </div>
+                    -->
                     <!-- /.ribbon -->
 
                 </div>
@@ -66,8 +68,19 @@
                         <h1 class="text-center">{{product.name}}</h1>
                         <p class="goToDescription"><a href="javascript:void(0)" scroll-to="#details">Ver detalles del producto, materiales y medidas</a>
                         </p>
-                        <p class="price">$ {{product.price}}</p>
-
+                        <p class="price" style="color: #999999;" *ngIf="product.current_offer">
+                          <del>
+                            ${{product.price}}
+                          </del>
+                        </p>
+                        <p class="price">
+                          $ {{product.discount_price}}
+                        </p>
+                        <p class="text-muted"
+                           style="text-align:center;font-size: 0.85em"
+                           *ngIf="product.current_offer && product.current_offer.min_required > 0">
+                          (*) a partir de la {{product.current_offer.min_required}} unidad
+                        </p>
                         <p class="text-center buttons">
                             <button class="btn btn-primary" (click)="addToCart(product)"><i class="fa fa-shopping-cart"></i> Agregar al carrito</button>
                             <!--

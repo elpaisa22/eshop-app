@@ -33,6 +33,10 @@ export class CartService {
     private totalPriceSource = new BehaviorSubject<number>(0);
     public  totalPrice : Observable<number> = this.totalPriceSource.asObservable();
 
+    //Mantiene el total de descuentos
+    private totalDiscountSource = new BehaviorSubject<number>(0);
+    public  totalDiscount : Observable<number> = this.totalDiscountSource.asObservable();
+
     //Datos del checkout
     private _delivery : Delivery;
     private _payment : Payment;
@@ -46,6 +50,7 @@ export class CartService {
       this.updateSubtotal();
       this.updateTotalPrice();
       this.updateItemsCount();
+      this.updateTotalDiscount();
     }
 
     //Calcula la cantidad de items del carrito
@@ -65,7 +70,7 @@ export class CartService {
     //Calcula el precio subtotal de los items
     private updateSubtotal() {
       let total : number = this.itemsSource.getValue().reduce((sum, cartProd)=>{
-          return sum += cartProd.price * cartProd.count, sum;
+          return sum += (cartProd.price + cartProd.discount) * cartProd.count, sum;
       },0);
       this.subtotalSource.next(total);
     }
@@ -78,7 +83,8 @@ export class CartService {
 
       let  financialCost = 0;
       //Si el methodo de pago posee cuotas
-      if (this._payment.method != null
+      if (this._payment != null
+          && this._payment.method != null
           && !this._payment.cashPayment
           && this._payment.method.totalAmount != null) {
         financialCost = this._payment.method.totalAmount;
@@ -95,24 +101,42 @@ export class CartService {
         this.totalPriceSource.next(this.calcTotalPrice());
     }
 
+    //Actualiza el precio total de los items
+    private updateTotalDiscount() {
+        this.totalDiscountSource.next(this.calcTotalDiscount());
+    }
+
     //ELimina la informacion del Pago
     public clearPaymentData() {
       if (this._payment != null) {
-        this._payment = null;
         this._payment.method = null;
       }
+      this._payment = null;
+      this._delivery = null;
     }
 
     //Actualiza la cantidad del item
     public updateItem(item : CartItem) {
       let index = this.itemsSource.getValue().findIndex((i) => i.id == item.id);
-      if (index > 0) {
+      if (index >= 0) {
         let elem  = this.itemsSource.getValue()[index];
         elem.count = item.count;
+        if (elem.product.current_offer) {
+          if (elem.count >= elem.product.current_offer.min_required) {
+            elem.price = elem.product.discount_price;
+            elem.discount = elem.product.price - elem.product.discount_price;
+          } else {
+            elem.price = elem.product.price;
+            elem.discount = 0;
+          }
+        }
       }
+      this.updateInterest();
+      this.updateDeliveryPrice();
       this.updateSubtotal();
       this.updateTotalPrice();
       this.updateItemsCount();
+      this.updateTotalDiscount();
     }
 
     //Levanta lo items del localStorage
@@ -140,9 +164,17 @@ export class CartService {
           item.id = prod.id;
           item.sku = prod.sku;
           item.name = prod.name;
-          item.price = prod.price;
+          if (prod.current_offer && prod.current_offer.min_required <= 1) {
+              item.price = prod.discount_price;
+              item.discount = prod.price - prod.discount_price;
+          } else {
+              item.price = prod.price;
+              item.discount = 0;
+          }
+
           item.count = 1;
           item.image = prod.images[0].image;
+          item.product = prod;
 
           this.itemsSource.getValue().push(item);
         }
@@ -151,6 +183,7 @@ export class CartService {
         this.updateSubtotal();
         this.updateTotalPrice();
         this.updateItemsCount();
+        this.updateTotalDiscount();
     }
 
     //Elimina un item del carrito
@@ -165,6 +198,7 @@ export class CartService {
         this.updateSubtotal();
         this.updateTotalPrice();
         this.updateItemsCount();
+        this.updateTotalDiscount();
     }
 
     //Limpia el carrito eliminando todos los items
@@ -184,6 +218,15 @@ export class CartService {
         },0);
 
         return totalPrice + this.deliveryPriceSource.getValue() + this.interestSource.getValue();
+    }
+
+    //Calcula el precio total de los descuentos
+    public calcTotalDiscount() : number {
+        let totalDiscount = this.itemsSource.getValue().reduce((sum, cartProd)=>{
+            return sum += cartProd.discount * cartProd.count, sum;
+        },0);
+
+        return totalDiscount;
     }
 
     public getDelivery() : Delivery {
