@@ -87,9 +87,9 @@
                           <h3><a [routerLink]="['/detail', prod.id]">{{prod.name}}</a></h3>
                           <p class="price">
                             <del *ngIf="prod.current_offer">
-                              $ {{prod.discount_price}}
+                              $ {{prod.price}}
                             </del>
-                            $ {{prod.price}}
+                            $ {{prod.discount_price}}
                           </p>
                           <p class="text-muted"
                              style="text-align:center; font-size: 0.85em"
