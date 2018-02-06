@@ -12,7 +12,7 @@ import {CheckoutRepository} from '../../repositories/checkout/checkout.repositor
 export class DeliveryComponent implements OnInit {
 
 	private _model : Delivery;
-	private _cashPayment : boolean;
+	private _shippingEnabled : boolean;
 	private _finished : boolean;
 
 	public errors : string;
@@ -26,22 +26,19 @@ export class DeliveryComponent implements OnInit {
 
 	//Se ejecuta al inicio
 	public ngOnInit() {
-		//Si aun no eligio el metodo de pago, redirige al metodo de pago
-		if (this.cartService.getPayment() == null) {
-				this.router.navigate(['/payment']);
-		} else {
-			this._cashPayment = this.cartService.getPayment().cashPayment;
-			//Intenta cargar el model desde el cartService
-			this._model = this.cartService.getDelivery();
-			//Si es null, crea uno nuevo
-			if (this._model == null) {
-					this._model = new Delivery();
-			} else if (this._model.quotedPrice || this._model.method == 'NONE') {
-					this._finished = true;
-			} else {
-					this._finished = false;
-			}
-		}
+
+  this._shippingEnabled = this.cartService.availableForShipping();
+
+  //Intenta cargar el model desde el cartService
+  this._model = this.cartService.getDelivery();
+  //Si es null, crea uno nuevo
+  if (this._model == null) {
+      this._model = new Delivery();
+  } else if (this._model.quotedPrice || this._model.method == 'NONE') {
+      this._finished = true;
+  } else {
+      this._finished = false;
+  }
 
 		//Asigna la data desde el servicio
 		this.cartService.items.subscribe(data => this.items = data);
@@ -51,8 +48,8 @@ export class DeliveryComponent implements OnInit {
 		return this._model;
 	}
 
-	get cashPayment() : boolean {
-		return this._cashPayment;
+	get shippingEnabled() : boolean {
+		return this._shippingEnabled;
 	}
 
 	get finished() : boolean {

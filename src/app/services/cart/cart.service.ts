@@ -80,6 +80,7 @@ export class CartService {
       let total = this.itemsSource.getValue().reduce((sum, cartProd)=>{
           return sum += cartProd.price * cartProd.count, sum;
       },0);
+      total = total + this.deliveryPriceSource.getValue();
 
       let  financialCost = 0;
       //Si el methodo de pago posee cuotas
@@ -89,8 +90,10 @@ export class CartService {
           && this._payment.method.totalAmount != null) {
         financialCost = this._payment.method.totalAmount;
       }
-      if (financialCost > 0) {
-        this.interestSource.next(financialCost - total);
+
+      let value = financialCost - total;
+      if (financialCost > 0 && value > 0.1) {
+        this.interestSource.next(value);
       } else {
         this.interestSource.next(0);
       }
@@ -220,6 +223,15 @@ export class CartService {
         return totalPrice + this.deliveryPriceSource.getValue() + this.interestSource.getValue();
     }
 
+    //Calcula el precio total de los items pero sin sumar el interes
+    public calcTotalPriceWithoutInteres() : number {
+        let totalPrice = this.itemsSource.getValue().reduce((sum, cartProd)=>{
+            return sum += cartProd.price * cartProd.count, sum;
+        },0);
+
+        return totalPrice + this.deliveryPriceSource.getValue();
+    }
+
     //Calcula el precio total de los descuentos
     public calcTotalDiscount() : number {
         let totalDiscount = this.itemsSource.getValue().reduce((sum, cartProd)=>{
@@ -227,6 +239,16 @@ export class CartService {
         },0);
 
         return totalDiscount;
+    }
+
+    //Verifica si todos los elementos del carrito pueden ser enviados
+    public availableForShipping() : boolean {
+      var elem = this.itemsSource.getValue().find(item => item.product.shipping_available == false);
+      if (elem == null) {
+        return true;
+      } else {
+        return false;
+      }
     }
 
     public getDelivery() : Delivery {

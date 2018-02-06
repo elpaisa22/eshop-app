@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {Router } from '@angular/router';
 
-import {Payment, PaymentMethod, Card} from '../../models/checkout/checkout.model';
+import {Payment, PaymentMethod, Card, Delivery} from '../../models/checkout/checkout.model';
 import {CartService} from '../../services/cart/cart.service';
 
 declare var Mercadopago:any;
@@ -21,55 +21,70 @@ export class PaymentComponent implements OnInit {
 	private _errorsWithCard : boolean = false;
 	private _issuerIdRequired : boolean = false;
 
+  private _paymentSelectorEnabled : boolean = false;
+
 	constructor(private el: ElementRef, private cartService: CartService, private router : Router) {
 	}
 
 	//Se ejecuta al inicio
 	public ngOnInit() {
 
-		//Toma el pago y el metodo del cartService
-		this._model = this.cartService.getPayment();
+      //Si aun no eligio el metodo de envio
+      if (this.cartService.getDelivery() == null) {
+          this.router.navigate(['/delivery']);
+      } else {
+          //Toma los datos del Envio
+          var delivery : Delivery = this.cartService.getDelivery();
+          if (delivery.method == 'NONE') {
+              this._paymentSelectorEnabled = true;
+          } else {
+              this._paymentSelectorEnabled = false;
+          }
 
-		//Si el modelo no está inicializado, se crea
-		if (this._model == null) {
-			this._model = new Payment();
+          //Toma el pago y el metodo del cartService
+      		this._model = this.cartService.getPayment();
 
-			//TODO ELIMINAR ANTES DE SALIR A PRODUCCION
-			/*
-			this._model.card.cardExpirationMonth = 11;
-			this._model.card.cardExpirationYear = 2022;
-			this._model.card.cardNumber = '4334419828976754';
-			this._model.card.cardholderName = 'SEBASTIAN ECCLESIA';
-			this._model.card.docNumber = '23302754';
-			this._model.card.docType = 'DNI';
-			this._model.card.email = 'sebastianecclesia@gmail.com';
-			this._model.card.phone = '221 5624355';
-			this._model.card.securityCode = 500;
-			*/
+      		//Si el modelo no está inicializado, se crea
+      		if (this._model == null) {
+      			this._model = new Payment();
 
-		//Si el metodo de pago NO es efectivo
-		} else if (!this._model.cashPayment) {
-			//Indica que la tarjeta está OK
-			this._cardNumberFilled = true;
-			//Verifica si la tarjeta solicita el emisor
-			if (this.methodRequireIssuerId(this._model.method.additionalInfoNeeded)) {
-				  this._issuerIdRequired = true;
-					this.loadIssuers(this._model.method.paymentMethodId);
-			}
-			//Carga las cuotas
-			var bin = this._model.card.cardNumber.replace(/[ .-]/g, '').slice(0, 6);
-			this.loadInstallments(bin, this.cartService.calcTotalPrice());
+      			//TODO ELIMINAR ANTES DE SALIR A PRODUCCION
+      			/*
+      			this._model.card.cardExpirationMonth = 11;
+      			this._model.card.cardExpirationYear = 2022;
+      			this._model.card.cardNumber = '4334419828976754';
+      			this._model.card.cardholderName = 'SEBASTIAN ECCLESIA';
+      			this._model.card.docNumber = '23302754';
+      			this._model.card.docType = 'DNI';
+      			this._model.card.email = 'sebastianecclesia@gmail.com';
+      			this._model.card.phone = '221 5624355';
+      			this._model.card.securityCode = 500;
+      			*/
 
-			//Marca que no existen errores con el numero de la tarjeta de credito
-			this._errorsWithCard = false;
-		}
+      		//Si el metodo de pago NO es efectivo
+      		} else if (!this._model.cashPayment) {
+      			//Indica que la tarjeta está OK
+      			this._cardNumberFilled = true;
+      			//Verifica si la tarjeta solicita el emisor
+      			if (this.methodRequireIssuerId(this._model.method.additionalInfoNeeded)) {
+      				  this._issuerIdRequired = true;
+      					this.loadIssuers(this._model.method.paymentMethodId);
+      			}
+      			//Carga las cuotas
+      			var bin = this._model.card.cardNumber.replace(/[ .-]/g, '').slice(0, 6);
+      			this.loadInstallments(bin, this.cartService.calcTotalPriceWithoutInteres());
 
-		//Inicializa la API de MercadoPago
-		Mercadopago.setPublishableKey("TEST-846d251c-6188-4a08-babc-927124773c8c");
-		//Obtiene los tipos de Documento
-		Mercadopago.getIdentificationTypes((data, result) => {
-			this._documentTypes = result
-		});
+      			//Marca que no existen errores con el numero de la tarjeta de credito
+      			this._errorsWithCard = false;
+      		}
+
+      		//Inicializa la API de MercadoPago
+      		Mercadopago.setPublishableKey("TEST-846d251c-6188-4a08-babc-927124773c8c");
+      		//Obtiene los tipos de Documento
+      		Mercadopago.getIdentificationTypes((data, result) => {
+      			this._documentTypes = result
+      		});
+      }
 
 	}
 
@@ -93,11 +108,11 @@ export class PaymentComponent implements OnInit {
 					} else {
 						//Si no ocurrieron errores, guarda el token en el cartService
 						this.cartService.setToken(response);
-						this.router.navigate(['/delivery']);
+						this.router.navigate(['/orderReview']);
 					}
 				});
 			} else {
-				this.router.navigate(['/delivery']);
+				this.router.navigate(['/orderReview']);
 			}
 
 	}
@@ -242,4 +257,8 @@ export class PaymentComponent implements OnInit {
 	get issuerIdRequired() : boolean {
 		return this._issuerIdRequired;
 	}
+
+  get paymentSelectorEnabled() : boolean {
+    return this._paymentSelectorEnabled;
+  }
 }

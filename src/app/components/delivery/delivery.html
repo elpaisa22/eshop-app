@@ -19,11 +19,11 @@
 
                 <h1>Finalizar compra</h1>
                 <ul class="nav nav-pills nav-justified">
-                    <li class="disabled"><a><i class="fa fa-money"></i><br>Metodo de Pago</a>
-                    </li>
                     <li class="active"><a><i class="fa fa-truck"></i><br>Metodo de Envio</a>
                     </li>
                     <li class="disabled"><a><i class="fa fa-map-marker"></i><br>Direccion</a>
+                    </li>
+                    <li class="disabled"><a><i class="fa fa-money"></i><br>Metodo de Pago</a>
                     </li>
                     <li class="disabled"><a><i class="fa fa-eye"></i><br>Revisar Orden</a>
                     </li>
@@ -32,7 +32,7 @@
                 <form (ngSubmit)="sendForm()" #deliveryForm="ngForm">
                     <div class="content">
                         <div class="row">
-                            <div class="col-sm-6" *ngIf="!cashPayment">
+                            <div class="col-sm-6" *ngIf="shippingEnabled">
                                 <div class="box shipping-method">
 
                                     <h4>Envio a Domicilio</h4>
@@ -79,7 +79,7 @@
                                 <!-- /.row -->
 
                             </div>
-                            <div class="col-sm-6" [ngClass]="{'col-sm-offset-3' : cashPayment}">
+                            <div class="col-sm-6" [ngClass]="{'col-sm-offset-3' : !shippingEnabled}">
                                 <div class="box shipping-method">
 
                                     <h4>Retiro en la sucursal</h4>
@@ -101,9 +101,9 @@
 
                     <div class="box-footer">
                         <div class="pull-left">
-                            <a [routerLink]="['/payment']" class="btn btn-default">
-                              <i class="fa fa-chevron-left">
-                              </i>Volver
+                            <a [routerLink]="['/basket']" class="btn btn-default">
+                              <i class="fa fa-chevron-left"></i>
+                              Volver al Carrito
                             </a>
                         </div>
                         <div class="pull-right">

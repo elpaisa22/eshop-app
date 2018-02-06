@@ -19,11 +19,11 @@
 
               <h1>Finalizar compra</h1>
               <ul class="nav nav-pills nav-justified">
-                  <li class="active"><a><i class="fa fa-money"></i><br>Metodo de Pago</a>
-                  </li>
                   <li class="disabled"><a><i class="fa fa-truck"></i><br>Metodo de Envio</a>
                   </li>
                   <li class="disabled"><a><i class="fa fa-map-marker"></i><br>Direccion</a>
+                  </li>
+                  <li class="active"><a><i class="fa fa-money"></i><br>Metodo de Pago</a>
                   </li>
                   <li class="disabled"><a><i class="fa fa-eye"></i><br>Revisar Orden</a>
                   </li>
@@ -32,7 +32,7 @@
               <form (ngSubmit)="sendForm()" #paymentForm="ngForm" class="form-horizontal">
 
                 <div class="content">
-                        <div class="form-group">
+                        <div class="form-group" *ngIf="paymentSelectorEnabled">
                           <div class="col-sm-offset-4 col-sm-8">
                               <div class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-default" [ngClass]="{'active' : !model.cashPayment}"
@@ -210,9 +210,9 @@
 
                   <div class="box-footer">
                       <div class="pull-left">
-                          <a [routerLink]="['/basket']" class="btn btn-default">
-                            <i class="fa fa-chevron-left"></i>
-                            Volver al Carrito
+                          <a [routerLink]="['/address']" class="btn btn-default">
+                            <i class="fa fa-chevron-left">
+                            </i>Volver
                           </a>
                       </div>
                       <div class="pull-right">

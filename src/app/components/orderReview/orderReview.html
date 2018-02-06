@@ -19,11 +19,11 @@
 
                   <h1>Finalizar compra</h1>
                   <ul class="nav nav-pills nav-justified">
-                      <li><a [routerLink]="['/payment']"><i class="fa fa-money"></i><br>Metodo de Pago</a>
-                      </li>
                       <li><a [routerLink]="['/delivery']"><i class="fa fa-truck"></i><br>Metodo de Envio</a>
                       </li>
                       <li><a [routerLink]="['/address']"><i class="fa fa-map-marker"></i><br>Direccion</a>
+                      </li>
+                      <li><a [routerLink]="['/payment']"><i class="fa fa-money"></i><br>Metodo de Pago</a>
                       </li>
                       <li class="active"><a><i class="fa fa-eye"></i><br>Revisar Orden</a>
                       </li>
@@ -73,7 +73,7 @@
 
                   <div class="box-footer">
                       <div class="pull-left">
-                          <a [routerLink]="['/address']" class="btn btn-default">
+                          <a [routerLink]="['/payment']" class="btn btn-default">
                             <i class="fa fa-chevron-left"></i>
                             Volver
                           </a>

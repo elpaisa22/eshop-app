@@ -48,36 +48,13 @@ export class AddressComponent implements OnInit {
 
 	//Se ejecuta al inicio
 	public ngOnInit() {
-		//Si aun no eligio el metodo de pago, redirige al metodo de pago
-		if (this.cartService.getPayment() == null) {
-				this.router.navigate(['/payment']);
+
 		//Si aun no eligio el metodo de envio
-		} else if (this.cartService.getDelivery() == null) {
+		if (this.cartService.getDelivery() == null) {
 				this.router.navigate(['/delivery']);
 		} else {
 			//Toma el modelo del cartService
 			this._model = this.cartService.getDelivery();
-
-			//Si aun no eligio el metodo de envio, redirige al metodo de envio
-			if (this._model == null) {
-					this.router.navigate(['/delivery']);
-			} else if (this._model.firstname == null) {
-        //Sino se carga por defecto con los datos de la tarjeta
-        var payment : Payment = this.cartService.getPayment();
-        if (payment.card.cardholderName) {
-          var separator : number = payment.card.cardholderName.trim().lastIndexOf(' ');
-          if (separator) {
-            var name : string = payment.card.cardholderName.trim().substring(0, separator);
-            var lastname : string = payment.card.cardholderName.trim().substring(separator+1);
-            this._model.firstname = name;
-            this._model.lastname = lastname;
-          }
-          this._model.docNumber = payment.card.docNumber;
-          this._model.docType = payment.card.docType;
-          this._model.email = payment.card.email;
-          this._model.phone = payment.card.phone;
-        }
-			}
 		}
 	}
 
@@ -102,6 +79,6 @@ export class AddressComponent implements OnInit {
 		//Guarda el modelo en el cartService
 		this.cartService.setDelivery(this._model);
 		//Redirige a la vista de Pago
-		this.router.navigate(['/orderReview']);
+		this.router.navigate(['/payment']);
 	}
 }

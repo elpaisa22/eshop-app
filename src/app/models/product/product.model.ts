@@ -16,6 +16,7 @@ export class Product {
     brand : string;
     sku : string;
     current_offer : Offer;
+    shipping_available : Boolean;
 }
 
 export interface Comment {
