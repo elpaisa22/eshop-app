@@ -26,10 +26,6 @@ export class OrderReviewComponent implements OnInit {
 		//Si aun no eligio el metodo de envio,redirige al metodo de envio
 		if (this.cartService.getDelivery() == null) {
 				this.router.navigate(['/delivery']);
-		//Si aun no eligio la direccion
-		} else if (this.cartService.getDelivery().address == null) {
-				this.router.navigate(['/address']);
-		//Si aun no eligio el metodo de pago, redirige al pago
 		} else if (this.cartService.getPayment() == null
 			         || this.cartService.getPayment() == null) {
 				this.router.navigate(['/payment']);
