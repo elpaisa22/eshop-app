@@ -58,6 +58,12 @@ export class CartService {
         this.itemsCountSource.next(this.itemsSource.getValue().length);
     }
 
+    //Resetea el valor del envio
+    private resetDeliveryPrice() {
+      this._delivery = null;
+      this.deliveryPriceSource.next(0);
+    }
+
     //Calcula el precio de envio
     private updateDeliveryPrice() {
       let  deliveryPrice = 0;
@@ -73,6 +79,12 @@ export class CartService {
           return sum += (cartProd.price + cartProd.discount) * cartProd.count, sum;
       },0);
       this.subtotalSource.next(total);
+    }
+
+    //Resetea la informacion del pago
+    private resetPayment() {
+      this._payment = null;
+      this.interestSource.next(0);
     }
 
     //Calcula el costo financiero (Interes)
@@ -134,8 +146,8 @@ export class CartService {
           }
         }
       }
-      this.updateInterest();
-      this.updateDeliveryPrice();
+      this.resetPayment();
+      this.resetDeliveryPrice();
       this.updateSubtotal();
       this.updateTotalPrice();
       this.updateItemsCount();
@@ -182,6 +194,8 @@ export class CartService {
           this.itemsSource.getValue().push(item);
         }
 
+        this.resetPayment();
+        this.resetDeliveryPrice();
         this.saveItems();
         this.updateSubtotal();
         this.updateTotalPrice();
@@ -197,6 +211,8 @@ export class CartService {
            this.itemsSource.getValue().splice(index, 1);
         }
 
+        this.resetPayment();
+        this.resetDeliveryPrice();
         this.saveItems();
         this.updateSubtotal();
         this.updateTotalPrice();
