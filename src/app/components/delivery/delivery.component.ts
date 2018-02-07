@@ -27,18 +27,18 @@ export class DeliveryComponent implements OnInit {
 	//Se ejecuta al inicio
 	public ngOnInit() {
 
-  this._shippingEnabled = this.cartService.availableForShipping();
+    this._shippingEnabled = this.cartService.availableForShipping();
 
-  //Intenta cargar el model desde el cartService
-  this._model = this.cartService.getDelivery();
-  //Si es null, crea uno nuevo
-  if (this._model == null) {
-      this._model = new Delivery();
-  } else if (this._model.quotedPrice || this._model.method == 'NONE') {
-      this._finished = true;
-  } else {
-      this._finished = false;
-  }
+    //Intenta cargar el model desde el cartService
+    this._model = this.cartService.getDelivery();
+    //Si es null, crea uno nuevo
+    if (this._model == null) {
+        this._model = new Delivery();
+    } else if (this._model.quotedPrice || this._model.method == 'NONE' || this._model.method == 'LOCAL') {
+        this._finished = true;
+    } else {
+        this._finished = false;
+    }
 
 		//Asigna la data desde el servicio
 		this.cartService.items.subscribe(data => this.items = data);
@@ -62,19 +62,28 @@ export class DeliveryComponent implements OnInit {
 			this._model.price = 0;
 			this._finished = true;
 			this._model.quotedPrice = false;
-		} else { //Si eligio envio a domicilio
+		} else if (this._model.method == 'home_shipping') { //Si eligio envio a domicilio
+        //Si no posee una direccion, la crea
+        if (this._model.address == null) {
+          this._model.address = new Address();
+        }
+  			//Si ya calculo, no vuelve a calcular todo
+  			if (this._model.quotedPrice) {
+  				this._finished = true;
+  			} else {
+  				this._model.price = 0;
+  				this._finished = false;
+  			}
+		} else if (this._model.method == 'LOCAL') { //Es una persona de Olavarria
       //Si no posee una direccion, la crea
       if (this._model.address == null) {
         this._model.address = new Address();
       }
-			//Si ya calculo, no vuelve a calcular todo
-			if (this._model.quotedPrice) {
-				this._finished = true;
-			} else {
-				this._model.price = 0;
-				this._finished = false;
-			}
-		}
+      this._model.address.zip = '7400';
+      this._model.price = 0;
+      this._finished = true;
+      this._model.quotedPrice = false;
+    }
 		this.cartService.setDelivery(this.model);
 	}
 

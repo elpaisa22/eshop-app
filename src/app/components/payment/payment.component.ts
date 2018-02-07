@@ -48,6 +48,13 @@ export class PaymentComponent implements OnInit {
       		if (this._model == null) {
       			this._model = new Payment();
 
+            //Carga los datos con los datos del envio
+            this._model.card.cardholderName = delivery.firstname + ' ' + delivery.lastname;
+            this._model.card.email = delivery.email;
+            this._model.card.docNumber = delivery.docNumber;
+            this._model.card.docType = delivery.docType;
+            this._model.card.phone = delivery.phone;
+
       			//TODO ELIMINAR ANTES DE SALIR A PRODUCCION
       			/*
       			this._model.card.cardExpirationMonth = 11;

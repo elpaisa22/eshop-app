@@ -36,7 +36,7 @@
                           <div class="col-sm-12">
                             <div class="panel panel-info">
                               <div class="panel-body">
-                                  <strong>Aqui debe ingresar los datos de la persona que recibirá el envío.</strong>
+                                  <strong>¡Importante!</strong> Aqui debe ingresar los datos de la persona que recibirá el envío.
                               </div>
                             </div>
                           </div>
@@ -162,7 +162,7 @@
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group">
                                     <label for="zip">Codigo Postal</label>
-                                    <input type="text" class="form-control" id="zip" name="zip" [attr.disabled]="model.quotedPrice ? '' : null"
+                                    <input type="text" class="form-control" id="zip" name="zip" disabled
                                            required [(ngModel)]="model.address.zip" #zip="ngModel">
                                     <div [hidden]="zip.valid || zip.pristine" class="validation-msg alert alert-danger">
                                       Ingrese la Ciudad

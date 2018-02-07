@@ -31,6 +31,19 @@
 
                 <form (ngSubmit)="sendForm()" #deliveryForm="ngForm">
                     <div class="content">
+
+                        <div class="row" *ngIf="!shippingEnabled">
+                          <div class="col-sm-12">
+                            <div class="panel panel-warning">
+                              <div class="panel-body">
+                                  <strong>¡Atención!</strong> El carrito contiene un elemento que no pude despacharse a través del correo standard.
+                                  Solo tiene disponibles las siguientes opciones
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
                         <div class="row">
                             <div class="col-sm-6" *ngIf="shippingEnabled">
                                 <div class="box shipping-method">
@@ -79,7 +92,19 @@
                                 <!-- /.row -->
 
                             </div>
-                            <div class="col-sm-6" [ngClass]="{'col-sm-offset-3' : !shippingEnabled}">
+                            <div class="col-sm-6" *ngIf="!shippingEnabled">
+                                <div class="box shipping-method">
+
+                                    <h4>Soy de Olavarria</h4>
+
+                                    <p>Los productos serán enviados a su domicilio en la ciudad de Olavarria</p>
+
+                                    <div class="box-footer text-center">
+                                        <input type="radio" name="delivery_method" value="LOCAL" [(ngModel)]="model.method" (change)="onDeliveryMethodChange($event)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
                                 <div class="box shipping-method">
 
                                     <h4>Retiro en la sucursal</h4>
