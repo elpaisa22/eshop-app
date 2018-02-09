@@ -78,7 +78,6 @@ export class ProductRepository {
     }
 
     public searchByText(value : string) : Observable<Product[]> {
-      var result : Product[] = [];
       return this.getProducts()
                  .map(response => {
                     let medidata = response as Product[];
@@ -99,6 +98,28 @@ export class ProductRepository {
       } else {
         return Observable.of(this._offersCache);
       }
+    }
+
+    public getOffer(id: number) : Observable<Offer> {
+      if (this._offersCache == null || this._offersCache.length == 0) {
+        return this._http.request(this.config.apiEndpoint + '/api/current_offers/' + id + '/')
+                         .map(x => x.json());
+      } else {
+        for (var i = 0; i < this._offersCache.length; i++) {
+            if (this._offersCache[i].id == id) {
+              return Observable.of(this._offersCache[i]);
+            }
+        }
+      }
+    }
+
+    public getProductsForOffer(offer : Offer) : Observable<Product[]> {
+      let result : Product[] = [];
+
+      offer.offerproduct_set.forEach(elem => {
+        this.getProduct(elem.product).subscribe(p => result.push(p));
+      })
+      return Observable.of(result);
     }
 
     private handleOfferResponse(response : Observable<Offer[]>) : Observable<Offer[]> {

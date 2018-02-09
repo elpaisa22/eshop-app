@@ -74,12 +74,13 @@
                           </del>
                         </p>
                         <p class="price">
-                          $ {{product.discount_price}}
+                          ${{product.discount_price}}
+                          <span *ngIf="product.current_offer && product.current_offer.min_required > 0">*</span>
                         </p>
                         <p class="text-muted"
                            style="text-align:center;font-size: 0.85em"
                            *ngIf="product.current_offer && product.current_offer.min_required > 0">
-                          (*) a partir de la {{product.current_offer.min_required}} unidad
+                          * A partir de {{product.current_offer.min_required}} unidades
                         </p>
                         <p class="text-center buttons">
                             <button class="btn btn-primary" (click)="addToCart(product)"><i class="fa fa-shopping-cart"></i> Agregar al carrito</button>

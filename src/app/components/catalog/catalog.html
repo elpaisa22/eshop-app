@@ -87,14 +87,15 @@
                           <h3><a [routerLink]="['/detail', prod.id]">{{prod.name}}</a></h3>
                           <p class="price">
                             <del *ngIf="prod.current_offer">
-                              $ {{prod.price}}
+                              ${{prod.price}}
                             </del>
-                            $ {{prod.discount_price}}
+                            ${{prod.discount_price}}
+                            <span *ngIf="prod.current_offer && prod.current_offer.min_required > 0">*</span>
                           </p>
                           <p class="text-muted"
                              style="text-align:center; font-size: 0.85em"
                              *ngIf="prod.current_offer && prod.current_offer.min_required > 0">
-                            (*) a partir de la {{prod.current_offer.min_required}} unidad
+                            * A partir de {{prod.current_offer.min_required}} unidades
                           </p>
                           <p class="buttons">
                               <a [routerLink]="['/detail', prod.id]" class="btn btn-default">Ver Detalle</a>

@@ -19,6 +19,7 @@ import {ComfirmationComponent} from './components/comfirmation/comfirmation.comp
 import {CatalogComponent} from './components/catalog/catalog.component';
 import {DetailComponent} from './components/detail/detail.component';
 import {ErrorComponent} from './components/error/error.component';
+import {OfferComponent} from './components/offer/offer.component';
 
 /* Shared components */
 import {TopBarComponent} from './components/_shared/topbar/topbar.component';
@@ -70,6 +71,7 @@ export const appRoutes : Routes = [
 	{path: 'catalog/section/:section/category/:category', component: CatalogComponent},
 	{path: 'catalog/section/:section/category/:category/sub-category/:subcategory', component: CatalogComponent},
 	{path: 'detail/:id', component: DetailComponent},
+	{path: 'offer/:id', component: OfferComponent},
 	{path: '**', component: ErrorComponent}
 ]
 
@@ -88,6 +90,7 @@ export const appRoutes : Routes = [
 		ComfirmationComponent,
     CatalogComponent,
     DetailComponent,
+		OfferComponent,
     ErrorComponent,
 		/* Shared */
     TopBarComponent,

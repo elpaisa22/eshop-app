@@ -9,7 +9,7 @@
                 </div>
 
                 <div *ngFor="let offer of currentOffers" class="item">
-                    <a href="">
+                    <a [routerLink]="['/offer', offer.id]">
                       <img class="img-responsive" src="{{offer.image}}" alt="{{offer.name}}" style="width: 1108px">
                     </a>
                 </div>
