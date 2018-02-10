@@ -22,7 +22,7 @@
         </div>
 
         <div class="col-md-12" style="margin-top: 20px;">
-          <div *ngFor="let prod of products" class="col-md-2 col-sm-4">
+          <div *ngFor="let prod of products" class="col-md-3 col-sm-4">
             <div class="product">
                 <div class="flip-container">
                     <div class="flipper">
@@ -45,9 +45,9 @@
                     <h3><a [routerLink]="['/detail', prod.id]">{{prod.name}}</a></h3>
                     <p class="price">
                       <del *ngIf="prod.current_offer">
-                        $ {{prod.price}}
+                        ${{prod.price}}
                       </del>
-                      $ {{prod.discount_price}}
+                      ${{prod.discount_price}}
                     </p>
                 </div>
                 <!-- /.text -->
