@@ -78,6 +78,11 @@ export class ProductRepository {
       }
     }
 
+    public getRelatedProducts(id: number) : Observable<Product[]> {
+      return this._http.request(this.config.apiEndpoint + '/api/product/' + id + '/related_products/')
+                       .map(x => this.convertResult(x.json()));
+    }
+
     public searchByText(value : string) : Observable<Product[]> {
       return this.getProducts()
                  .map(response => {

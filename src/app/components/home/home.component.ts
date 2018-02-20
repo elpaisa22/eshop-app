@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   public sliderContent : Content[] = [];
 
   constructor(private offerRepository: OfferRepository,
-              private contentRepository: ContentRepository,) {
+              private contentRepository: ContentRepository) {
 	}
 
   ngOnInit(){
