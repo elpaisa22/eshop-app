@@ -21,6 +21,6 @@ export class MainSliderDirective implements AfterViewInit {
             singleItem: true,
             afterInit: ''
           });
-       }, 700)
+       }, 1000)
     }
 }

@@ -21,6 +21,6 @@ export class GetInspiredDirective  implements AfterViewInit {
             singleItem: true,
             afterInit: ''
           });
-       }, 700)
+       }, 1000)
     }
 }

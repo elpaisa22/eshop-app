@@ -56,6 +56,7 @@ import {CategoryRepository} from './repositories/category/category.repository';
 import {CheckoutRepository} from './repositories/checkout/checkout.repository';
 import {OfferRepository} from './repositories/offer/offer.repository';
 import {ContentRepository} from './repositories/content/content.repository';
+import {ContactRepository} from './repositories/contact/contact.repository';
 
 import { APP_CONFIG, REMOTE_CONFIG, LOCAL_CONFIG } from './app.config';
 
@@ -133,6 +134,7 @@ export const appRoutes : Routes = [
 		CheckoutRepository,
     OfferRepository,
     ContentRepository,
+    ContactRepository,
 		{provide: 'APP_CONFIG', useValue: REMOTE_CONFIG}
 	],
   bootstrap: [AppComponent]
