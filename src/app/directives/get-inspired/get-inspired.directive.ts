@@ -1,30 +1,26 @@
-import {Directive, ElementRef} from '@angular/core';
+import {Directive, ElementRef, AfterViewInit} from '@angular/core';
 
 declare var jQuery:any;
 
 @Directive({
     selector: '[get-inspired]'
 })
-export class GetInspiredDirective {
-    $el: any
+export class GetInspiredDirective  implements AfterViewInit {
 
-    constructor(private _el: ElementRef) {
-      this.$el = jQuery(_el.nativeElement);
+    constructor(private el: ElementRef) {
     }
 
-    render(): void {
-      jQuery(this.$el).owlCarousel({
-          navigation: true, // Show next and prev buttons
-          slideSpeed: 300,
-          paginationSpeed: 400,
-          autoPlay: true,
-          stopOnHover: true,
-          singleItem: true,
-          afterInit: ''
-      });
-    }
-
-    ngOnInit() {
-      this.render();
+    public ngAfterViewInit() {
+      setTimeout(() => {
+          jQuery(this.el.nativeElement).owlCarousel({
+            navigation: true, // Show next and prev buttons
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            autoPlay: true,
+            stopOnHover: true,
+            singleItem: true,
+            afterInit: ''
+          });
+       }, 700)
     }
 }

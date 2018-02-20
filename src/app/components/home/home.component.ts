@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router } from '@angular/router';
 
-import {Offer} from '../../models/product/product.model';
-import {ProductRepository} from '../../repositories/product/product.repository';
+import {Offer} from '../../models/offer/offer.model';
+import {Content} from '../../models/content/content.model';
+import {OfferRepository} from '../../repositories/offer/offer.repository';
+import {ContentRepository} from '../../repositories/content/content.repository';
 
 @Component({
 	templateUrl : './home.html'
@@ -10,14 +12,21 @@ import {ProductRepository} from '../../repositories/product/product.repository';
 export class HomeComponent implements OnInit {
 
   public currentOffers : Offer[] = [];
+  public sliderContent : Content[] = [];
 
-  constructor(private productRepository: ProductRepository) {
+  constructor(private offerRepository: OfferRepository,
+              private contentRepository: ContentRepository,) {
 	}
 
   ngOnInit(){
-    this.productRepository.getCurrentOffers()
-                          .subscribe(data => {
+    this.offerRepository.getCurrentOffers()
+                        .subscribe(data => {
                              this.currentOffers = data;
+                        });
+
+    this.contentRepository.getSliderContent()
+                          .subscribe(data => {
+                               this.sliderContent = data;
                           });
   }
 

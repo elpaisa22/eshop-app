@@ -10,14 +10,14 @@
         </div>
 
         <div class="col-md-12">
-          <div *ngIf="offer" class="col-md-12">
+          <div *ngIf="offer" class="box">
             <img src="{{offer.image}}" alt="" class="img-responsive" style="width: 100%;">
           </div>
+        </div>
 
-          <div class="col-md-offset-2 col-md-8" style="position: absolute;top: 5%;left: 16px;opacity:.7">
-            <div *ngIf="offer" class="box">
-              <div [innerHTML]="offer.details"></div>
-            </div>
+        <div class="col-md-12">
+          <div *ngIf="offer" class="box">
+            <div [innerHTML]="offer.details"></div>
           </div>
         </div>
 

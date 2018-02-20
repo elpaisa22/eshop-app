@@ -20,6 +20,7 @@ import {CatalogComponent} from './components/catalog/catalog.component';
 import {DetailComponent} from './components/detail/detail.component';
 import {ErrorComponent} from './components/error/error.component';
 import {OfferComponent} from './components/offer/offer.component';
+import {ContentComponent} from './components/content/content.component';
 
 /* Shared components */
 import {TopBarComponent} from './components/_shared/topbar/topbar.component';
@@ -53,6 +54,8 @@ import {FilterService} from './services/filter/filter.service';
 import {ProductRepository} from './repositories/product/product.repository';
 import {CategoryRepository} from './repositories/category/category.repository';
 import {CheckoutRepository} from './repositories/checkout/checkout.repository';
+import {OfferRepository} from './repositories/offer/offer.repository';
+import {ContentRepository} from './repositories/content/content.repository';
 
 import { APP_CONFIG, REMOTE_CONFIG, LOCAL_CONFIG } from './app.config';
 
@@ -72,6 +75,7 @@ export const appRoutes : Routes = [
 	{path: 'catalog/section/:section/category/:category/sub-category/:subcategory', component: CatalogComponent},
 	{path: 'detail/:id', component: DetailComponent},
 	{path: 'offer/:id', component: OfferComponent},
+  {path: 'content/:id', component: ContentComponent},
 	{path: '**', component: ErrorComponent}
 ]
 
@@ -91,6 +95,7 @@ export const appRoutes : Routes = [
     CatalogComponent,
     DetailComponent,
 		OfferComponent,
+    ContentComponent,
     ErrorComponent,
 		/* Shared */
     TopBarComponent,
@@ -126,6 +131,8 @@ export const appRoutes : Routes = [
 		ProductRepository,
 		CategoryRepository,
 		CheckoutRepository,
+    OfferRepository,
+    ContentRepository,
 		{provide: 'APP_CONFIG', useValue: REMOTE_CONFIG}
 	],
   bootstrap: [AppComponent]

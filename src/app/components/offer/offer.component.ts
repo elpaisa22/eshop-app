@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Params, Router }  from '@angular/router';
 
-import {Offer, Product} from '../../models/product/product.model';
+import {Product} from '../../models/product/product.model';
+import {Offer} from '../../models/offer/offer.model';
 import {ProductRepository} from '../../repositories/product/product.repository';
+import {OfferRepository} from '../../repositories/offer/offer.repository';
 
 
 @Component({
@@ -15,20 +17,21 @@ export class OfferComponent implements OnInit {
   public products : Product[];
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _productRepository: ProductRepository) {
+              private _productRepository: ProductRepository,
+              private _offerRepository: OfferRepository) {
 	}
 
   ngOnInit(){
     this._activatedRoute.params.subscribe((params: Params) => {
 			this._selectedId = params['id'];
-			this._productRepository.getOffer(this._selectedId)
-			                       .subscribe(
-																data => {
-																	this.offer = data;
-                                  this.loadProductsForOffer(this.offer);
-																},
-													      error => console.log(error)
-														 );
+			this._offerRepository.getOffer(this._selectedId)
+		                       .subscribe(
+															data => {
+																this.offer = data;
+                                this.loadProductsForOffer(this.offer);
+															},
+												      error => console.log(error)
+													 );
 			window.scrollTo(0, 0);
 	 	});
   }

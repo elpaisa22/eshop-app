@@ -1,0 +1,26 @@
+<div id="content">
+    <div class="container">
+
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li><a [routerLink]="['/home']">Inicio</a>
+                </li>
+            </ul>
+        </div>
+
+        <div *ngIf="content" class="col-md-12">
+          <div class="box" style="padding:0">
+            <img src="{{content.image}}" alt="" class="img-responsive" style="width: 100%;">
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div *ngIf="content" class="box">
+            <div [innerHTML]="content.content"></div>
+          </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /#content -->
