@@ -13,15 +13,76 @@ _________________________________________________________ -->
                       <img class="img-responsive" src="{{slider.image}}" alt="{{slider.name}}" style="width: 1108px">
                     </a>
                 </div>
+                <div *ngFor="let offer of currentOffers" class="item">
+                    <a [routerLink]="['/offer', offer.id]">
+                        <img class="img-responsive" src="{{offer.image}}" alt="{{offer.name}}" style="width: 1108px">
+                    </a>
+                </div>
             </div>
             <!-- /#main-slider -->
         </div>
     </div>
     <!-- *** MAIN SLIDER END *** -->
 
+    <!-- *** HOT PRODUCT SLIDESHOW ***
+_________________________________________________________ -->
+   <div id="hot" *ngFor="let offer of currentOffers">
+
+       <div class="box">
+           <div class="container">
+               <div class="col-md-12">
+                   <h2>{{offer.name}}</h2>
+               </div>
+           </div>
+       </div>
+
+       <div class="container">
+           <div id="product-slider" class="product-slider" product-slider>
+               <div class="item" *ngFor="let prod of productsOffer.get(offer.id)">
+                   <div class="product same-height">
+                       <div class="flip-container">
+                           <div class="flipper">
+                               <div class="front">
+                                   <a [routerLink]="['/detail', prod.id]">
+                                       <img src="{{prod.images[0].image}}" alt="" class="img-responsive">
+                                   </a>
+                               </div>
+                               <div class="back">
+                                   <a [routerLink]="['/detail', prod.id]">
+                                       <img src="{{prod.images[1].image}}" alt="" class="img-responsive">
+                                   </a>
+                               </div>
+                           </div>
+                       </div>
+                       <a [routerLink]="['/detail', prod.id]" class="invisible">
+                           <img src="{{prod.images[0].image}}" alt="" class="img-responsive">
+                       </a>
+                       <div class="text">
+                           <h3><a [routerLink]="['/detail', prod.id]">{{prod.name}}</a></h3>
+                           <p class="price">
+                             <del *ngIf="prod.current_offer">
+                               ${{prod.price}}
+                             </del>
+                             ${{prod.discount_price}}
+                           </p>
+                       </div>
+                       <!-- /.text -->
+                   </div>
+                   <!-- /.product -->
+               </div>
+           </div>
+           <!-- /.product-slider -->
+       </div>
+       <!-- /.container -->
+
+   </div>
+   <!-- /#hot -->
+
+   <!-- *** HOT END *** -->
+
 
     <!-- *** GET INSPIRED ***
-_________________________________________________________ -->
+_________________________________________________________
     <div class="container" data-animate="fadeInUpBig">
         <div class="col-md-12">
             <div class="box slideshow">
@@ -37,6 +98,7 @@ _________________________________________________________ -->
             </div>
         </div>
     </div>
+    -->
     <!-- *** GET INSPIRED END *** -->
 
 </div>
