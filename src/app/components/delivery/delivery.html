@@ -64,7 +64,7 @@
                                         Ingrese su codigo postal para calcular el monto del envio:
                                     </p>
                                     <div class="input-group col-sm-6">
-                                      <input class="form-control" placeholder="Ej: 7400" type="text" name="zip" [attr.disabled]="loading ? '' : null"
+                                      <input class="form-control" placeholder="Ej: 7400" type="number" min="1000" max="9999" name="zip" [attr.disabled]="loading ? '' : null"
                                              (change)="onPostalCodeChange()" [(ngModel)]="model.address.zip">
                                       <span class="input-group-btn">
                                         <button class="btn btn-primary" type="button" (click)="calculateShippingCost()" [ngClass]="{disabled : loading}">

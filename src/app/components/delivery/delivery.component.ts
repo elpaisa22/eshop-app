@@ -96,6 +96,25 @@ export class DeliveryComponent implements OnInit {
 
 	//calcula el costo de Envio
 	public calculateShippingCost() {
+		if (!this._model.address.zip){
+			this._model.price = 0
+			this.errors = "Debe ingresar un valor";
+			this.cartService.setDelivery(this.model);
+			return;
+		}
+		else
+			this.errors = null;
+
+		var zip_number = parseInt(this._model.address.zip)
+		if (zip_number < 1000 || zip_number > 9999){
+			this._model.price = 0
+			this.errors = "Debe ingresar un C.P. válido.";
+			this.cartService.setDelivery(this.model);
+			return;
+		}
+		else
+			this.errors = null;
+
 		//Si el envio es local, no tiene costo
 		if (this._model.address.zip == '7400') {
 			this._model.price = 0;
