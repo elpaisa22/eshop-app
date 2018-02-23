@@ -19,7 +19,6 @@ export class ComfirmationComponent implements OnInit {
 			this.cartService.items.subscribe(data =>
 																				{
 																					//this.items = Object.assign({}, data);
-																					debugger
 																					this.items = JSON.parse(JSON.stringify(data))
 																					this.cartService.cleanCart();
 																				});
