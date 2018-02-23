@@ -47,17 +47,17 @@ export class OrderReviewComponent implements OnInit {
 		// verifica el resultado
    	result.subscribe(
            (res) => {
-           	   var response = res.json();
-           	   if (response.success) {
-           	   	this.router.navigate(['/comfirmation']);
-							} else {
-								this.showErrors(response.errors);
-							}
+           	   		var response = res.json();
+					if (response.success) {
+						this.router.navigate(['/comfirmation']);
+					} else {
+						this.showErrors(response.message);
+					}
            },
            err => {
                // Log errors if any
                //console.log(err);
-               this.showErrors(err)
+               this.showErrors(err._body)
            }
 		);
 	}
