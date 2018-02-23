@@ -46,11 +46,16 @@ export class CartService {
 
     constructor() {
       //Verifica si ya existen items anteriores
-      this.loadItems();
+      //this.loadItems();
       this.updateSubtotal();
       this.updateTotalPrice();
       this.updateItemsCount();
       this.updateTotalDiscount();
+    }
+
+    //Verifica si el carrito de compras esta vacio
+    public cartIsEmpty() : boolean {
+      return this.itemsCountSource.getValue() == 0;
     }
 
     //Calcula la cantidad de items del carrito
@@ -196,7 +201,7 @@ export class CartService {
 
         this.resetPayment();
         this.resetDeliveryPrice();
-        this.saveItems();
+        //this.saveItems();
         this.updateSubtotal();
         this.updateTotalPrice();
         this.updateItemsCount();
@@ -213,7 +218,7 @@ export class CartService {
 
         this.resetPayment();
         this.resetDeliveryPrice();
-        this.saveItems();
+        //this.saveItems();
         this.updateSubtotal();
         this.updateTotalPrice();
         this.updateItemsCount();
@@ -223,11 +228,14 @@ export class CartService {
     //Limpia el carrito eliminando todos los items
     public cleanCart(){
         this.itemsSource.getValue().splice(0);
-        this.saveItems();
+        //this.saveItems();
 
         this.subtotalSource.next(0);
         this.totalPriceSource.next(0);
         this.deliveryPriceSource.next(0);
+        this.itemsCountSource.next(0);
+        this.totalDiscountSource.next(0);
+        this.interestSource.next(0);
     }
 
     //Calcula el precio total de los items

@@ -196,6 +196,14 @@
                           </div>
                         </div>
 
+                        <div [hidden]="!installmentLabel" class="row">
+                            <div class="col-md-offset-2 col-md-5">
+                              <div class="alert alert-warning">
+                                {{installmentLabel}}
+                              </div>
+                            </div>
+                        </div>
+
                         <div class="row">
                           <div class="col-md-offset-2 col-md-10">
                               <div [hidden]="!errorsWithCard" class="alert alert-danger" role="alert">

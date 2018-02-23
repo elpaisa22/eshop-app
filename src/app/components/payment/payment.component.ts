@@ -23,6 +23,8 @@ export class PaymentComponent implements OnInit {
 
   private _paymentSelectorEnabled : boolean = false;
 
+	public installmentLabel : string = "";
+
 	constructor(private el: ElementRef, private cartService: CartService, private router : Router) {
 	}
 
@@ -140,9 +142,15 @@ export class PaymentComponent implements OnInit {
 	//Cuando cambia la cantidad de cuotas
 	public onInstallmentChange(event: any) {
 		//Obtiene el plan de cuotas seleccionado
-		let installment = this._installments.filter(x => x.installments == this._model.method.installments);
+		let installments = this._installments.filter(x => x.installments == this._model.method.installments);
 		//Carga el monto total
-		this._model.method.totalAmount = installment[0].total_amount;
+		this._model.method.totalAmount = installments[0].total_amount;
+		//Carga el TEA y CFT
+		let labels = installments[0].labels.filter(x => x.indexOf('CFT') == 0);
+		this.installmentLabel = labels[0];
+		if (labels.length > 0) {
+				this.installmentLabel = labels[0].replace(/_/gi, ": ");
+		}
 		//Guarda el pago en el cartService
 		this.cartService.setPayment(this._model);
 	}
@@ -213,6 +221,13 @@ export class PaymentComponent implements OnInit {
 						this._model.method.issuerName = installment.issuer.name;
 					}
 					this._installments = installment.payer_costs;
+					//Obtiene el plan de cuotas seleccionado
+					let installments = this._installments.filter(x => x.installments == this._model.method.installments);
+					//Carga el TEA y CFT
+					let labels = installments[0].labels.filter(x => x.indexOf('CFT') == 0);
+					if (labels.length > 0) {
+							this.installmentLabel = labels[0].replace(/_/gi, ": ");
+					}
 				}
 			});
 	}

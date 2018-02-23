@@ -16,7 +16,13 @@ export class ComfirmationComponent implements OnInit {
 
 		ngOnInit() {
 			//Asigna la data desde el servicio
-			this.cartService.items.subscribe(data => this.items = data);
+			this.cartService.items.subscribe(data =>
+																				{
+																					//this.items = Object.assign({}, data);
+																					debugger
+																					this.items = JSON.parse(JSON.stringify(data))
+																					this.cartService.cleanCart();
+																				});
 		}
 
 }

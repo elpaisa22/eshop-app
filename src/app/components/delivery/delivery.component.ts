@@ -26,22 +26,27 @@ export class DeliveryComponent implements OnInit {
 
 	//Se ejecuta al inicio
 	public ngOnInit() {
+		//Si el carrito esta vacio, vuelve a la vista del carrito
+		if (this.cartService.cartIsEmpty()) {
+				this.router.navigate(['/basket']);
+		} else {
+			this._shippingEnabled = this.cartService.availableForShipping();
 
-    this._shippingEnabled = this.cartService.availableForShipping();
+	    //Intenta cargar el model desde el cartService
+	    this._model = this.cartService.getDelivery();
+	    //Si es null, crea uno nuevo
+	    if (this._model == null) {
+	        this._model = new Delivery();
+	    } else if (this._model.quotedPrice || this._model.method == 'NONE' || this._model.method == 'LOCAL') {
+	        this._finished = true;
+	    } else {
+	        this._finished = false;
+	    }
 
-    //Intenta cargar el model desde el cartService
-    this._model = this.cartService.getDelivery();
-    //Si es null, crea uno nuevo
-    if (this._model == null) {
-        this._model = new Delivery();
-    } else if (this._model.quotedPrice || this._model.method == 'NONE' || this._model.method == 'LOCAL') {
-        this._finished = true;
-    } else {
-        this._finished = false;
-    }
+			//Asigna la data desde el servicio
+			this.cartService.items.subscribe(data => this.items = data);
+		}
 
-		//Asigna la data desde el servicio
-		this.cartService.items.subscribe(data => this.items = data);
 	}
 
 	get model() : Delivery {
