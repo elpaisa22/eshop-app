@@ -17,7 +17,7 @@
 
         <div class="col-md-12">
           <div *ngIf="content" class="box">
-            <div [innerHTML]="content.content"></div>
+            <div [innerHTML]="safeContent"></div>
           </div>
         </div>
 
