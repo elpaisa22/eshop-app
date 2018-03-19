@@ -135,7 +135,7 @@ export const appRoutes : Routes = [
     OfferRepository,
     ContentRepository,
     ContactRepository,
-		{provide: 'APP_CONFIG', useValue: LOCAL_CONFIG}
+		{provide: 'APP_CONFIG', useValue: REMOTE_CONFIG}
 	],
   bootstrap: [AppComponent]
 })
