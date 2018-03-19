@@ -63,7 +63,8 @@ _________________________________________________________ -->
                              <del *ngIf="prod.current_offer">
                                ${{prod.price}}
                              </del>
-                             ${{prod.discount_price}}
+                             <br>
+                             ${{prod.discount_price | number:'1.2-2'}}
                            </p>
                        </div>
                        <!-- /.text -->

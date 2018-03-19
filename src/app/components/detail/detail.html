@@ -68,13 +68,13 @@
                         <h1 class="text-center">{{product.name}}</h1>
                         <p class="goToDescription"><a href="javascript:void(0)" scroll-to="#details">Ver detalles del producto, materiales y medidas</a>
                         </p>
-                        <p class="price" style="color: #999999;" *ngIf="product.current_offer">
+                        <p class="price" style="color: #999999;margin-bottom:0px;" *ngIf="product.current_offer">
                           <del>
-                            ${{product.price}}
+                            ${{product.price | number:'1.2-2'}}
                           </del>
                         </p>
-                        <p class="price">
-                          ${{product.discount_price}}
+                        <p class="price" style="margin-top:0px; padding:0px">
+                          ${{product.discount_price | number:'1.2-2'}}
                           <span *ngIf="product.current_offer && product.current_offer.min_required > 0">*</span>
                         </p>
                         <p class="text-muted"
