@@ -57,7 +57,7 @@ export class OrderReviewComponent implements OnInit {
            err => {
                // Log errors if any
                //console.log(err);
-               this.showErrors(err._body)
+               this.showErrors(err._body.message)
            }
 		);
 	}

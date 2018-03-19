@@ -102,6 +102,7 @@ export class PaymentComponent implements OnInit {
 			//Si el pago es en EFECTIVO, se limpia el Metodo de Pago y la Tarjeta
 			if (this._model.cashPayment) {
 				this._model.method = new PaymentMethod();
+				this._model.method.totalAmount = this.cartService.calcTotalPrice();
 				this._model.card = new Card();
 			}
 
