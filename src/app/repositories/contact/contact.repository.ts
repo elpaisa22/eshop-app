@@ -1,6 +1,7 @@
 import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
-import {Observable}     from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import {Contact} from '../../models/contact/contact.model';
 import {AppConfig} from '../../app.config';
@@ -17,16 +18,17 @@ export class ContactRepository {
     public getContactInfo (forceReload : boolean = false) : Observable<Contact> {
       if (this._contactCache == null || forceReload) {
         var response = this._http.request(this.config.apiEndpoint + "/api/contact_info/")
-                                 .map(x => x.json());
+                                 .pipe(map(x => x.json()));
         return this.handleContactResponse(response);
       } else {
-        return Observable.of(this._contactCache);
+        return of(this._contactCache);
       }
     }
 
     private handleContactResponse(response : Observable<Contact>) : Observable<Contact> {
-      return response.do(data => {
-        this._contactCache = data;
-      });
+      return response.pipe(tap(data => {
+                            this._contactCache = data;
+                           })
+                      );
     }
 }

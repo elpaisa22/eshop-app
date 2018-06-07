@@ -1,6 +1,7 @@
 import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
-import {Observable}     from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import {Section} from '../../models/category/section.model';
 import {AppConfig} from '../../app.config';
@@ -17,16 +18,16 @@ export class CategoryRepository {
   public getCategories (forceReload : boolean = false) : Observable<Section[]> {
     if (this._categoryCache == null || this._categoryCache.length == 0 || forceReload) {
       var response = this._http.request(this.config.apiEndpoint + "/api/categories/")
-                               .map(x => x.json());
+                               .pipe(map(x => x.json()));
       return this.handleResponse(response);
     } else {
-      return Observable.of(this._categoryCache);
+      return of(this._categoryCache);
     }
   }
 
   private handleResponse(response : Observable<Section[]>) : Observable<Section[]> {
-    return response.do(data => {
+    return response.pipe(tap(data => {
       this._categoryCache = data;
-    });
+    }));
   }
 }

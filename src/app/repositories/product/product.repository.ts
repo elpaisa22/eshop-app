@@ -1,6 +1,7 @@
 import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
-import {Observable}     from 'rxjs/Observable';
+import {Observable, of, from} from 'rxjs';
+import { map, tap, concatMap, filter, toArray } from 'rxjs/operators';
 
 import {Product} from '../../models/product/product.model';
 import {Offer, ProductInOffer} from '../../models/offer/offer.model';
@@ -52,27 +53,27 @@ export class ProductRepository {
     public getProducts (forceReload : boolean = false) : Observable<Product[]> {
       if (this._productsCache == null || this._productsCache.length == 0 || forceReload) {
         var response = this._http.request(this.config.apiEndpoint + '/api/product')
-                                 .map(x => this.convertResult(x.json()));
+                                 .pipe(map(x => this.convertResult(x.json())));
         return this.handleProductResponse(response);
       } else {
-        return Observable.of(this._productsCache);
+        return of(this._productsCache);
       }
     }
 
     private handleProductResponse(response : Observable<Product[]>) : Observable<Product[]> {
-      return response.do(data => {
-        this._productsCache = data;
-      });
+      return response.pipe(tap(data => {
+                              this._productsCache = data;
+                            }));
     }
 
     public getProduct(id: number) : Observable<Product> {
       if (this._productsCache == null || this._productsCache.length == 0) {
         return this._http.request(this.config.apiEndpoint + '/api/product/' + id + '/')
-                         .map(x => this.convertProducto(x.json()));
+                         .pipe(map(x => this.convertProducto(x.json())));
       } else {
         for (var i = 0; i < this._productsCache.length; i++) {
             if (this._productsCache[i].id == id) {
-              return Observable.of(this._productsCache[i]);
+              return of(this._productsCache[i]);
             }
         }
       }
@@ -80,20 +81,22 @@ export class ProductRepository {
 
     public getRelatedProducts(id: number) : Observable<Product[]> {
       return this._http.request(this.config.apiEndpoint + '/api/product/' + id + '/related_products/')
-                       .map(x => this.convertResult(x.json()));
+                       .pipe(map(x => this.convertResult(x.json())));
     }
 
     public searchByText(value : string) : Observable<Product[]> {
       return this.getProducts()
-                 .map(response => {
-                    let medidata = response as Product[];
-                    return medidata;
-                  })
-                 .concatMap(array => Observable.from(array))
-                 .filter((prod, index) => {
-                      return prod.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
-                  })
-                 .toArray();
+                 .pipe(
+                   map(response => {
+                      let medidata = response as Product[];
+                      return medidata;
+                    }),
+                   concatMap(array => from(array)),
+                   filter((prod, index) => {
+                        return prod.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
+                    }),
+                    toArray()
+                 );
     }
 
     public getProductsForOffer(offer : Offer) : Observable<Product[]> {
@@ -102,7 +105,7 @@ export class ProductRepository {
       offer.offerproduct_set.forEach(elem => {
         this.getProduct(elem.product).subscribe(p => result.push(p));
       })
-      return Observable.of(result);
+      return of(result);
     }
 
 }

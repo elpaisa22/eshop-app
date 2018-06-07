@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
-import {Observable}     from 'rxjs/Observable';
+import {Observable}     from 'rxjs';
 
 import {Content} from '../../../models/content/content.model';
 import {Contact} from '../../../models/contact/contact.model';

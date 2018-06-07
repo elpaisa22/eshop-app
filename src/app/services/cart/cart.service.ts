@@ -4,7 +4,7 @@ import {Product} from '../../models/product/product.model';
 import {CartItem} from '../../models/cartitem/cartitem.model';
 import {Delivery, Payment} from '../../models/checkout/checkout.model';
 
-import { Observable, BehaviorSubject } from 'rxjs/Rx';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class CartService {

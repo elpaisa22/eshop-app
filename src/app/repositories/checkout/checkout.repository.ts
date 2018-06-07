@@ -1,6 +1,7 @@
 import {Injectable, Inject} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import {CartItem} from '../../models/cartitem/cartitem.model';
 import {Delivery, Payment} from '../../models/checkout/checkout.model';
@@ -25,7 +26,7 @@ export class CheckoutRepository {
         'X-CSRFToken': this.xsrfToken
     });
     return this._http.post(this.config.apiEndpoint + '/api/quote_shipping/', body , {headers : head})
-                     .catch(this.handleErrorObservable);
+                     .pipe(catchError(this.handleErrorObservable));
   }
 
   //Invoca al servicio de checkout
@@ -43,7 +44,7 @@ export class CheckoutRepository {
     });
 
     return this._http.post(this.config.apiEndpoint + '/api/process_payment/', body , {headers : head})
-                     .catch(this.handleErrorObservable);
+                     .pipe(catchError(this.handleErrorObservable));
   }
 
   private handleErrorObservable (error: Response | any) {

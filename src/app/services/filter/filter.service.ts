@@ -8,7 +8,7 @@ import {Tag} from '../../models/tag/tag.model';
 import {TagGroup, TagValue} from '../../models/tag/taggroup.model';
 import {Section, Category, SubCategory} from '../../models/category/section.model';
 
-import { Observable, BehaviorSubject } from 'rxjs/Rx';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class FilterService {
@@ -142,7 +142,7 @@ export class FilterService {
       if (this._products.length > 0) {
         this.priceMinSource.next(this._products.reduce((a, b) => (Number(a.price) < Number(b.price)) ? a : b).price);
         this.priceMaxSource.next(this._products.reduce((a, b) => (Number(a.price) > Number(b.price)) ? a : b).price);
-  
+
         this._filterRangeMin = this.priceMinSource.getValue();
         this._filterRangeMax = this.priceMaxSource.getValue();
       }
