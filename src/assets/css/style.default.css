@@ -145,7 +145,7 @@ h1 {
   }
 }
 .navbar #basket-overview {
-  padding: 0;
+  /*padding: 0;*/
 }
 #hot h2 {
   text-transform: uppercase;

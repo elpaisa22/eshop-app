@@ -7,15 +7,15 @@ _________________________________________________________ -->
             <div id="main-slider" main-slider>
                 <div *ngFor="let slider of sliderContent" class="item">
                     <a *ngIf="slider.content" [routerLink]="['/content', slider.id]">
-                      <img class="img-responsive" src="{{slider.image}}" alt="{{slider.name}}" style="width: 1108px">
+                      <img class="img-responsive" src="{{slider.image}}" alt="{{slider.name}}" style="width: 1438px">
                     </a>
                     <a *ngIf="!slider.content" href="javascript:void(0)">
-                      <img class="img-responsive" src="{{slider.image}}" alt="{{slider.name}}" style="width: 1108px">
+                      <img class="img-responsive" src="{{slider.image}}" alt="{{slider.name}}" style="width: 1438px">
                     </a>
                 </div>
                 <div *ngFor="let offer of currentOffers" class="item">
                     <a [routerLink]="['/offer', offer.id]">
-                        <img class="img-responsive" src="{{offer.image}}" alt="{{offer.name}}" style="width: 1108px">
+                        <img class="img-responsive" src="{{offer.image}}" alt="{{offer.name}}" style="width: 1438px">
                     </a>
                 </div>
             </div>
@@ -26,57 +26,59 @@ _________________________________________________________ -->
 
     <!-- *** HOT PRODUCT SLIDESHOW ***
 _________________________________________________________ -->
-   <div id="hot" *ngFor="let offer of currentOffers">
+    <div id="hot" *ngFor="let offer of currentOffers">
+        <div class="container">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <h2>{{offer.name}}</h2>
+                        </div>
+                    </div>
+                </div>
 
-       <div class="box">
-           <div class="container">
-               <div class="col-md-12">
-                   <h2>{{offer.name}}</h2>
-               </div>
-           </div>
-       </div>
-
-       <div class="container">
-           <div id="product-slider" class="product-slider" product-slider>
-               <div class="item" *ngFor="let prod of productsOffer.get(offer.id)">
-                   <div class="product same-height">
-                       <div class="flip-container">
-                           <div class="flipper">
-                               <div class="front">
-                                   <a [routerLink]="['/detail', prod.id]">
-                                       <img src="{{prod.images[0].image}}" alt="" class="img-responsive">
-                                   </a>
-                               </div>
-                               <div class="back">
-                                   <a [routerLink]="['/detail', prod.id]">
-                                       <img src="{{prod.images[1].image}}" alt="" class="img-responsive">
-                                   </a>
-                               </div>
-                           </div>
-                       </div>
-                       <a [routerLink]="['/detail', prod.id]" class="invisible">
-                           <img src="{{prod.images[0].image}}" alt="" class="img-responsive">
-                       </a>
-                       <div class="text">
-                           <h3><a [routerLink]="['/detail', prod.id]">{{prod.name}}</a></h3>
-                           <p class="price">
-                             <del *ngIf="prod.current_offer">
-                               ${{prod.price | number:'1.2-2'}}
-                             </del>
-                             <br>
-                             ${{prod.discount_price | number:'1.2-2'}}
-                           </p>
-                       </div>
-                       <!-- /.text -->
-                   </div>
-                   <!-- /.product -->
-               </div>
-           </div>
-           <!-- /.product-slider -->
-       </div>
+        
+                <div id="product-slider" class="product-slider" product-slider>
+                    <div class="item" *ngFor="let prod of productsOffer.get(offer.id)">
+                        <div class="product same-height">
+                            <div class="flip-container">
+                                <div class="flipper">
+                                    <div class="front">
+                                        <a [routerLink]="['/detail', prod.id]">
+                                            <img src="{{prod.images[0].image}}" alt="" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="back">
+                                        <a [routerLink]="['/detail', prod.id]">
+                                            <img src="{{prod.images[1].image}}" alt="" class="img-responsive">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <a [routerLink]="['/detail', prod.id]" class="invisible">
+                                <img src="{{prod.images[0].image}}" alt="" class="img-responsive">
+                            </a>
+                            <div class="text">
+                                <h3><a [routerLink]="['/detail', prod.id]">{{prod.name}}</a></h3>
+                                <p class="price">
+                                    <del *ngIf="prod.current_offer">
+                                        ${{prod.price | number:'1.2-2'}}
+                                    </del>
+                                    <br>
+                                    ${{prod.discount_price | number:'1.2-2'}}
+                                </p>
+                            </div>
+                            <!-- /.text -->
+                        </div>
+                        <!-- /.product -->
+                    </div>
+                </div>
+                <!-- /.product-slider -->
+            </div>
+        </div>
        <!-- /.container -->
 
-   </div>
+    </div>
    <!-- /#hot -->
 
    <!-- *** HOT END *** -->

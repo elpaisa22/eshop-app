@@ -1,1 +1,42 @@
 /** Your theme modifications here **/
+@media (min-width: 1600px) {
+    .container {
+        width: 1500px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .navbar-header {
+        height: 40px;
+    }
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.navbar ul.nav > li > a{
+    padding-top: 5px;
+    height: 25px;
+    margin-top: 5px;
+}
+
+.navbar-centered {
+    max-width: 1050px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#hot .product-slider{
+    background-color: white;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.box{
+    margin-bottom: 0px;
+    border: none;
+}
+
+#content .product{
+    border: none;
+}

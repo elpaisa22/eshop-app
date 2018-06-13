@@ -30,63 +30,63 @@ _________________________________________________________ -->
         </div>
 
         <div class="row">
-
-            <div class="navbar-header">
-                <a class="navbar-brand home" [routerLink]="['home']" data-animate-hover="bounce" style="padding-top: 5px;">
-                    <img src="/assets/images/logo-small.png" alt="Obaju logo" class="visible-xs" width="55px"><span class="sr-only">CASA DEL CREDITO</span>
-                </a>
-                <div class="navbar-buttons">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
-                        <span class="sr-only">Toggle navigation</span>
-                        <i class="fa fa-align-justify"></i>
-                    </button>
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
-                        <span class="sr-only">Toggle search</span>
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <a class="btn-default navbar-toggle" [routerLink]="['/basket']">
-                        <i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">3 items in cart</span>
+            <div class="navbar-centered">
+                <div class="navbar-header">
+                    <a class="navbar-brand home" [routerLink]="['home']" data-animate-hover="bounce" style="padding-top: 5px;">
+                        <img src="/assets/images/logo-small.png" alt="Obaju logo" class="visible-xs" width="55px"><span class="sr-only">CASA DEL CREDITO</span>
                     </a>
+                    <div class="navbar-buttons">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                            <span class="sr-only">Toggle navigation</span>
+                            <i class="fa fa-align-justify"></i>
+                        </button>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
+                            <span class="sr-only">Toggle search</span>
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <a class="btn-default navbar-toggle" [routerLink]="['/basket']">
+                            <i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">3 items in cart</span>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <!--/.navbar-header -->
+                <!--/.navbar-header -->
 
-            <div class="collapse clearfix hidden-sm hidden-md hidden-lg" id="search">
-              <div class="container">
-                <div class="navbar-form" role="search">
-                    <autocomplete></autocomplete>
+                <div class="collapse clearfix hidden-sm hidden-md hidden-lg" id="search">
+                <div class="container">
+                    <div class="navbar-form" role="search">
+                        <autocomplete></autocomplete>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <!--/.nav-collapse -->
+                </div>
+                <!--/.nav-collapse -->
 
-            <div class="navbar-collapse collapse" id="navigation">
-                <ul class="nav navbar-nav navbar-left">
-                    <li [routerLinkActive]="['active']"><a [routerLink]="['/home']">Inicio</a>
-                    </li>
-                    <li *ngFor="let section of sections" class="dropdown yamm-fw">
-                        <a href="#" [routerLinkActive]="['active']" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">{{section.name}} <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <div class="yamm-content">
-                                    <div class="row" style="display: flex; flex-wrap: wrap;">
-                                        <div *ngFor="let category of section.categories" class="col-sm-3">
-                                            <h5>{{category.name}}</h5>
-                                            <ul>
-                                                <li *ngFor="let subcategory of category.subcategories">
-                                                  <a [routerLink]="['/catalog/section', section.id, 'category' , category.id, 'sub-category',subcategory.id]">{{subcategory.name}}</a>
-                                                </li>
-                                            </ul>
+                <div class="navbar-collapse collapse" id="navigation">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a [routerLink]="['/']">Inicio</a>
+                        </li>
+                        <li *ngFor="let section of sections" class="dropdown yamm-fw">
+                            <a href="#" [routerLinkActive]="['active']" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">{{section.name}} <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="yamm-content">
+                                        <div class="row" style="display: flex; flex-wrap: wrap;">
+                                            <div *ngFor="let category of section.categories" class="col-sm-3">
+                                                <h5>{{category.name}}</h5>
+                                                <ul>
+                                                    <li *ngFor="let subcategory of category.subcategories">
+                                                    <a [routerLink]="['/catalog/section', section.id, 'category' , category.id, 'sub-category',subcategory.id]">{{subcategory.name}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </li>
-                            </ul>
-                    </li>
-                </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
             </div>
-            <!--/.nav-collapse -->
-
         </div>
 
     </div>
