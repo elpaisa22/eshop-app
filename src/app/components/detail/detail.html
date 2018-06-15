@@ -1,3 +1,21 @@
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:730px;height:800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Promociones de MercadoPago</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe src="https://www.mercadopago.com.ar/cuotas" width="700" height="700" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="content">
     <div class="container" *ngIf="product">
 
@@ -75,12 +93,18 @@
                         </p>
                         <p class="price" style="margin-top:0px; padding:0px">
                           ${{product.discount_price | number:'1.2-2'}}
-                          <span *ngIf="product.current_offer && product.current_offer.min_required > 0">*</span>
+                          <span *ngIf="product.current_offer && product.current_offer.min_required > 1">*</span>
                         </p>
                         <p class="text-muted"
                            style="text-align:center;font-size: 0.85em"
-                           *ngIf="product.current_offer && product.current_offer.min_required > 0">
+                           *ngIf="product.current_offer && product.current_offer.min_required > 1">
                           * A partir de {{product.current_offer.min_required}} unidades
+                        </p>
+                        <p class="text-center buttons">
+                            <a data-toggle="modal" data-target="#exampleModalLong" style="cursor: pointer;">
+                                Ver promociones de MercadoPago
+                            </a>
+                            <br><br>
                         </p>
                         <p class="text-center buttons">
                             <button class="btn btn-primary" (click)="addToCart(product)"><i class="fa fa-shopping-cart"></i> Agregar al carrito</button>
@@ -88,8 +112,6 @@
                             <a [routerLink]="['/basket']" class="btn btn-default"><i class="fa fa-heart"></i> Me gusta </a>
                             -->
                         </p>
-
-
                     </div>
 
                     <div class="row" id="thumbs">
