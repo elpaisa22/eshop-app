@@ -118,6 +118,8 @@ export class PaymentComponent implements OnInit {
 					} else {
 						//Si no ocurrieron errores, guarda el token en el cartService
 						this.cartService.setToken(response);
+						//Carga el monto total
+						this._model.method.totalAmount = this.cartService.calcTotalPrice();
 						this.router.navigate(['/orderReview']);
 					}
 				});
@@ -144,8 +146,6 @@ export class PaymentComponent implements OnInit {
 	public onInstallmentChange(event: any) {
 		//Obtiene el plan de cuotas seleccionado
 		let installments = this._installments.filter(x => x.installments == this._model.method.installments);
-		//Carga el monto total
-		this._model.method.totalAmount = installments[0].total_amount;
 		//Carga el TEA y CFT
 		let labels = installments[0].labels.filter(x => x.indexOf('CFT') == 0);
 		this.installmentLabel = labels[0];
