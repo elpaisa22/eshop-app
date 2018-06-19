@@ -24,6 +24,14 @@ _________________________________________________________ -->
     </div>
     <!-- *** MAIN SLIDER END *** -->
 
+    <div class="container">
+      <div class="col-md-12" style="margin-bottom: 20px">
+        <div class="box" style="padding:0">
+          <payments-banner></payments-banner>
+        </div>
+      </div>
+    </div>
+
     <!-- *** HOT PRODUCT SLIDESHOW ***
 _________________________________________________________ -->
     <div id="hot" *ngFor="let offer of currentOffers">
@@ -37,7 +45,7 @@ _________________________________________________________ -->
                     </div>
                 </div>
 
-        
+
                 <div id="product-slider" class="product-slider" product-slider>
                     <div class="item" *ngFor="let prod of productsOffer.get(offer.id)">
                         <div class="product same-height">
@@ -106,3 +114,23 @@ _________________________________________________________
 
 </div>
 <!-- /#content -->
+
+
+<div class="modal fade" id="modalPromociones" tabindex="-1" role="dialog" aria-labelledby="modalPromocionesLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalPromocionesLongTitle">Promociones de MercadoPago</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body wrapper">
+                <iframe src="https://www.mercadopago.com.ar/cuotas?iframe=true" width="700" height="700" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

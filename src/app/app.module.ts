@@ -34,6 +34,7 @@ import {SummaryComponent} from './components/_shared/summary/summary.component';
 import {AutocompleteComponent} from './components/_shared/autocomplete/autocomplete.component';
 import {PriveFilterComponent} from './components/_shared/priceFilter/priceFilter.component';
 import {RelatedProductsComponent} from './components/_shared/relatedProducts/relatedProducts.component';
+import {PaymentsBannerComponent} from './components/_shared/paymentsBanner/paymentsBanner.component';
 
 /* Pipes */
 import {KeysPipe} from './pipes/keys/keys.pipe';
@@ -110,6 +111,7 @@ export const appRoutes : Routes = [
 		AutocompleteComponent,
 		PriveFilterComponent,
 		RelatedProductsComponent,
+    PaymentsBannerComponent,
 		/* Pipes */
 		KeysPipe,
 		/* Directives */
