@@ -11,17 +11,21 @@ export class ComfirmationComponent implements OnInit {
 
 		public items : CartItem[];
 
-		constructor(private cartService: CartService) {
+		constructor(private cartService: CartService, private router : Router) {
 		}
 
 		ngOnInit() {
 			//Asigna la data desde el servicio
 			this.cartService.items.subscribe(data =>
 																				{
-																					//this.items = Object.assign({}, data);
 																					this.items = JSON.parse(JSON.stringify(data))
-																					this.cartService.cleanCart();
 																				});
 		}
 
+		//Se ejecuta cuando presiona el boton de continuar
+		public continueBuying() {
+			//Vacia el carrito
+			this.cartService.cleanCart();
+			this.router.navigate(['/home']);
+		}
 }
