@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router } from '@angular/router';
 
 import {CartItem} from '../../models/cartitem/cartitem.model';
@@ -7,7 +7,7 @@ import {CartService} from '../../services/cart/cart.service';
 @Component({
 	templateUrl : './comfirmation.html'
 })
-export class ComfirmationComponent implements OnInit {
+export class ComfirmationComponent implements OnInit, OnDestroy {
 
 		public items : CartItem[];
 
@@ -22,10 +22,9 @@ export class ComfirmationComponent implements OnInit {
 																				});
 		}
 
-		//Se ejecuta cuando presiona el boton de continuar
-		public continueBuying() {
+		ngOnDestroy() {
 			//Vacia el carrito
 			this.cartService.cleanCart();
-			this.router.navigate(['/home']);
 		}
+
 }
