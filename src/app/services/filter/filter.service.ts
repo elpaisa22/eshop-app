@@ -151,12 +151,12 @@ export class FilterService {
   private calculateActualPage() {
     var result : Product[] = [];
     var size = this.pageSizeSource.getValue();
-    if (this.pageSize == null) {
+    if (size == null) {
       size = this._products.length;
     }
     var from : number = size * (this.pageSource.getValue() - 1);
     var to : number = from + size - 1;
-    if (to > this._products.length) {
+    if (to >= this._products.length) {
       to = this._products.length - 1;
     }
     if (from <= this._products.length) {
@@ -170,10 +170,12 @@ export class FilterService {
     if (this.pageSize == null) {
         this.totalPagesSource.next(1);
     } else {
-        this.totalPagesSource.next(Math.floor(this.totalProductsSource.getValue()/size) + 1);
-    }
-    if (this.totalProductsSource.getValue() > size && this.totalProductsSource.getValue() % size > 0) {
-      this.totalPagesSource.next(this.totalPagesSource.getValue() + 1);
+        if (this.totalProductsSource.getValue() % size > 0) {
+          this.totalPagesSource.next(Math.floor(this.totalProductsSource.getValue()/size) + 1);
+        } else {
+          this.totalPagesSource.next(Math.floor(this.totalProductsSource.getValue()/size));
+        }
+        
     }
 
     this.actualPageSource.next(result);
