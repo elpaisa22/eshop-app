@@ -11,16 +11,29 @@ export class MainSliderDirective implements AfterViewInit {
     }
 
     public ngAfterViewInit() {
-      setTimeout(() => {
-          jQuery(this.el.nativeElement).owlCarousel({
-            navigation: true, // Show next and prev buttons
-            slideSpeed: 300,
-            paginationSpeed: 400,
-            autoPlay: true,
-            stopOnHover: true,
-            singleItem: true,
-            afterInit: ''
-          });
-       }, 1000)
+      if (jQuery(this.el.nativeElement).find('.item').length) {
+        jQuery(this.el.nativeElement).owlCarousel({
+          navigation: true, // Show next and prev buttons
+          slideSpeed: 300,
+          paginationSpeed: 400,
+          autoPlay: true,
+          stopOnHover: true,
+          singleItem: true,
+          afterInit: ''
+        });
+      } else {
+        setTimeout(() => {
+            jQuery(this.el.nativeElement).owlCarousel({
+              navigation: true, // Show next and prev buttons
+              slideSpeed: 300,
+              paginationSpeed: 400,
+              autoPlay: true,
+              stopOnHover: true,
+              singleItem: true,
+              afterInit: ''
+            });
+         }, 2000)  
+      }
+      
     }
 }
