@@ -14,9 +14,9 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
                                 <div class="col-md-6 col-sm-6">
                                     <div class="products-number">
                                         <strong>Mostrar</strong>
-                                        <a href="#" class="btn btn-default btn-sm" [class.btn-primary]="pageSize == 12"   (click)="changePageSize(12, $event)">12</a>
-                                        <a href="#" class="btn btn-default btn-sm" [class.btn-primary]="pageSize == 24"   (click)="changePageSize(24, $event)">24</a>
-                                        <a href="#" class="btn btn-default btn-sm" [class.btn-primary]="pageSize == null" (click)="changePageSize(null, $event)">Todos</a>
+                                        <a href="#" class="btn btn-default btn-sm btn-with-margin" [class.btn-primary]="pageSize == 12"   (click)="changePageSize(12, $event)">12</a>
+                                        <a href="#" class="btn btn-default btn-sm btn-with-margin" [class.btn-primary]="pageSize == 24"   (click)="changePageSize(24, $event)">24</a>
+                                        <a href="#" class="btn btn-default btn-sm btn-with-margin" [class.btn-primary]="pageSize == null" (click)="changePageSize(null, $event)">Todos</a>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6">

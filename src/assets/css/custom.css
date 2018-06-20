@@ -63,6 +63,6 @@
     height: 100%;
 }
 
-.btn.btn-primary, .btn.btn-default {
+.btn.btn-with-margin {
   margin : 1px;
 }
