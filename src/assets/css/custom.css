@@ -37,6 +37,10 @@
     border: none;
 }
 
+#main-slider{
+    margin-bottom: 0px;
+}
+
 #content .product{
     border: none;
 }
