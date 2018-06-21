@@ -35,6 +35,7 @@ import {AutocompleteComponent} from './components/_shared/autocomplete/autocompl
 import {PriveFilterComponent} from './components/_shared/priceFilter/priceFilter.component';
 import {RelatedProductsComponent} from './components/_shared/relatedProducts/relatedProducts.component';
 import {PaymentsBannerComponent} from './components/_shared/paymentsBanner/paymentsBanner.component';
+import {ToastComponent} from './components/_shared/toast/toast.component';
 
 /* Pipes */
 import {KeysPipe} from './pipes/keys/keys.pipe';
@@ -50,6 +51,7 @@ import {BackToTopDirective} from './directives/back-to-top/back-to-top.directive
 /* Services */
 import {CartService} from './services/cart/cart.service';
 import {FilterService} from './services/filter/filter.service';
+import {ToastService} from './services/toast/toast.service';
 
 /* Repositories */
 import {ProductRepository} from './repositories/product/product.repository';
@@ -112,6 +114,7 @@ export const appRoutes : Routes = [
 		PriveFilterComponent,
 		RelatedProductsComponent,
     PaymentsBannerComponent,
+    ToastComponent,
 		/* Pipes */
 		KeysPipe,
 		/* Directives */
@@ -131,6 +134,7 @@ export const appRoutes : Routes = [
   providers: [
 		CartService,
 		FilterService,
+		ToastService,
 		ProductRepository,
 		CategoryRepository,
 		CheckoutRepository,

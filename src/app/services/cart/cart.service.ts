@@ -4,6 +4,8 @@ import {Product} from '../../models/product/product.model';
 import {CartItem} from '../../models/cartitem/cartitem.model';
 import {Delivery, Payment} from '../../models/checkout/checkout.model';
 
+import {ToastService} from '../toast/toast.service';
+
 import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
@@ -44,7 +46,7 @@ export class CartService {
     //Token de MercadoPago
     private _token : any;
 
-    constructor() {
+    constructor(private toastService : ToastService) {
       //Verifica si ya existen items anteriores
       //this.loadItems();
       this.updateSubtotal();
@@ -197,6 +199,7 @@ export class CartService {
           item.product = prod;
 
           this.itemsSource.getValue().push(item);
+          this.toastService.sendMessage('Producto agregado correctamente', 'success');
         }
 
         this.resetPayment();
