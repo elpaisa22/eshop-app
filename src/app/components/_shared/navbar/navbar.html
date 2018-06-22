@@ -20,10 +20,11 @@ _________________________________________________________ -->
           </div>
           <div class="col-md-3 col-sm-3">
             <div class="navbar-collapse collapse right" id="basket-overview">
-                <a [routerLink]="['/basket']" class="btn btn-primary navbar-btn">
+                <button [routerLink]="['/basket']" class="btn btn-primary navbar-btn">
                   <i class="fa fa-shopping-cart"></i>
-                  <span class="hidden-xs">{{itemsCount}} items en el carrito</span>
-                </a>
+                  <span class="hidden-xs">Carrito</span>
+                </button>
+                <span class="badge badge-notify">{{itemsCount}}</span>
             </div>
             <!--/.nav-collapse -->
           </div>
@@ -44,9 +45,10 @@ _________________________________________________________ -->
                             <span class="sr-only">Toggle search</span>
                             <i class="fa fa-search"></i>
                         </button>
-                        <a class="btn-default navbar-toggle" [routerLink]="['/basket']">
-                            <i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">3 items in cart</span>
-                        </a>
+                        <button class="btn-default navbar-toggle" [routerLink]="['/basket']">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="badge badge-notify-small">{{itemsCount}}</span>
+                        </button>
                     </div>
                 </div>
                 <!--/.navbar-header -->
