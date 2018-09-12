@@ -29,3 +29,7 @@ export interface Comment {
 export interface Image {
     image : string;
 }
+
+export class ProductImage implements Image {
+    image : string;
+}

@@ -3,7 +3,7 @@ import {Http, Headers, Response} from '@angular/http';
 import {Observable, of, from} from 'rxjs';
 import { map, tap, concatMap, filter, toArray } from 'rxjs/operators';
 
-import {Product} from '../../models/product/product.model';
+import {Product, ProductImage} from '../../models/product/product.model';
 import {Offer, ProductInOffer} from '../../models/offer/offer.model';
 import {AppConfig} from '../../app.config';
 
@@ -18,10 +18,30 @@ export class ProductRepository {
     }
 
     private convertProducto(prod : Product) : Product {
-      for (var i = 0; i < prod.images.length; i++) {
-        var url : string = this.config.apiEndpoint + '/' + prod.images[i].image;
-        prod.images[i].image = url;
+      //Si no hay imagenes cargadas para el producto, carga 2 imagenes por defecto
+      if (prod.images.length == 0) {
+        let defaultImg : ProductImage;
+        defaultImg = new ProductImage();
+        defaultImg.image = '/assets/images/not-available.png';
+        prod.images.push(defaultImg);
+        defaultImg = new ProductImage();
+        defaultImg.image = '/assets/images/not-available.png';
+        prod.images.push(defaultImg);
+        //prod.images = images;
+      } else {
+        for (var i = 0; i < prod.images.length; i++) {
+          var url : string = this.config.apiEndpoint + '/' + prod.images[i].image;
+          prod.images[i].image = url;
+        }
+        //Si se cargo solo una imagen, entonces agrega una imagen mas
+        if (prod.images.length == 1) {
+          let defaultImg : ProductImage;
+          defaultImg = new ProductImage();
+          defaultImg.image = '/assets/images/not-available.png';
+          prod.images.push(defaultImg);
+        }
       }
+      //Obtiene el precio y calcula el descuento
       prod.discount_price = prod.price;
       if (prod.current_offer) {
         prod.discount = this.calcDiscount(prod.current_offer.offerproduct_set, prod.id, prod.price);
