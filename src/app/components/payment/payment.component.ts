@@ -152,6 +152,9 @@ export class PaymentComponent implements OnInit {
 		if (labels.length > 0) {
 				this.installmentLabel = labels[0].replace(/_/gi, ": ");
 		}
+    //Carga el total de intereses
+    this._model.method.totalAmount = installments[0].total_amount;
+
 		//Guarda el pago en el cartService
 		this.cartService.setPayment(this._model);
 	}
