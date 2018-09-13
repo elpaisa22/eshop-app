@@ -38,10 +38,12 @@ export class BasketComponent implements OnInit {
 
     //Metodo que se ejecuta cuando se quiere incrementar la cantidad de un item
 		public incrementQuantity(item : CartItem){
-			item.count++;
-      this.cartService.clearPaymentData();
-			this.cartService.updateItem(item);
-			this.cartService.saveItems();
+			if (item.count < 3) {
+				item.count++;
+        this.cartService.clearPaymentData();
+			  this.cartService.updateItem(item);
+				this.cartService.saveItems();
+			}
 		}
 
     //Metodo que se ejecuta cuando se quiere decrementar la cantidad item
