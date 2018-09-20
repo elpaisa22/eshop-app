@@ -33,11 +33,11 @@ export class ProductRepository {
           var url : string = this.config.apiEndpoint + '/' + prod.images[i].image;
           prod.images[i].image = url;
         }
-        //Si se cargo solo una imagen, entonces agrega una imagen mas
+        //Si se cargo solo una imagen, entonces como segunda imagen se muestra la primera
         if (prod.images.length == 1) {
           let defaultImg : ProductImage;
           defaultImg = new ProductImage();
-          defaultImg.image = '/assets/images/not-available.png';
+          defaultImg.image = this.config.apiEndpoint + '/' + prod.images[0].image;
           prod.images.push(defaultImg);
         }
       }

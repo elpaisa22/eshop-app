@@ -53,18 +53,18 @@ _________________________________________________________ -->
                                 <div class="flipper">
                                     <div class="front">
                                         <a [routerLink]="['/detail', prod.id]">
-                                            <img src="{{prod.images[0].image}}" alt="" class="img-responsive">
+                                            <img src="{{prod.images[0].image}}" alt="" class="img-responsive img-product">
                                         </a>
                                     </div>
                                     <div class="back">
                                         <a [routerLink]="['/detail', prod.id]">
-                                            <img src="{{prod.images[1].image}}" alt="" class="img-responsive">
+                                            <img src="{{prod.images[1].image}}" alt="" class="img-responsive img-product">
                                         </a>
                                     </div>
                                 </div>
                             </div>
                             <a [routerLink]="['/detail', prod.id]" class="invisible">
-                                <img src="{{prod.images[0].image}}" alt="" class="img-responsive">
+                                <img src="{{prod.images[0].image}}" alt="" class="img-responsive img-product">
                             </a>
                             <div class="text">
                                 <h3><a [routerLink]="['/detail', prod.id]">{{prod.name}}</a></h3>

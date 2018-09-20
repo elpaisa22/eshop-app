@@ -75,8 +75,9 @@ _________________________________________________________ -->
                                             <div *ngFor="let category of section.categories" class="col-sm-3">
                                                 <h5>{{category.name}}</h5>
                                                 <ul>
-                                                    <li *ngFor="let subcategory of category.subcategories">
-                                                    <a [routerLink]="['/catalog/section', section.id, 'category' , category.id, 'sub-category',subcategory.id]">{{subcategory.name}}</a>
+                                                    <li *ngFor="let subcategory of category.subcategories.slice(0,5);  let i=index" >
+                                                        <a *ngIf="i<4" [routerLink]="['/catalog/section', section.id, 'category' , category.id, 'sub-category',subcategory.id]">{{subcategory.name}}</a>
+                                                        <a style="color:#666" *ngIf="i==4" [routerLink]="['/catalog/section', section.id, 'category' , category.id]"><b>Ver todas las subcategorías</b></a>                                                       
                                                     </li>
                                                 </ul>
                                             </div>
