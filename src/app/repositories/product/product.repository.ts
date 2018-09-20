@@ -37,7 +37,7 @@ export class ProductRepository {
         if (prod.images.length == 1) {
           let defaultImg : ProductImage;
           defaultImg = new ProductImage();
-          defaultImg.image = this.config.apiEndpoint + '/' + prod.images[0].image;
+          defaultImg.image = prod.images[0].image;
           prod.images.push(defaultImg);
         }
       }
