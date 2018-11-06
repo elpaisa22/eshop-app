@@ -20,7 +20,7 @@ import {ProductRepository} from '../../../repositories/product/product.repositor
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </span>
               </div>
-              <ul class="autocomplete-options dropdown-menu col-sm-12" *ngIf="filteredList.length > 0" style="display: block">
+              <ul class="autocomplete-options dropdown-menu col-sm-12" *ngIf="!loading && filteredList.length > 0" style="display: block">
                   <li *ngFor="let item of filteredList;let idx = index"
                        [class.active]="idx == selectedIdx"
                        class="active">
@@ -30,6 +30,21 @@ import {ProductRepository} from '../../../repositories/product/product.repositor
                         {{item.name}}
                     </a>
                   </li>
+              </ul>
+              <ul class="autocomplete-options dropdown-menu col-sm-12" *ngIf="loading" style="display: block">
+                <li>
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-refresh fa-spin fa-fw"></i>
+                      Buscando productos...
+                     </a>
+                </li>
+              </ul>
+              <ul class="autocomplete-options dropdown-menu col-sm-12" *ngIf="!loading && filteredList.length == 0 && query != ''" style="display: block">
+                <li>
+                    <a href="javascript:void(0)">
+                      No se encontraron coincidencias
+                     </a>
+                </li>
               </ul>
             </div>
     	`
@@ -41,6 +56,7 @@ export class AutocompleteComponent {
     public filteredList = [];
     public elementRef;
     selectedIdx: number;
+    loading : boolean = false;
 
     constructor(myElement: ElementRef,
                 private _productRepository : ProductRepository,
@@ -51,9 +67,11 @@ export class AutocompleteComponent {
 
     filter(event: any) {
         if (this.query !== "") {
+            this.loading = true;
             this._productRepository.searchByText(this.query)
                                    .subscribe(data => {
                                      this.filteredList = data.slice(0,6)
+                                     this.loading = false;
                                    });
             if (event.code == "ArrowDown" && this.selectedIdx < this.filteredList.length-1) {
                 this.selectedIdx++;
