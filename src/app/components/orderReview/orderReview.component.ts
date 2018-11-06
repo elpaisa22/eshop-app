@@ -16,6 +16,8 @@ export class OrderReviewComponent implements OnInit {
 	public hasErrors : boolean = false;
 	public errors : String;
 
+	public loading : boolean;
+
   constructor(private cartService: CartService,
 					    private checkoutRepository : CheckoutRepository,
 					    private router : Router) {
@@ -38,6 +40,7 @@ export class OrderReviewComponent implements OnInit {
 
 	//Envia los datos al backend
 	public sendData() {
+		this.loading = true;
 		let result = this.checkoutRepository
 		                 .sendCheckoutData(this.cartService.getDelivery(),
 		                                   this.cartService.getPayment(),
@@ -47,16 +50,18 @@ export class OrderReviewComponent implements OnInit {
 		// verifica el resultado
    	result.subscribe(
            (res) => {
+           				this.loading = false;
            	   		var response = res.json();
-					if (response.success) {
-						this.router.navigate(['/comfirmation']);
-					} else {
-						this.showErrors(response.message);
-					}
+									if (response.success) {
+										this.router.navigate(['/comfirmation']);
+									} else {
+										this.showErrors(response.message);
+									}
            },
            err => {
                // Log errors if any
                //console.log(err);
+               this.loading = false;
                this.showErrors(err._body.message)
            }
 		);

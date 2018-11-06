@@ -132,10 +132,14 @@
             </div>
             <!-- /.products -->
 
-            <div *ngIf="!actualPage.length">
-                <div class="box" style="text-align: center">
-                    <strong>No se encontraron productos</strong>
-                </div>
+
+            <div *ngIf="loading" class="box" style="text-align: center">
+                <h3>Cargando productos</h3>
+                <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+            </div>
+            <div *ngIf="initialized && !loading && !actualPage.length"
+                 class="box" style="text-align: center">
+                <strong>No se encontraron productos</strong>
             </div>
 
             <paginator *ngIf="actualPage.length"

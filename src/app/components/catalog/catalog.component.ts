@@ -36,6 +36,9 @@ export class CatalogComponent implements OnInit {
 	public  priceMin : number;
 	public  priceMax : number;
 
+	public  loading : boolean = true;
+	public  initialized : boolean = false;
+
 	constructor(private activatedRoute: ActivatedRoute,
 		          public filterService : FilterService,
 	            private cartService : CartService) {
@@ -66,6 +69,12 @@ export class CatalogComponent implements OnInit {
 		this.filterService.tags.subscribe(data => this.tags = data);
 		this.filterService.priceMin.subscribe(data => this.priceMin = data);
 		this.filterService.priceMax.subscribe(data => this.priceMax = data);
+		this.filterService.loading.subscribe(data => {
+																									this.loading = data;
+		                                              if (this.loading) {
+		                                              	this.initialized = true
+		                                              }
+		                                      });
 	}
 
 	public addToCart(prod : Product) {

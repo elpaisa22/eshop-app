@@ -52,6 +52,9 @@ export class FilterService {
   private subcategorySource = new BehaviorSubject<SubCategory>(null);
   public  subcategory : Observable<SubCategory> = this.subcategorySource.asObservable();
 
+  private loadingSource = new BehaviorSubject<boolean>(false);
+  public  loading : Observable<boolean> = this.loadingSource.asObservable();
+
   _filterRangeMin : number;
   _filterRangeMax : number;
 
@@ -68,12 +71,14 @@ export class FilterService {
 
   private loadProducts(forceReload : boolean = false) {
     this._products.length = 0;
+    this.loadingSource.next(true);
     this.productRepository.getProducts()
                           .subscribe(data => {
                              this._products = this.applySectionFilters(data);
                              this._products = this.sortProducts(this._products, this.sortBySource.getValue());
                              this._allProducts = this._products;
                              this.initialize();
+                             this.loadingSource.next(false);
                              return this.actualPageSource.getValue();
                           });
   }
