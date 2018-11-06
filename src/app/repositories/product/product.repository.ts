@@ -34,12 +34,14 @@ export class ProductRepository {
           prod.images[i].image = url;
         }
         //Si se cargo solo una imagen, entonces como segunda imagen se muestra la primera
+        /*
         if (prod.images.length == 1) {
           let defaultImg : ProductImage;
           defaultImg = new ProductImage();
           defaultImg.image = prod.images[0].image;
           prod.images.push(defaultImg);
         }
+        */
       }
       //Obtiene el precio y calcula el descuento
       prod.discount_price = prod.price;
