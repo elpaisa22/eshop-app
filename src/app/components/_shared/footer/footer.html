@@ -21,12 +21,10 @@
 
                 <p>
                   <strong>{{contactInfo.name}}</strong>
-                  <br>{{contactInfo.address}} - {{contactInfo.zip}}
-                  <br>{{contactInfo.province}}
+                  <br>{{contactInfo.address}}
+                  <br>{{contactInfo.city}} ({{contactInfo.zip}}), {{contactInfo.province}}
                   <br><strong>{{contactInfo.country}}</strong>
                 </p>
-
-                <a href="mailto:{{contactInfo.email}}">{{contactInfo.email}}</a>
 
                 <hr class="hidden-md hidden-lg">
 
@@ -38,13 +36,20 @@
             <div class="col-md-4 col-sm-6">
                 <h4>Contáctanos</h4>
 
-                <p class="social">
-                    <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
-                    <a href="#" class="twitter external" data-animate-hover="shake"><i class="fa fa-twitter"></i></a>
-                    <a href="#" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
-                    <a href="#" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
-                    <a href="#" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
-                </p>
+                <div class="social">
+                    <div style="vertical-align:middle;">
+                        <a href="javascript:void(0)" class="gplus external" data-animate-hover="shake"><i class="fa fa-phone"></i></a>
+                        <span style="line-height: 30px;"><b>{{contactInfo.phone}}</b></span>
+                    </div>
+                    <div style="vertical-align:middle;">
+                        <a href="mailto:{{contactInfo.email}}" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
+                        <span style="line-height: 30px;"><a href="mailto:{{contactInfo.email}}" style="color: #ff6f02; background-color: transparent;">{{contactInfo.email}}</a></span>
+                    </div>
+                    <div style="vertical-align:middle;">
+                        <a href="{{contactInfo.facebook}}" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
+                        <a href="{{contactInfo.facebook}}" style="display:inline; color: #4460ae; background-color: transparent;line-height: 30px;"><b>{{contactInfo.name}}</b></a>
+                    </div>
+                </div>
 
 
             </div>

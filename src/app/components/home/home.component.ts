@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
 	}
 
   ngOnInit(){
+    this.productRepository.getProducts();
     this.offerRepository.getCurrentOffers()
                         .subscribe(data => {
                              this.currentOffers = data;
