@@ -24,7 +24,7 @@
         <div class="col-md-12" style="margin-top: 20px;">
           <div *ngFor="let prod of products" class="col-md-3 col-sm-4">
             <div class="product">
-                <div class="flip-container">
+                <div class="flip-container" *ngIf="prod.images.length > 1">
                     <div class="flipper">
                         <div class="front">
                             <a [routerLink]="['/detail', prod.id]">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <a [routerLink]="['/detail', prod.id]" class="invisible">
+                <a [routerLink]="['/detail', prod.id]" [ngClass]="{'invisible' : prod.images.length > 1}">
                     <img src="{{prod.images[0].image}}" alt="" class="img-responsive img-product">
                 </a>
                 <div class="text">
