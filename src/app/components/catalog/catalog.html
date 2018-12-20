@@ -91,12 +91,12 @@
                             </del>
                             <br>
                             ${{prod.discount_price | number:'1.2-2'}}
-                            <span *ngIf="prod.current_offer && prod.current_offer.min_required > 0">*</span>
-                          </p>
-                          <p class="text-muted"
-                             style="text-align:center; font-size: 0.85em"
-                             *ngIf="prod.current_offer && prod.current_offer.min_required > 0">
-                            * A partir de {{prod.current_offer.min_required}} unidades
+                            <span *ngIf="prod.current_offer && prod.current_offer.min_required > 1">*</span>
+                            <div class="text-muted"
+                                style="text-align:center; font-size: 9px; margin-top:-3px; margin-bottom: -9px;"
+                                *ngIf="prod.current_offer && prod.current_offer.min_required > 1">
+                                * A partir de {{prod.current_offer.min_required}} unidades
+                            </div>
                           </p>
                           <p class="buttons">
                               <a [routerLink]="['/detail', prod.id]" class="btn btn-default btn-with-margin">Ver Detalle</a>
