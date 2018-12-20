@@ -92,12 +92,12 @@
                             <br>
                             ${{prod.discount_price | number:'1.2-2'}}
                             <span *ngIf="prod.current_offer && prod.current_offer.min_required > 1">*</span>
-                            <div class="text-muted"
-                                style="text-align:center; font-size: 9px; margin-top:-3px; margin-bottom: -9px;"
+                          </p>
+                          <div class="text-muted"
+                                style="text-align:center; font-size: 9px; margin-top:-12px;"
                                 *ngIf="prod.current_offer && prod.current_offer.min_required > 1">
                                 * A partir de {{prod.current_offer.min_required}} unidades
-                            </div>
-                          </p>
+                          </div>
                           <p class="buttons">
                               <a [routerLink]="['/detail', prod.id]" class="btn btn-default btn-with-margin">Ver Detalle</a>
                               <a class="btn btn-primary btn-with-margin" (click)="addToCart(prod)"><i class="fa fa-shopping-cart"></i>Agregar al Carrito</a>
